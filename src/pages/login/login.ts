@@ -28,9 +28,9 @@ export class LoginPage {
   }
 
     private redirection(){
-      if(this.email == "michel@drucker.fr"){
+      if(this.email == "michel"){
         this.navCtrl.setRoot(TabsPage, {email: this.email});
-      }else if(this.email == "laurent@ruquier.fr"){
+      }else if(this.email == "laurent"){
         this.navCtrl.setRoot(TabsExposantPage, {email: this.email})
       }else{
         let alert = this.alertCtrl.create({
