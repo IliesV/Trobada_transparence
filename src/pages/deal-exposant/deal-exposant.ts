@@ -40,8 +40,8 @@ export class DealExposantPage {
         let scanSub = this.qrScanner.scan().subscribe((text: string) => {
           console.log('Scanned something', text);
     
-          this.qrScanner.hide(); // hide camera preview
-          scanSub.unsubscribe(); // stop scanning
+          // this.qrScanner.hide(); // hide camera preview
+          // scanSub.unsubscribe(); // stop scanning
         });
     
       } else if (status.denied) {
