@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+
+import {HomePage} from '../home/home'
+import {TabsPage} from '../tabs/tabs'
+import {TabsExposantPage} from '../tabs-exposant/tabs-exposant'
 
 /**
  * Generated class for the LoginPage page.
@@ -15,8 +20,29 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class LoginPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+    email: string;
+
+  constructor(public navCtrl: NavController, 
+    public navParams: NavParams,
+    private alertCtrl: AlertController) {
   }
+
+    private redirection(){
+      if(this.email == "michel@drucker.fr"){
+        this.navCtrl.setRoot(TabsPage, {email: this.email});
+      }else if(this.email == "laurent@ruquier.fr"){
+        this.navCtrl.setRoot(TabsExposantPage, {email: this.email})
+      }else{
+        let alert = this.alertCtrl.create({
+          title: 'Erreur',
+          subTitle: 'Adresse mail erronée',
+          buttons: ['Ok pardon']
+        });
+        alert.present();
+      }
+
+
+      }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');

@@ -13,7 +13,7 @@
           <ion-list inset>
             
             <ion-item>
-              <ion-input type="text" placeholder="Email" name="email"></ion-input>
+              <ion-input type="text" placeholder="Email" name="email" [(ngModel)]="email"></ion-input>
             </ion-item>
             
             <ion-item>
@@ -26,7 +26,7 @@
       
       <ion-row>
         <ion-col class="signup-col">
-          <button ion-button class="submit-btn" full type="submit">Se connecter</button>
+          <button ion-button class="submit-btn" full type="submit" (tap)="redirection()">Se connecter</button>
           <button ion-button class="register-btn" block clear>S'inscrire</button>
         </ion-col>
       </ion-row>
