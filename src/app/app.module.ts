@@ -12,6 +12,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
+import { SQLite } from '@ionic-native/sqlite';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -37,6 +39,7 @@ import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
   providers: [
     StatusBar,
     SplashScreen,
+    SQLite,
     {provide: ErrorHandler, useClass: IonicErrorHandler}
   ]
 })
