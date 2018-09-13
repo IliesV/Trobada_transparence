@@ -4,6 +4,7 @@ import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
+import { ScanQrPage } from '../scan-qr/scan-qr';
 
 /**
  * Generated class for the DealExposantPage page.
@@ -25,6 +26,9 @@ export class DealExposantPage {
     private app: App) {
   }
 
+  private goScan(){
+    this.navCtrl.push(ScanQrPage);
+}
   private logout(){
     console.log("merde")
     let alert = this.alertCtrl.create({
