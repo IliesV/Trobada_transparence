@@ -47,9 +47,9 @@ export class SqlitePage {
   private createTables() : void {
 
     //Table 
-    this.db.executeSql('CREATE TABLE `article` ( `idArticle` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `nom` TEXT NOT NULL )', {})
+    this.db.executeSql('CREATE TABLE IF NOT EXISTS `article` ( `idArticle` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `nom` TEXT NOT NULL )',[])
       .then(() => {
-        this.db.executeSql('CREATE TABLE "festival" ( `idFestival` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `nom` TEXT NOT NULL )', {})
+        this.db.executeSql('CREATE TABLE IF NOT EXISTS "festival" ( `idFestival` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `nom` TEXT NOT NULL )', [])
         .then(() => console.log('Executed SQL'))
         .catch(e => console.log(e));
       })
