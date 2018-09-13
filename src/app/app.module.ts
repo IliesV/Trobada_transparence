@@ -12,6 +12,7 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { ScanQrPage } from '../pages/scan-qr/scan-qr';
 
 @NgModule({
   declarations: [
@@ -20,7 +21,8 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
     ContactPage,
     HomePage,
     TabsPage,
-    TabsExposantPage
+    TabsExposantPage,
+    ScanQrPage
   ],
   imports: [
     BrowserModule,
@@ -33,7 +35,8 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
     ContactPage,
     HomePage,
     TabsPage,
-    TabsExposantPage
+    TabsExposantPage,
+    ScanQrPage
   ],
   providers: [
     StatusBar,
