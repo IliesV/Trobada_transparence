@@ -13,6 +13,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
 import { SQLite } from '@ionic-native/sqlite';
+import { AppBddProvider } from '../providers/app-bdd/app-bdd';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,6 +27,7 @@ import { SQLite } from '@ionic-native/sqlite';
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -40,7 +43,8 @@ import { SQLite } from '@ionic-native/sqlite';
     StatusBar,
     SplashScreen,
     SQLite,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AppBddProvider
   ]
 })
 export class AppModule {}
