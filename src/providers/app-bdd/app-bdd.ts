@@ -64,7 +64,10 @@ export class AppBddProvider {
                           .then(() => {
                             //Table QRCODE_ARTICLE
                             this.db.executeSql('CREATE TABLE IF NOT EXISTS `qrcode_article` ( `qrArticle_articleId` INTEGER NOT NULL, `qrArticle_festivalId` INTEGER NOT NULL, `qrArticle_vendeurId` INTEGER NOT NULL, `prix_unitaire` NUMERIC NOT NULL, `qrArticle_image` TEXT, PRIMARY KEY(qrArticle_articleId,qrArticle_festivalId,qrArticle_vendeurId), FOREIGN KEY(`qrArticle_articleId`) REFERENCES articleId, FOREIGN KEY(`qrArticle_festivalId`) REFERENCES festivalId, FOREIGN KEY(`qrArticle_vendeurId`) REFERENCES userId )', [])
-                              .then(() => console.log('Toutes les tables sont créées'))
+                              .then(() => {
+                                console.log('Toutes les tables sont créées');
+                                this.addDatas()
+                              })
                               .catch(e => console.log(e));
                           })
                           .catch(e => console.log(e));
@@ -80,4 +83,23 @@ export class AppBddProvider {
       .catch(e => console.log(e));
   }
 
+  //PROVISOIRE Add datas
+  private addDatas(): void {
+
+    this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (1,\'Client\')', [])
+    .then(() => {
+      this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (2,\'Vendeur\')', [])
+      .then(() => {
+        this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Ruquier\',\'Laurent\',2)', [])
+        .then(() => {
+          this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Drucker\',\'Michel\',1)', [])
+          .then(() => console.log('Les données sont enregistrées'))
+          .catch(e => console.log(e));
+        })
+        .catch(e => console.log(e));
+      })
+      .catch(e => console.log(e));
+    })
+    .catch(e => console.log(e));
+  }
 }
