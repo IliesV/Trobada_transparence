@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 
 /**
  * Generated class for the ScanQrPage page.
@@ -16,63 +16,33 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 })
 export class ScanQrPage {
 
-  private callback = function(err, contents){
-    if(err){
-      console.error(err._message);
-    }
-    alert('The QR Code contains: ' + contents);
-  };
+  scannedCode = null;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    private qrScanner: QRScanner) {
+    private barcodeScanner: BarcodeScanner) {
+      this.scanCode();
   }
 
-  showCamera() {
-    (window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
+  scanCode() {
+    this.barcodeScanner.scan().then(barcodeData => {
+      console.log('topMoumoute')
+      this.scannedCode = barcodeData.text;
+    }, (err) => {
+        console.log('Error: ', err);
+    })
   }
+
+  // showCamera() {
+  //   (window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
+  // }
   
-  hideCamera() {
-    (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
-  }
+  // hideCamera() {
+  //   (window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
+  // }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ScanQrPage');
+    console.log('ionViewDidLoad ScanQrPage tuu');
   }
-
-
-  
-  ionViewWillEnter(){
-     this.showCamera();
-     
-    
-    this.qrScanner.scan();
-
-    // this.qrScanner.prepare()
-    //   .then((status: QRScannerStatus) => {
-    //     if (status.authorized) {
-    //       console.log('Camera Permission Given');
-  
-    //        let scanSub = this.qrScanner.scan().subscribe((text: string) => {
-  
-    //        console.log('Scanned something', text);
-    //        this.qrScanner.hide();
-    //        scanSub.unsubscribe(); 
-          
-    //       });
-  
-    //       this.qrScanner.show();
-    //     } else if (status.denied) {
-    //       console.log('Camera permission denied');
-    //     } else {
-    //       console.log('Permission denied for this runtime.');
-    //     }
-    //   })
-    //   .catch((e: any) => console.log('Error is', e));
-  }
- 
- ionViewWillLeave(){
-    this.hideCamera(); 
- }
 
 }
