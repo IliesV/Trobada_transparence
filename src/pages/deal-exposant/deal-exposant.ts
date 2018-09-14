@@ -4,6 +4,7 @@ import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
+import { ScanQrPage } from '../scan-qr/scan-qr';
 
 /**
  * Generated class for the DealExposantPage page.
@@ -19,12 +20,18 @@ import {LoginPage} from '../login/login';
 })
 export class DealExposantPage {
 
+  qrdata: string;
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private app: App) {
+      this.qrdata = this.navParams.get('qrdata');
   }
 
+  private goScan(){
+    this.navCtrl.push(ScanQrPage);
+}
   private logout(){
     console.log("merde")
     let alert = this.alertCtrl.create({
@@ -52,6 +59,16 @@ export class DealExposantPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad DealExposantPage');
+    
+    console.log(this.qrdata)
+    if(this.qrdata !== null){
+        let alert = this.alertCtrl.create({
+          title: 'Bim bam boum',
+          subTitle: "le qr code contient '" + this.qrdata + "'",
+          buttons: ['OK']
+        });
+        alert.present();
+    } 
   }
 
 }
