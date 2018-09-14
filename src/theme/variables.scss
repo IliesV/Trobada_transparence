@@ -89,5 +89,5 @@ $colors: (
 
 //Scan QR
 ion-app.cameraView, ion-app.cameraView ion-content, ion-app.cameraView .nav-decor {
-  background: transparent none !important;
+  background-color: rgba(0, 0, 0, 0.3) !important;
 }
