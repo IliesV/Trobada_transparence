@@ -4,6 +4,9 @@ import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
+import {HomeExposantPage} from '../home-exposant/home-exposant';
+
+
 
 @Component({
   selector: 'page-home',
@@ -13,7 +16,8 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
-    private app: App) {
+    private app: App
+    ) {
 
   }
 
@@ -41,6 +45,8 @@ export class HomePage {
     });
     alert.present();
   }
+
+
 
 
 }

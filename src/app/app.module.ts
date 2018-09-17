@@ -16,6 +16,8 @@ import { SQLite } from '@ionic-native/sqlite';
 import { AppBddProvider } from '../providers/app-bdd/app-bdd';
 import { HttpClientModule } from '@angular/common/http';
 
+import { NativeStorage } from '@ionic-native/native-storage';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -43,6 +45,7 @@ import { HttpClientModule } from '@angular/common/http';
     StatusBar,
     SplashScreen,
     SQLite,
+    NativeStorage,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AppBddProvider
   ]

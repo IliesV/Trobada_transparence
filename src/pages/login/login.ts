@@ -7,6 +7,7 @@ import {TabsPage} from '../tabs/tabs';
 import {TabsExposantPage} from '../tabs-exposant/tabs-exposant';
 
 import {AppBddProvider} from '../../providers/app-bdd/app-bdd';
+import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
 
 /**
@@ -28,7 +29,8 @@ export class LoginPage {
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private alertCtrl: AlertController,
-    private appBddProvider: AppBddProvider
+    private appBddProvider: AppBddProvider,
+    private connexionApiProvider:ConnexionApiProvider
   ) {
     this.appBddProvider.createDatabaseFile();
   }
@@ -45,6 +47,14 @@ export class LoginPage {
           buttons: ['Ok pardon']
         });
         alert.present();
+      }
+    }
+
+    ionViewWillEnter(){
+      console.log("willEnter");
+      if(this.connexionApiProvider.getToken()){
+        console.log('toto');
+        this.navCtrl.setRoot(TabsExposantPage);
       }
     }
 
