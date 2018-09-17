@@ -4,9 +4,7 @@ import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
-import {HomeExposantPage} from '../home-exposant/home-exposant';
-
-
+import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
 @Component({
   selector: 'page-home',
@@ -14,11 +12,14 @@ import {HomeExposantPage} from '../home-exposant/home-exposant';
 })
 export class HomePage {
 
+  public token:string;
+
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
-    private app: App
+    private app: App,
+    public connexionApiProvider:ConnexionApiProvider
     ) {
-
+      this.token = this.connexionApiProvider.getToken();
   }
 
   private logout(){

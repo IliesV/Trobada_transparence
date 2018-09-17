@@ -1,5 +1,7 @@
 /*
 * Connexion: requete API et check credentials ou token
+*https://forum.ionicframework.com/t/adding-authorization-header-in-get-request/91222/8
+*https://raw.githubusercontent.com/RedFroggy/ionic2-nfc-app/master/app/pages/login/login.service.ts
 */
 
 //Native Storage
@@ -7,14 +9,18 @@ import { NativeStorage } from '@ionic-native/native-storage';
 
 // Core components
 import { Injectable }   from '@angular/core';
-import { Http }         from '@angular/http';
+import {Http,Headers,Response} from '@angular/http';
+//import { HttpClientModule } from '@angular/common/http';
 
 // RxJS
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
 
-// Models
-// Importez vos models ici
+
+const CONTENT_TYPE_HEADER:string = 'Content-Type';
+const APPLICATION_JSON:string = 'application/json';
+const BACKEND_URL:string = 'http://demo2726806.mockable.io/authenticate';
+
 @Injectable()
 export class ConnexionApiProvider {
 
@@ -25,48 +31,42 @@ export class ConnexionApiProvider {
     id:number;
     
     constructor(
-        private http: Http,
-        private nativeStorage: NativeStorage
+        //private http: HttpClientModule,
+        private nativeStorage: NativeStorage,
+        private http:Http
         ) { }
 
+        //CheckLogin
+        login(username:string,password:string,rememberMe:boolean):any{
+            let headers = new Headers();
+            headers.append(CONTENT_TYPE_HEADER, APPLICATION_JSON);
+            return this.http.post(this.baseUrl+'login_check',JSON.stringify({login:username,password:password}),{headers:headers}).map((res:Response) => {
+                            let loginData:any = res.json();
+                            let user:User = this.readJwt(loginData.token);
+        }
+    }
         //Sauvegarde du token et infos sur le mobile
-        public saveToken(token, role, pseudo, id): void {
+        public saveToken(token): any {
 
             this.nativeStorage.setItem('userToken', {
                 token: token,
-                role: role,
-                pseudo: pseudo,
-                id:id
             })
             .then(
-                () => console.log('Stored token!'),
+                () => console.log('token saves ='+token),
                 error => console.error('Error storing item', error)
             );
         }
 
         //Recuperation Token et infos
-        public getToken():void {
+        public getToken():string {
             this.nativeStorage.getItem('userToken')
             .then(
                 data => {
-                    this.token = data.token,
-                    this.role = data.role,
-                    this.pseudo = data.pseudo,
-                    this.id = data.id
+                    this.token = data.token;
+                    console.log('token recup');
                 },
-                error => {
-                    console.error(error),
-                    this.token = 'anonymous'
-                }
+                error => console.error(error)
             );
+            return this.token;
         }
-
-    // public getObjects(): Promise<any> {
-        
-    //     return this.http.get(url)
-    //     .toPromise()
-    //     .then(response => response.json())
-    //     .catch(error => console.log('Une erreur est survenue ' + error))
-    // }
-
 }

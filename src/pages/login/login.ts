@@ -30,15 +30,18 @@ export class LoginPage {
     public navParams: NavParams,
     private alertCtrl: AlertController,
     private appBddProvider: AppBddProvider,
-    private connexionApiProvider:ConnexionApiProvider
+    public connexionApiProvider:ConnexionApiProvider
   ) {
-    this.appBddProvider.createDatabaseFile();
+    // this.appBddProvider.createDatabaseFile();
   }
 
     private redirection(){
+
       if(this.email == "michel"){
+        this.connexionApiProvider.saveToken('michelToken')
         this.navCtrl.setRoot(TabsPage, {email: this.email});
       }else if(this.email == "laurent"){
+
         this.navCtrl.setRoot(TabsExposantPage, {email: this.email})
       }else{
         let alert = this.alertCtrl.create({
@@ -50,13 +53,7 @@ export class LoginPage {
       }
     }
 
-    ionViewWillEnter(){
-      console.log("willEnter");
-      if(this.connexionApiProvider.getToken()){
-        console.log('toto');
-        this.navCtrl.setRoot(TabsExposantPage);
-      }
-    }
+    
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
