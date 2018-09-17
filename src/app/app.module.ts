@@ -15,12 +15,13 @@ import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 import { SQLite } from '@ionic-native/sqlite';
 import { AppBddProvider } from '../providers/app-bdd/app-bdd';
 import { HttpClientModule } from '@angular/common/http';
-import { Http,Headers,Response } from '@ionic-native/http';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
 import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
 import {LoginPage} from '../pages/login/login';
+
+import { ConnexionApiGlobal } from '../models/api.connexion.model'
 
 @NgModule({
   declarations: [
@@ -36,9 +37,6 @@ import {LoginPage} from '../pages/login/login';
   imports: [
     BrowserModule,
     HttpClientModule,
-    Http,
-    Headers,
-    Response,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -59,7 +57,8 @@ import {LoginPage} from '../pages/login/login';
     NativeStorage,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AppBddProvider,
-    ConnexionApiProvider
+    ConnexionApiProvider,
+    ConnexionApiGlobal
   ]
 })
 export class AppModule {}

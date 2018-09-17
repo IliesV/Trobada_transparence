@@ -6,20 +6,29 @@ import {App} from 'ionic-angular';
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
+import { ConnexionApiGlobal } from '../../models/api.connexion.model';
+
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
 })
 export class HomePage {
 
-  public token:string;
+  public token:ConnexionApiGlobal;
+  public dataToken:String;
 
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
     private app: App,
-    public connexionApiProvider:ConnexionApiProvider
+    public connexionApiProvider:ConnexionApiProvider,
     ) {
-      this.token = this.connexionApiProvider.getToken();
+      console.log('construct home');
+      this.connexionApiProvider.login('michel','tutu',true)
+      .then(retour => {
+        this.token = retour;
+        this.dataToken = this.token.token;
+      })
+
   }
 
   private logout(){

@@ -9,12 +9,15 @@ import { NativeStorage } from '@ionic-native/native-storage';
 
 // Core components
 import { Injectable }   from '@angular/core';
-import {Http,Headers,Response} from '@angular/http';
-//import { HttpClientModule } from '@angular/common/http';
+// import { Http,Headers } from '@angular/http';
+import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 
 // RxJS
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
+
+//Model datas connexion
+import { ConnexionApiGlobal } from '../../models/api.connexion.model';
 
 
 const CONTENT_TYPE_HEADER:string = 'Content-Type';
@@ -33,18 +36,24 @@ export class ConnexionApiProvider {
     constructor(
         //private http: HttpClientModule,
         private nativeStorage: NativeStorage,
-        private http:Http
+        private http: HttpClient,
+        private error: HttpErrorResponse
         ) { }
 
         //CheckLogin
-        login(username:string,password:string,rememberMe:boolean):any{
-            let headers = new Headers();
+        public login(username:string,password:string,rememberMe:boolean):Promise<ConnexionApiGlobal> {
+            console.log('Tentative connexion');
+            let headers = new HttpHeaders();
             headers.append(CONTENT_TYPE_HEADER, APPLICATION_JSON);
-            return this.http.post(this.baseUrl+'login_check',JSON.stringify({login:username,password:password}),{headers:headers}).map((res:Response) => {
-                            let loginData:any = res.json();
-                            let user:User = this.readJwt(loginData.token);
+            return this.http.post(`${this.baseUrl}login_check`,JSON.stringify({username:username,password:password}),{headers:headers})
+            .toPromise()
+            .then(response => response as ConnexionApiGlobal)
+            .catch(this.error => console.log(this.error))
+            
+            // let loginData:any = res.json();
+            // let user:User = this.readJwt(loginData.token);
         }
-    }
+
         //Sauvegarde du token et infos sur le mobile
         public saveToken(token): any {
 
