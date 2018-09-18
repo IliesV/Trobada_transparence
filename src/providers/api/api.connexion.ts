@@ -18,7 +18,7 @@ import 'rxjs/add/operator/map';
 
 //Model datas connexion
 import { ConnexionApiGlobal } from '../../models/api.connexion.model';
-
+import { JwtHelper } from "angular2-jwt";
 
 @Injectable()
 export class ConnexionApiProvider {
@@ -32,6 +32,7 @@ export class ConnexionApiProvider {
     constructor(
         private nativeStorage: NativeStorage,
         private http: HTTP,
+        private decoder:JwtHelper
         ) { }
 
         CheckLogin
@@ -53,9 +54,10 @@ export class ConnexionApiProvider {
                     'Content-Type': 'application/json'
                 });
 
+
             // return this.http.post(this.baseUrl,JSON.stringify({username:username,password:password}),{headers:headers})
             return this.http.post(this.baseUrl,body,{headers:headers})
-            .then(response => console.log(response.data))
+            .then(response => console.log((this.decoder.decodeToken(response.data).username)))
             .catch(error => console.log(error))
             
             // let loginData:any = res.json();

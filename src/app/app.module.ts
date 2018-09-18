@@ -22,7 +22,8 @@ import {ConnexionApiProvider} from '../providers/api/api.connexion';
 import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
 import {LoginPage} from '../pages/login/login';
 
-import { ConnexionApiGlobal } from '../models/api.connexion.model'
+import { ConnexionApiGlobal } from '../models/api.connexion.model';
+import { JwtHelper } from "angular2-jwt";
 
 @NgModule({
   declarations: [
@@ -59,7 +60,8 @@ import { ConnexionApiGlobal } from '../models/api.connexion.model'
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AppBddProvider,
     ConnexionApiProvider,
-    ConnexionApiGlobal
+    ConnexionApiGlobal,
+    JwtHelper
   ]
 })
 export class AppModule {}
