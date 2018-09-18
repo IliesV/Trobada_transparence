@@ -24,10 +24,10 @@ export class HomePage {
     ) {
       console.log('construct home');
       this.connexionApiProvider.login('michel','tutu',true)
-      .then(retour => {
-        this.token = retour;
-        this.dataToken = this.token.token;
-      })
+      // .then(retour => {
+      //   this.token = retour;
+      //   this.dataToken = this.token.token;
+      //})
 
   }
 
