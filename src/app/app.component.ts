@@ -25,7 +25,7 @@ export class MyApp {
       statusBar.styleDefault();
 
       //Check Token
-      this.token = this.connexionApiProvider.getToken();
+      this.token = this.connexionApiProvider.getToken()
      
       if(this.token == undefined){  //Pas de Token -> LoginPage
 

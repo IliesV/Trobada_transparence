@@ -19,6 +19,8 @@ import {LoginPage} from '../login/login';
 })
 export class HomeExposantPage {
 
+  infosUser = {};
+
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,

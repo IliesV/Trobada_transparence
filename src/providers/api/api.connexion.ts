@@ -36,13 +36,7 @@ export class ConnexionApiProvider {
         ) { }
 
         CheckLogin
-        public login(username:string,password:string,rememberMe:boolean) {
-
-            console.log('Tentative connexion');
-
-            // let headers = new Headers();
-            // headers.append('Content-Type','application/json');
-            // headers.append('Accept','application/json');
+        public login(username:string,password:string) {
 
             this.http.setDataSerializer('JSON');
 
@@ -54,14 +48,10 @@ export class ConnexionApiProvider {
                     'Content-Type': 'application/json'
                 });
 
-
-            // return this.http.post(this.baseUrl,JSON.stringify({username:username,password:password}),{headers:headers})
             return this.http.post(this.baseUrl,body,{headers:headers})
-            .then(response => console.log((this.decoder.decodeToken(response.data).username)))
+            .then(
+                response => this.token = response.data)
             .catch(error => console.log(error))
-            
-            // let loginData:any = res.json();
-            // let user:User = this.readJwt(loginData.token);
         }
 
 
@@ -72,12 +62,12 @@ export class ConnexionApiProvider {
                 token: token,
             })
             .then(
-                () => console.log('token saves ='+token),
+                () => console.log('token saves = '+token),
                 error => console.error('Error storing item', error)
             );
         }
 
-        //Recuperation Token et infos
+        //Recuperation Token
         public getToken():string {
             this.nativeStorage.getItem('userToken')
             .then(
@@ -88,6 +78,21 @@ export class ConnexionApiProvider {
                 error => console.error(error)
             );
             return this.token;
+        }
+
+        //Recup infos
+        public getInfosUser(token){
+
+            var objetToken = this.decoder.decodeToken(token);
+
+            return {
+                'pseudo': objetToken.username
+            }
+        }
+
+        //Verification validité token
+        public checkTimeToken(token){
+
         }
 }
 
