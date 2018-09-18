@@ -24,7 +24,7 @@ import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 })
 export class LoginPage {
 
-    email: string;
+    email: string = 'michel';
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,

@@ -10,8 +10,8 @@ import { NativeStorage } from '@ionic-native/native-storage';
 // Core components
 import { Injectable }   from '@angular/core';
 // import { Http,Headers } from '@angular/http';
-import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
-
+//import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
+import { HTTP } from '@ionic-native/http';
 // RxJS
 import 'rxjs/add/operator/toPromise';
 import 'rxjs/add/operator/map';
@@ -20,44 +20,48 @@ import 'rxjs/add/operator/map';
 import { ConnexionApiGlobal } from '../../models/api.connexion.model';
 
 
-const CONTENT_TYPE_HEADER:string = 'Content-Type';
-const APPLICATION_JSON:string = 'application/json';
-const BACKEND_URL:string = 'http://demo2726806.mockable.io/authenticate';
-
 @Injectable()
 export class ConnexionApiProvider {
 
-    private baseUrl: string = 'http://trobadapi.ddns.info/';
+    private baseUrl: string = 'http://trobadapi.ddns.info/login_check';
     token:string;
     role:string;
     pseudo:string;
     id:number;
     
     constructor(
-        //private http: HttpClientModule,
         private nativeStorage: NativeStorage,
-        private http: HttpClient,
-        private error: HttpErrorResponse
+        private http: HTTP,
         ) { }
 
-        //CheckLogin
-        public login(username:string,password:string,rememberMe:boolean):Promise<ConnexionApiGlobal> {
+        CheckLogin
+        public login(username:string,password:string,rememberMe:boolean) {
+
             console.log('Tentative connexion');
-            let headers = new HttpHeaders();
-            headers.append(CONTENT_TYPE_HEADER, APPLICATION_JSON);
-            return this.http.post(`${this.baseUrl}login_check`,JSON.stringify({username:username,password:password}),{headers:headers})
-            .toPromise()
-            .then(response => response as ConnexionApiGlobal)
+
+            // let headers = new Headers();
+            // headers.append('Content-Type','application/json');
+            // headers.append('Accept','application/json');
+
+            this.http.setDataSerializer('JSON');
+
+            const body = {
+                username, password
+            }
+            const headers = new Headers(
+                {
+                    'Content-Type': 'application/json'
+                });
+
+            // return this.http.post(this.baseUrl,JSON.stringify({username:username,password:password}),{headers:headers})
+            return this.http.post(this.baseUrl,body,{headers:headers})
+            .then(response => console.log(response.data))
             .catch(error => console.log(error))
             
             // let loginData:any = res.json();
             // let user:User = this.readJwt(loginData.token);
         }
 
-        async getAsyncData() {
-            this.asyncResult = await this.httpClient.get<Employee>(this.url).toPromise();
-            console.log('No issues, I will wait until promise is resolved..');
-          }
 
         //Sauvegarde du token et infos sur le mobile
         public saveToken(token): any {
@@ -83,18 +87,6 @@ export class ConnexionApiProvider {
             );
             return this.token;
         }
-        private handleError(error: HttpErrorResponse) {
-            if (error.error instanceof ErrorEvent) {
-              // A client-side or network error occurred. Handle it accordingly.
-              console.error('An error occurred:', error.error.message);
-            } else {
-              // The backend returned an unsuccessful response code.
-              // The response body may contain clues as to what went wrong,
-              console.error(
-                `Backend returned code ${error.status}, ` +
-                `body was: ${error.error}`);
-            }
-          };
 }
 
 //ngOnInit() {

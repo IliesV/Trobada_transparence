@@ -14,7 +14,8 @@ import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
 import { SQLite } from '@ionic-native/sqlite';
 import { AppBddProvider } from '../providers/app-bdd/app-bdd';
-import { HttpClientModule } from '@angular/common/http';
+// import { HttpClientModule } from '@angular/common/http';
+import { HTTP } from '@ionic-native/http';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
@@ -36,7 +37,6 @@ import { ConnexionApiGlobal } from '../models/api.connexion.model'
   ],
   imports: [
     BrowserModule,
-    HttpClientModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -54,6 +54,7 @@ import { ConnexionApiGlobal } from '../models/api.connexion.model'
     StatusBar,
     SplashScreen,
     SQLite,
+    HTTP,
     NativeStorage,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AppBddProvider,
