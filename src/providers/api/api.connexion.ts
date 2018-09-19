@@ -47,46 +47,36 @@ export class ConnexionApiProvider {
                 {
                     'Content-Type': 'application/json'
                 });
-            return this.http.post(this.baseUrl, {"username": "michel","password":"tutu"}, {"Content-Type": "application/json"});
+            return this.http.post(this.baseUrl, {"username": username,"password":password}, {"Content-Type": "application/json"});
             //return this.http.post(this.baseUrl,body,{headers:headers})
-            // .then(
-            //     response => {
-            //          response
-            //         .then({
-            //             this.token = response;
-            //             console.log('Retourne le token')
-            //             console.log(this.token.data);
-            //             console.log('go token !');
-            //         })
-                    
-            //     })
-            //     .catch(error => console.log('error recup token'))
         }
 
 
-        //Sauvegarde du token et infos sur le mobile
+        //Sauvegarde du token
         public saveToken(token): any {
 
             this.nativeStorage.setItem('userToken', {
                 token: token,
             })
             .then(
-                () => console.log('token saves = '+token),
+                () => console.log('Token sauvegarde'),
                 error => console.error('Error storing item', error)
             );
+
+            const TOTO = this.getToken();
+            console.log('token en dur: '+TOTO)
         }
 
         //Recuperation Token
-        public getToken():string {
+        public getToken() {
             this.nativeStorage.getItem('userToken')
             .then(
                 data => {
-                    this.token = data.token;
-                    console.log('token recup');
+                    console.log(data.token);
+                    return data;
                 },
                 error => console.error(error)
             );
-            return this.token;
         }
 
         //Recup infos
@@ -95,13 +85,21 @@ export class ConnexionApiProvider {
             var objetToken = this.decoder.decodeToken(token);
 
             return {
-                'pseudo': objetToken.username
+                'pseudo': objetToken.username,
+                'role': objetToken.roles[0],
+                'dateCreation': objetToken.iat,
+                'dateExpiration': objetToken.exp
             }
         }
 
         //Verification validité token
-        public checkTimeToken(token){
+        public checkTimeToken(today,expiration):boolean{
 
+            if(today > expiration){
+                return true;
+            }else{
+                return false;
+            }
         }
 }
 

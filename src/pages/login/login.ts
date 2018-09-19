@@ -27,10 +27,7 @@ export class LoginPage {
 
     email: string = 'michel';
     password: string = 'tutu';
-    token;
     infosUser = {};
-    //PROVISOIREMENT
-    role:string;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -49,11 +46,18 @@ export class LoginPage {
       .then(
         response => {
             console.log('Retour du token')
-            console.log(response.data)
-            this.role = 'vendeur';
+            const TOKEN = JSON.parse(response.data).token;
+
+            //Sauvegarde du token
+            console.log('Sauvegarde Token');
+            this.connexionApiProvider.saveToken(TOKEN);
+
+            //decodage token
+            console.log('Decodeage Token = '+this.connexionApiProvider.getInfosUser(TOKEN));
+            this.infosUser = this.connexionApiProvider.getInfosUser(TOKEN);
 
             //Redirection
-            if(this.role == 'vendeur'){
+            if(this.infosUser['role'] == 'vendeur'){
               this.navCtrl.setRoot(TabsExposantPage, {infosUser: this.infosUser})
             }else{
               this.navCtrl.setRoot(TabsPage, {infosUser: this.infosUser});

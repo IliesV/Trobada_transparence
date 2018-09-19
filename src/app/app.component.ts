@@ -3,7 +3,8 @@ import { Platform } from 'ionic-angular';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 
-import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
+import {TabsPage} from '../pages/tabs/tabs';
+import {TabsExposantPage} from '../pages/tabs-exposant/tabs-exposant';
 import {LoginPage} from '../pages/login/login';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
 
@@ -12,7 +13,6 @@ import {ConnexionApiProvider} from '../providers/api/api.connexion';
 })
 export class MyApp {
   rootPage:any;
-  token:string;
 
   constructor(platform: Platform,
     statusBar: StatusBar,
@@ -25,15 +25,31 @@ export class MyApp {
       statusBar.styleDefault();
 
       //Check Token
-      this.token = this.connexionApiProvider.getToken()
-     
-      if(this.token == undefined){  //Pas de Token -> LoginPage
+      const TOKEN = this.connexionApiProvider.getToken();
+      console.log('token saved = '+TOKEN)
+
+      if(TOKEN == undefined){  //Pas de Token -> LoginPage
 
         this.rootPage = LoginPage;
 
       }else{  //Token -> Ckeck Token et role
 
-        this.rootPage = HomeExposantPage;
+        //Recuperation infos
+        const INFOSUSER = this.connexionApiProvider.getInfosUser(TOKEN);
+
+        //Validité token
+        if(this.connexionApiProvider.checkTimeToken(INFOSUSER['dateCreation'],INFOSUSER['dateExpiration'])){
+
+        //Redirection
+          if(INFOSUSER['role'] == 'vendeur'){
+            this.rootPage = TabsExposantPage;
+          }else{
+            this.rootPage = TabsPage;
+          }
+        
+      }else{
+      }
+      //REGENERATION TOKEN
 
       }
       splashScreen.hide();
