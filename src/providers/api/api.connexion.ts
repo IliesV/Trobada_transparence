@@ -35,9 +35,9 @@ export class ConnexionApiProvider {
         private decoder:JwtHelper
         ) { }
 
-        CheckLogin
+        //CheckLogin
         public login(username:string,password:string) {
-
+            console.log("Fonction login");
             this.http.setDataSerializer('JSON');
 
             const body = {
@@ -50,8 +50,12 @@ export class ConnexionApiProvider {
 
             return this.http.post(this.baseUrl,body,{headers:headers})
             .then(
-                response => this.token = response.data)
-            .catch(error => console.log(error))
+                response => {
+                    this.token = response.data;
+                    console.log(response.data)
+                }
+                    )
+            .catch(error => console.log('error recup token'))
         }
 
 

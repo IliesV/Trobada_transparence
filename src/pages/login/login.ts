@@ -26,7 +26,7 @@ export class LoginPage {
 
     email: string = 'michel';
     password: string = 'tutu';
-    token:string;
+    token;
     infosUser = {};
     //PROVISOIREMENT
     role:string;
@@ -41,12 +41,14 @@ export class LoginPage {
   }
 
     private submitLogin(){
-
+      console.log("Start login: "+this.email+" "+this.password);
       this.connexionApiProvider.login(this.email,this.password)
+      
       .then(retour => {
         
         //Recuperation token
         this.token = retour;
+        console.log(this.token);
 
         //decodage token
         this.infosUser = this.connexionApiProvider.getInfosUser(this.token);
