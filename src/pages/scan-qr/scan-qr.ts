@@ -18,6 +18,7 @@ import { DealExposantPage } from '../deal-exposant/deal-exposant';
 export class ScanQrPage {
 
   qrdata: string;
+  objet: string;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -52,11 +53,11 @@ export class ScanQrPage {
            let scanSub = this.qrScanner.scan().subscribe((text: string) => {
   
            console.log('Scanned something', text);
-           this.qrdata = text;
+           this.objet = text;
            this.qrScanner.hide();
            scanSub.unsubscribe(); 
-          console.log('tout marche' + this.qrdata);
-          this.navCtrl.push(DealExposantPage, {qrdata: this.qrdata})
+          console.log('tout marche' + this.objet);
+          this.navCtrl.push(DealExposantPage, { objet: this.objet})
           });
   
           
