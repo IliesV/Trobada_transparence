@@ -50,7 +50,7 @@ export class LoginPage {
         response => {
             console.log('Retour du token')
             console.log(response.data)
-            this.role = 'to';
+            this.role = 'vendeur';
 
             //Redirection
             if(this.role == 'vendeur'){

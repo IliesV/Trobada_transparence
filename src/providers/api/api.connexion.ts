@@ -47,8 +47,8 @@ export class ConnexionApiProvider {
                 {
                     'Content-Type': 'application/json'
                 });
-
-            return this.http.post(this.baseUrl,body,{headers:headers})
+            return this.http.post(this.baseUrl, {"username": "michel","password":"tutu"}, {"Content-Type": "application/json"});
+            //return this.http.post(this.baseUrl,body,{headers:headers})
             // .then(
             //     response => {
             //          response
