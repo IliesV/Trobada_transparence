@@ -24,7 +24,7 @@ import { JwtHelper } from "angular2-jwt";
 export class ConnexionApiProvider {
 
     private baseUrl: string = 'http://trobadapi.ddns.info/login_check';
-    token:string;
+    token;
     role:string;
     pseudo:string;
     id:number;
@@ -36,7 +36,7 @@ export class ConnexionApiProvider {
         ) { }
 
         //CheckLogin
-        public login(username:string,password:string) {
+        public login(username:string,password:string):Promise<any> {
             console.log("Fonction login");
             this.http.setDataSerializer('JSON');
 
@@ -49,13 +49,18 @@ export class ConnexionApiProvider {
                 });
 
             return this.http.post(this.baseUrl,body,{headers:headers})
-            .then(
-                response => {
-                    this.token = response.data;
-                    console.log(response.data)
-                }
-                    )
-            .catch(error => console.log('error recup token'))
+            // .then(
+            //     response => {
+            //          response
+            //         .then({
+            //             this.token = response;
+            //             console.log('Retourne le token')
+            //             console.log(this.token.data);
+            //             console.log('go token !');
+            //         })
+                    
+            //     })
+            //     .catch(error => console.log('error recup token'))
         }
 
 

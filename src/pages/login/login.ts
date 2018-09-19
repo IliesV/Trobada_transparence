@@ -8,7 +8,8 @@ import {TabsExposantPage} from '../tabs-exposant/tabs-exposant';
 //import {AppBddProvider} from '../../providers/app-bdd/app-bdd';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
-
+import 'rxjs/add/operator/toPromise';
+import { resolve } from 'path';
 
 /**
  * Generated class for the LoginPage page.
@@ -41,39 +42,54 @@ export class LoginPage {
   }
 
     private submitLogin(){
-      console.log("Start login: "+this.email+" "+this.password);
-      this.connexionApiProvider.login(this.email,this.password)
       
-      .then(retour => {
-        
-        //Recuperation token
-        this.token = retour;
-        console.log(this.token);
+      console.log("Start login: "+this.email+" "+this.password);
+      
+      this.connexionApiProvider.login(this.email,this.password)
+      .then(
+        response => {
+            console.log('Retour du token')
+            console.log(response.data)
+            this.role = 'vendeur';
 
-        //decodage token
-        this.infosUser = this.connexionApiProvider.getInfosUser(this.token);
+            //Redirection
+            if(this.role == 'vendeur'){
+              this.navCtrl.setRoot(TabsExposantPage, {infosUser: this.infosUser})
+            }else{
+                this.navCtrl.setRoot(TabsPage, {infosUser: this.infosUser});
+            }
+        })
+        .catch(error => 
+          {
+            console.log(error);
+            let alert = this.alertCtrl.create({
+              title: 'Erreur de connexion',
+              subTitle: 'Vérifiez vos informations',
+              buttons: ['Ok']
+            });
+            alert.present();
+          })
 
-        //Validité token
+      // try {
+      //   console.log('retour token');
+      //   this.token = this.connexionApiProvider.login(this.email,this.password);
+      // }
+      // catch(error) {
+       
+      // }
+      
 
-        //PROVISOIREMENT
-        this.role = 'vendeur';
+      
+        // //console.log(this.token);
+        // console.log('Decodage');
+        // //decodage token
+        // this.infosUser = this.connexionApiProvider.getInfosUser(this.token);
 
-        //Redirection
-        if(this.role == 'vendeur'){
-          this.navCtrl.setRoot(TabsExposantPage, {infosUser: this.infosUser})
-        }else{
-            this.navCtrl.setRoot(TabsPage, {infosUser: this.infosUser});
-        }
-      })
-      .catch(error => {
-        console.log(error);
-        let alert = this.alertCtrl.create({
-          title: 'Erreur de connexion',
-          subTitle: 'Vérifiez vos informations',
-          buttons: ['Ok']
-        });
-        alert.present();
-      })
+        // //Validité token
+
+        // //PROVISOIREMENT
+       
+
     }
 
     
