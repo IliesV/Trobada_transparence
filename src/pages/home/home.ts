@@ -13,9 +13,8 @@ export class HomePage {
 
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
-    private app: App) {
-
-  }
+    private app: App
+    ) {}
 
   private logout(){
     console.log("merde")
@@ -41,6 +40,8 @@ export class HomePage {
     });
     alert.present();
   }
+
+
 
 
 }

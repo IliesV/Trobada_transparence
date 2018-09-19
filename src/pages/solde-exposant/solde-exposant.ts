@@ -51,7 +51,7 @@ export class SoldeExposantPage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad SoldeExposantPage');
+    console.log('ionViewDidLoad SoldeExposantPag2e');
   }
 
 }
