@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-
 import { NavParams } from 'ionic-angular';
 
 import { AboutPage } from '../about/about';
@@ -11,7 +10,7 @@ import { HomePage } from '../home/home';
 })
 export class TabsPage {
 
-    email: string;
+  email: string;
 
   tab1Root = HomePage;
   tab2Root = AboutPage;

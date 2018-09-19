@@ -50,13 +50,13 @@ export class LoginPage {
         response => {
             console.log('Retour du token')
             console.log(response.data)
-            this.role = 'vendeur';
+            this.role = 'to';
 
             //Redirection
             if(this.role == 'vendeur'){
               this.navCtrl.setRoot(TabsExposantPage, {infosUser: this.infosUser})
             }else{
-                this.navCtrl.setRoot(TabsPage, {infosUser: this.infosUser});
+              this.navCtrl.setRoot(TabsPage, {infosUser: this.infosUser});
             }
         })
         .catch(error => 
