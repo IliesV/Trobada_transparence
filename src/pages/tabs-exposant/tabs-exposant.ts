@@ -1,25 +1,24 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController } from 'ionic-angular';
+import { NavParams } from 'ionic-angular';
 
-/**
- * Generated class for the TabsExposantPage tabs.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+import { HomeExposantPage } from '../home-exposant/home-exposant';
+import { DealExposantPage } from '../deal-exposant/deal-exposant';
+import { SoldeExposantPage } from '../solde-exposant/solde-exposant';
 
-@IonicPage()
 @Component({
   selector: 'page-tabs-exposant',
   templateUrl: 'tabs-exposant.html'
 })
 export class TabsExposantPage {
 
-  homeExposantRoot = 'HomeExposantPage'
-  dealExposantRoot = 'DealExposantPage'
-  soldeExposantRoot = 'SoldeExposantPage'
+  email: string;
+
+  homeExposantRoot = HomeExposantPage;
+  dealExposantRoot = DealExposantPage;
+  soldeExposantRoot = SoldeExposantPage;
 
 
-  constructor(public navCtrl: NavController) {}
-
+  constructor(private navParams: NavParams) {
+    this.email = navParams.get('email')
+  }
 }
