@@ -67,7 +67,7 @@
         "ANDROID_SUPPORT_ANNOTATIONS_VERSION": "27.+"
       },
       "cordova-plugin-ionic-keyboard": {},
-      "cordova-plugin-qrscanner": {}
+      "cordova-plugin-qrscanner": {},
       "cordova-plugin-cocoapod-support": {},
       "cordova-sqlite-storage": {},
       "cordova-plugin-nativestorage": {},

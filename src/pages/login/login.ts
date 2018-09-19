@@ -9,7 +9,7 @@ import {TabsExposantPage} from '../tabs-exposant/tabs-exposant';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
 import 'rxjs/add/operator/toPromise';
-import { resolve } from 'path';
+//import { resolve } from 'path';
 
 /**
  * Generated class for the LoginPage page.

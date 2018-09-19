@@ -37,7 +37,7 @@ import { JwtHelper } from "angular2-jwt";
     ContactPage,
     HomePage,
     TabsPage,
-    ScanQrPage
+    ScanQrPage,
     HomeExposantPage,
     TabsExposantPage,
     DealExposantPage,
@@ -58,7 +58,7 @@ import { JwtHelper } from "angular2-jwt";
     DealExposantPage,
     SoldeExposantPage,
     TabsPage,
-    ScanQrPage
+    ScanQrPage,
     LoginPage,
     TabsExposantPage
   ],
@@ -72,7 +72,7 @@ import { JwtHelper } from "angular2-jwt";
     AppBddProvider,
     ConnexionApiProvider,
     ConnexionApiGlobal,
-    JwtHelper
+    JwtHelper,
     QRScanner
   ]
 })
