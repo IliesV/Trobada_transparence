@@ -17,6 +17,8 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ScanQrPage } from '../pages/scan-qr/scan-qr';
+import { GloablsProvider } from '../providers/gloabls/gloabls';
+import { TransactionProvider } from '../providers/transaction/transaction';
 
 import { SQLite } from '@ionic-native/sqlite';
 import { AppBddProvider } from '../providers/app-bdd/app-bdd';
@@ -73,7 +75,10 @@ import { JwtHelper } from "angular2-jwt";
     ConnexionApiProvider,
     ConnexionApiGlobal,
     JwtHelper,
-    QRScanner
+    QRScanner,
+    GloablsProvider,
+    TransactionProvider
+    
   ]
 })
 export class AppModule {}

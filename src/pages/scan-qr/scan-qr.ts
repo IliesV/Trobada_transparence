@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { DealExposantPage } from '../deal-exposant/deal-exposant';
+import { TransactionProvider } from '../../providers/transaction/transaction';
 
 /**
  * Generated class for the ScanQrPage page.
@@ -18,10 +19,12 @@ import { DealExposantPage } from '../deal-exposant/deal-exposant';
 export class ScanQrPage {
 
   qrdata: string;
+  objet: string;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    private qrScanner: QRScanner) {
+    private qrScanner: QRScanner,
+    private transaction: TransactionProvider) {
   }
 
   showCamera() {
@@ -52,11 +55,11 @@ export class ScanQrPage {
            let scanSub = this.qrScanner.scan().subscribe((text: string) => {
   
            console.log('Scanned something', text);
-           this.qrdata = text;
+           this.objet = text;
            this.qrScanner.hide();
            scanSub.unsubscribe(); 
-          console.log('tout marche' + this.qrdata);
-          this.navCtrl.push(DealExposantPage, {qrdata: this.qrdata})
+          console.log('tout marche' + this.objet);
+          this.navCtrl.push(DealExposantPage, { objet: this.objet})
           });
   
           
