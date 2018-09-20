@@ -22,7 +22,7 @@ export class MyApp {
 
     platform.ready().then(() => {
 
-      statusBar.styleDefault();
+      statusBar.styleLightContent();
 
       //Check Token
       this.token = this.connexionApiProvider.getToken()

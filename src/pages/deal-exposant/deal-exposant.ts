@@ -23,7 +23,6 @@ export class DealExposantPage {
 
   objet: string;
   qrdata: object;
-  sommeTotale : number = 0 + this.qrdata[3];
 
 
   constructor(public navCtrl: NavController,
@@ -69,7 +68,6 @@ export class DealExposantPage {
     console.log(typeof(this.objet));
     if(this.objet != null){
       this.qrdata = this.objet.split("-",6);
-      this.sommeTotale += this.qrdata[3];
       console.log(this.sommeTotale)
         let alert = this.alertCtrl.create({
           title: 'Bim bam boum',
