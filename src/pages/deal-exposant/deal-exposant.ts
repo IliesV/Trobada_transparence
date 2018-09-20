@@ -61,7 +61,7 @@ export class DealExposantPage {
     console.log('ionViewDidLoad DealExposantPage');
     
     console.log(this.qrdata)
-    if(this.qrdata !== null){
+    if(this.qrdata != null){
         let alert = this.alertCtrl.create({
           title: 'Bim bam boum',
           subTitle: "le qr code contient '" + this.qrdata + "'",
