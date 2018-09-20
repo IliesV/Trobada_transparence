@@ -9,15 +9,11 @@ import { NativeStorage } from '@ionic-native/native-storage';
 
 // Core components
 import { Injectable }   from '@angular/core';
-// import { Http,Headers } from '@angular/http';
-//import { HttpClient, HttpParams, HttpHeaders, HttpErrorResponse} from '@angular/common/http';
 import { HTTP } from '@ionic-native/http';
 // RxJS
 import 'rxjs/add/operator/toPromise';
-import 'rxjs/add/operator/map';
+// import 'rxjs/add/operator/map';
 
-//Model datas connexion
-import { ConnexionApiGlobal } from '../../models/api.connexion.model';
 import { JwtHelper } from "angular2-jwt";
 
 @Injectable()
@@ -56,7 +52,7 @@ export class ConnexionApiProvider {
         public saveToken(token): any {
 
             this.nativeStorage.setItem('userToken', {
-                token: token,
+                'token': token,
             })
             .then(
                 () => console.log('Token sauvegarde'),
@@ -66,14 +62,7 @@ export class ConnexionApiProvider {
 
         //Recuperation Token
         public getToken() {
-            this.nativeStorage.getItem('userToken')
-            .then(
-                data => {
-                    console.log(data.token);
-                    return data;
-                },
-                error => console.error(error)
-            );
+            return this.nativeStorage.getItem('userToken');
         }
 
         //Recup infos
@@ -90,13 +79,8 @@ export class ConnexionApiProvider {
         }
 
         //Verification validité token
-        public checkTimeToken(today,expiration):boolean{
-
-            if(today > expiration){
-                return true;
-            }else{
-                return false;
-            }
+        public checkTimeToken(token):boolean{
+            return this.decoder.isTokenExpired(token);
         }
 }
 

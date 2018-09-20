@@ -25,33 +25,39 @@ export class MyApp {
       statusBar.styleDefault();
 
       //Check Token
-      const TOKEN = this.connexionApiProvider.getToken();
-      console.log('token saved = '+TOKEN)
+      this.connexionApiProvider.getToken()
+      .then(
+        data => {
+          const TOKEN = data.token;
 
-      if(TOKEN == undefined){  //Pas de Token -> LoginPage
+          if(TOKEN == undefined){  //Pas de Token -> LoginPage
 
-        this.rootPage = LoginPage;
+            this.rootPage = LoginPage;
+    
+          }else{  //Token -> Ckeck Token et role
+            console.log('token saved = '+TOKEN)
 
-      }else{  //Token -> Ckeck Token et role
+            //Recuperation infos
+            const INFOSUSER = this.connexionApiProvider.getInfosUser(TOKEN);
+    
+            //Validité token
+            if(this.connexionApiProvider.checkTimeToken(TOKEN)){
+              
+              //REGENERATION TOKEN
 
-        //Recuperation infos
-        const INFOSUSER = this.connexionApiProvider.getInfosUser(TOKEN);
+            }else{
 
-        //Validité token
-        if(this.connexionApiProvider.checkTimeToken(INFOSUSER['dateCreation'],INFOSUSER['dateExpiration'])){
-
-        //Redirection
-          if(INFOSUSER['role'] == 'vendeur'){
-            this.rootPage = TabsExposantPage;
-          }else{
-            this.rootPage = TabsPage;
+              //Redirection
+              if(INFOSUSER.role == 'vendeur'){
+                this.rootPage = TabsExposantPage;
+              }else{
+                this.rootPage = TabsPage;
+              }
+            }
           }
+        })
+        .catch(error => this.rootPage = LoginPage)
         
-      }else{
-      }
-      //REGENERATION TOKEN
-
-      }
       splashScreen.hide();
 
     });

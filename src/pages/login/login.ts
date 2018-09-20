@@ -9,14 +9,6 @@ import {TabsExposantPage} from '../tabs-exposant/tabs-exposant';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
 import 'rxjs/add/operator/toPromise';
-//import { resolve } from 'path';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -38,7 +30,7 @@ export class LoginPage {
     // this.appBddProvider.createDatabaseFile();
   }
 
-    private submitLogin(){
+    public submitLogin(){
       
       this.connexionApiProvider.login(this.email,this.password)
       .then(
@@ -51,7 +43,7 @@ export class LoginPage {
             this.connexionApiProvider.saveToken(TOKEN);
 
             //decodage token
-            console.log('Decodeage Token = '+this.connexionApiProvider.getInfosUser(TOKEN));
+            console.log('Decodage Token = '+this.connexionApiProvider.getInfosUser(TOKEN));
             this.infosUser = this.connexionApiProvider.getInfosUser(TOKEN);
 
             //Redirection
@@ -71,33 +63,5 @@ export class LoginPage {
             });
             alert.present();
           })
-
-      // try {
-      //   console.log('retour token');
-      //   this.token = this.connexionApiProvider.login(this.email,this.password);
-      // }
-      // catch(error) {
-       
-      // }
-      
-
-      
-        // //console.log(this.token);
-        // console.log('Decodage');
-        // //decodage token
-        // this.infosUser = this.connexionApiProvider.getInfosUser(this.token);
-
-        // //Validité token
-
-        // //PROVISOIREMENT
-       
-
     }
-
-    
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
 }
