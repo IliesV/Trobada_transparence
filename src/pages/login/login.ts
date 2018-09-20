@@ -40,8 +40,6 @@ export class LoginPage {
 
     private submitLogin(){
       
-      console.log("Start login: "+this.email+" "+this.password);
-      
       this.connexionApiProvider.login(this.email,this.password)
       .then(
         response => {

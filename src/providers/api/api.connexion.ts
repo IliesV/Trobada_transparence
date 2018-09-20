@@ -62,9 +62,6 @@ export class ConnexionApiProvider {
                 () => console.log('Token sauvegarde'),
                 error => console.error('Error storing item', error)
             );
-
-            const TOTO = this.getToken();
-            console.log('token en dur: '+TOTO)
         }
 
         //Recuperation Token
