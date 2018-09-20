@@ -18,7 +18,7 @@ export class HomeExposantPage {
     private app: App) {
   }
 
-  private logout(){
+  public logout(){
     console.log("merde")
     let alert = this.alertCtrl.create({
       title: 'Confirmation',
