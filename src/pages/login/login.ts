@@ -9,14 +9,6 @@ import {TabsExposantPage} from '../tabs-exposant/tabs-exposant';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
 import 'rxjs/add/operator/toPromise';
-//import { resolve } from 'path';
-
-/**
- * Generated class for the LoginPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 
 @IonicPage()
 @Component({
@@ -27,10 +19,7 @@ export class LoginPage {
 
     email: string = 'michel';
     password: string = 'tutu';
-    token;
     infosUser = {};
-    //PROVISOIREMENT
-    role:string;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -41,19 +30,24 @@ export class LoginPage {
     // this.appBddProvider.createDatabaseFile();
   }
 
-    private submitLogin(){
-      
-      console.log("Start login: "+this.email+" "+this.password);
+    public submitLogin(){
       
       this.connexionApiProvider.login(this.email,this.password)
       .then(
         response => {
             console.log('Retour du token')
-            console.log(response.data)
-            this.role = 'vendeur';
+            const TOKEN = JSON.parse(response.data).token;
+
+            //Sauvegarde du token
+            console.log('Sauvegarde Token');
+            this.connexionApiProvider.saveToken(TOKEN);
+
+            //decodage token
+            console.log('Decodage Token = '+this.connexionApiProvider.getInfosUser(TOKEN));
+            this.infosUser = this.connexionApiProvider.getInfosUser(TOKEN);
 
             //Redirection
-            if(this.role == 'vendeur'){
+            if(this.infosUser['role'] == 'vendeur'){
               this.navCtrl.setRoot(TabsExposantPage, {infosUser: this.infosUser})
             }else{
               this.navCtrl.setRoot(TabsPage, {infosUser: this.infosUser});
@@ -69,33 +63,5 @@ export class LoginPage {
             });
             alert.present();
           })
-
-      // try {
-      //   console.log('retour token');
-      //   this.token = this.connexionApiProvider.login(this.email,this.password);
-      // }
-      // catch(error) {
-       
-      // }
-      
-
-      
-        // //console.log(this.token);
-        // console.log('Decodage');
-        // //decodage token
-        // this.infosUser = this.connexionApiProvider.getInfosUser(this.token);
-
-        // //Validité token
-
-        // //PROVISOIREMENT
-       
-
     }
-
-    
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
-  }
-
 }

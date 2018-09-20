@@ -18,7 +18,7 @@ export class ContactPage {
 
   }
 
-  private logout(){
+  public logout(){
     console.log("merde")
     let alert = this.alertCtrl.create({
       title: 'Confirmation',

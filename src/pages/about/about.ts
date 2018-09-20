@@ -14,11 +14,12 @@ export class AboutPage {
 
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
-    private app: App) {
+    private app: App
+    ) {
 
   }
 
-  private logout(){
+  public logout(){
     console.log("merde")
     let alert = this.alertCtrl.create({
       title: 'Confirmation',
