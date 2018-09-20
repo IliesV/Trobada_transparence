@@ -4,6 +4,8 @@ import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
+import {ConnexionApiProvider} from '../../providers/api/api.connexion';
+
 
 /**
  * Generated class for the SoldeExposantPage page.
@@ -22,11 +24,11 @@ export class SoldeExposantPage {
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
-    private app: App) {
+    private app: App,
+    private connexionApiProvider: ConnexionApiProvider) {
   }
 
   private logout(){
-    console.log("merde")
     let alert = this.alertCtrl.create({
       title: 'Confirmation',
       message: 'Voulez vous vraiment vous déconnecter?',
@@ -35,23 +37,17 @@ export class SoldeExposantPage {
           text: 'Annuler',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
           }
         },
         {
           text: 'Oui',
           handler: () => {
+            this.connexionApiProvider.deleteToken();
             this.app.getRootNav().setRoot(LoginPage);
-            console.log('Buy clicked');
           }
         }
       ]
     });
     alert.present();
   }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad SoldeExposantPag2e');
-  }
-
 }

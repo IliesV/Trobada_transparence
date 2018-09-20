@@ -19,19 +19,15 @@ export class AppBddProvider {
 
   constructor(
     private sqlite: SQLite
-  ) {
-    console.log('Hello AppBddProvider Provider');
-  }
+  ) {}
 
   public createDatabaseFile(): void {
 
-    console.log('fonction appelée')
     this.sqlite.create({
       name: DATABASE_NAME,
       location: 'default'
     })
       .then((db: SQLiteObject) => {
-        console.log('BDD créée');
         //Creation BDD
         this.db = db;
       })
@@ -76,22 +72,22 @@ export class AppBddProvider {
   }
 
   //PROVISOIRE Add datas
-  private addDatas(): void {
+  // private addDatas(): void {
 
-    this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (1,\'Client\')', [])
-    .then(() => {
-      this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (2,\'Vendeur\')', [])
-      .then(() => {
-        this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Ruquier\',\'Laurent\',2)', [])
-        .then(() => {
-          this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Drucker\',\'Michel\',1)', [])
-          .then(() => console.log('Les données sont enregistrées'))
-          .catch(e => console.log(e));
-        })
-        .catch(e => console.log(e));
-      })
-      .catch(e => console.log(e));
-    })
-    .catch(e => console.log(e));
-  }
+  //   this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (1,\'Client\')', [])
+  //   .then(() => {
+  //     this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (2,\'Vendeur\')', [])
+  //     .then(() => {
+  //       this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Ruquier\',\'Laurent\',2)', [])
+  //       .then(() => {
+  //         this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Drucker\',\'Michel\',1)', [])
+  //         .then(() => console.log('Les données sont enregistrées'))
+  //         .catch(e => console.log(e));
+  //       })
+  //       .catch(e => console.log(e));
+  //     })
+  //     .catch(e => console.log(e));
+  //   })
+  //   .catch(e => console.log(e));
+  // }
 }

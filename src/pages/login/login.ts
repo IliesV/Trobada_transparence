@@ -35,15 +35,12 @@ export class LoginPage {
       this.connexionApiProvider.login(this.email,this.password)
       .then(
         response => {
-            console.log('Retour du token')
             const TOKEN = JSON.parse(response.data).token;
 
-            //Sauvegarde du token
-            console.log('Sauvegarde Token');
+            //Sauvegarde du token;
             this.connexionApiProvider.saveToken(TOKEN);
 
             //decodage token
-            console.log('Decodage Token = '+this.connexionApiProvider.getInfosUser(TOKEN));
             this.infosUser = this.connexionApiProvider.getInfosUser(TOKEN);
 
             //Redirection

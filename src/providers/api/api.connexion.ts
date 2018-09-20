@@ -33,16 +33,15 @@ export class ConnexionApiProvider {
 
         //CheckLogin
         public login(username:string,password:string):Promise<any> {
-            console.log("Fonction login");
             this.http.setDataSerializer('JSON');
 
-            const body = {
-                username, password
-            }
-            const headers = new Headers(
-                {
-                    'Content-Type': 'application/json'
-                });
+            // const body = {
+            //     username, password
+            // }
+            // const headers = new Headers(
+            //     {
+            //         'Content-Type': 'application/json'
+            //     });
             return this.http.post(this.baseUrl, {"username": username,"password":password}, {"Content-Type": "application/json"});
             //return this.http.post(this.baseUrl,body,{headers:headers})
         }
@@ -81,6 +80,11 @@ export class ConnexionApiProvider {
         //Verification validité token
         public checkTimeToken(token):boolean{
             return this.decoder.isTokenExpired(token);
+        }
+
+        //Verification validité token
+        public deleteToken(){
+            this.nativeStorage.remove('userToken');
         }
 }
 

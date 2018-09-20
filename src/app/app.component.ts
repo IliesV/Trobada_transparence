@@ -35,7 +35,6 @@ export class MyApp {
             this.rootPage = LoginPage;
     
           }else{  //Token -> Ckeck Token et role
-            console.log('token saved = '+TOKEN)
 
             //Recuperation infos
             const INFOSUSER = this.connexionApiProvider.getInfosUser(TOKEN);

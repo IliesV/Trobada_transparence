@@ -4,6 +4,7 @@ import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
+import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
 
 @Component({
@@ -14,13 +15,13 @@ export class AboutPage {
 
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
-    private app: App
+    private app: App,
+    private connexionApiProvider: ConnexionApiProvider
     ) {
 
   }
 
   public logout(){
-    console.log("merde")
     let alert = this.alertCtrl.create({
       title: 'Confirmation',
       message: 'Voulez vous vraiment vous déconnecter?',
@@ -29,14 +30,13 @@ export class AboutPage {
           text: 'Annuler',
           role: 'cancel',
           handler: () => {
-            console.log('Cancel clicked');
           }
         },
         {
           text: 'Oui',
           handler: () => {
+            this.connexionApiProvider.deleteToken();
             this.app.getRootNav().setRoot(LoginPage);
-            console.log('Buy clicked');
           }
         }
       ]

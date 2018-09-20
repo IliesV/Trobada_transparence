@@ -30,8 +30,6 @@ import {LoginPage} from '../pages/login/login';
 import { ConnexionApiGlobal } from '../models/api.connexion.model';
 import { JwtHelper } from "angular2-jwt";
 
-import { DeconnexionProvider } from '../providers/deconnexion/deconnexion';
-
 @NgModule({
   declarations: [
     MyApp,
@@ -75,8 +73,7 @@ import { DeconnexionProvider } from '../providers/deconnexion/deconnexion';
     ConnexionApiProvider,
     ConnexionApiGlobal,
     JwtHelper,
-    QRScanner,
-    DeconnexionProvider
+    QRScanner
   ]
 })
 export class AppModule {}
