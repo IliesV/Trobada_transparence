@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
+import {TransactionProvider} from '../../providers/transaction/transaction';
 
 import {LoginPage} from '../login/login';
 import { ScanQrPage } from '../scan-qr/scan-qr';
@@ -22,13 +23,14 @@ export class DealExposantPage {
 
   objet: string;
   qrdata: object;
-  sommeTotale : number;
+  sommeTotale : number = 0 + this.qrdata[3];
 
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
-    private app: App) {
+    private app: App,
+    private transaction: TransactionProvider) {
       this.objet = this.navParams.get('objet');
   }
 

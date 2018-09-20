@@ -14,6 +14,7 @@ import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ScanQrPage } from '../pages/scan-qr/scan-qr';
 import { GloablsProvider } from '../providers/gloabls/gloabls';
+import { TransactionProvider } from '../providers/transaction/transaction';
 
 @NgModule({
   declarations: [
@@ -44,7 +45,8 @@ import { GloablsProvider } from '../providers/gloabls/gloabls';
     SplashScreen,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     QRScanner,
-    GloablsProvider
+    GloablsProvider,
+    TransactionProvider
     
   ]
 })

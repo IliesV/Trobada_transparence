@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { DealExposantPage } from '../deal-exposant/deal-exposant';
+import { TransactionProvider } from '../../providers/transaction/transaction';
 
 /**
  * Generated class for the ScanQrPage page.
@@ -22,7 +23,8 @@ export class ScanQrPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
-    private qrScanner: QRScanner) {
+    private qrScanner: QRScanner,
+    private transaction: TransactionProvider) {
   }
 
   showCamera() {
