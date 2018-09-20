@@ -59,6 +59,7 @@ export class ScanQrPage {
            this.qrScanner.hide();
            scanSub.unsubscribe(); 
           console.log('tout marche' + this.objet);
+          this.transaction.addInfos(text);
           this.navCtrl.push(DealExposantPage, { objet: this.objet})
           });
   

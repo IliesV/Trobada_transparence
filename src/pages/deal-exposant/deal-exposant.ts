@@ -23,6 +23,8 @@ export class DealExposantPage {
 
   objet: string;
   qrdata: object;
+  nomsArticles: string[] = [];
+  prixArticles: number[] = [];
 
 
   constructor(public navCtrl: NavController,
@@ -30,7 +32,9 @@ export class DealExposantPage {
     private alertCtrl: AlertController,
     private app: App,
     private transaction: TransactionProvider) {
-      this.objet = this.navParams.get('objet');
+      this.objet = this.navParams.get('objet'),
+      this.nomsArticles = this.transaction.nomsArticles,
+      this.prixArticles = this.transaction.prixArticles;
   }
 
   private goScan(){
@@ -68,7 +72,8 @@ export class DealExposantPage {
     console.log(typeof(this.objet));
     if(this.objet != null){
       this.qrdata = this.objet.split("-",6);
-      console.log(this.sommeTotale)
+      this.transaction.addPrix(parseFloat(this.qrdata[3]));
+      //console.log(this.sommeTotale)
         let alert = this.alertCtrl.create({
           title: 'Bim bam boum',
           subTitle: this.qrdata[2] + " coute " + this.qrdata[3] + " €",
