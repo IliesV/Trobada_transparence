@@ -30,12 +30,14 @@ export class DealExposantPage {
   pseudo: string;
 
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     public navParams: NavParams,
     private alertCtrl: AlertController,
-    private connexionApiProvider: ConnexionApiProvider) {
+    private connexionApiProvider: ConnexionApiProvider,
     private app: App,
-    private transaction: TransactionProvider) {
+    private transaction: TransactionProvider
+    ) {
       this.objet = this.navParams.get('objet'),
       this.nomsArticles = this.transaction.nomsArticles,
       this.prixArticles = this.transaction.prixArticles,
