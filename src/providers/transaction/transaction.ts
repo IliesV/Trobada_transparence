@@ -29,7 +29,7 @@ export class TransactionProvider {
     this.prixArticles.push(infosArticle[3]);
   }
 
-  public infosFestivalier(string){
+  public addInfosFestivalier(string){
     let infosFestivalier = string.split("-",3);
     this.idFestivalier = infosFestivalier[0];
     this.pseudoFestivalier = infosFestivalier[1];

@@ -26,6 +26,7 @@ export class DealExposantPage {
   nomsArticles: string[] = [];
   prixArticles: number[] = [];
   pseudo: string;
+  quantite: number[] = [];
 
 
   constructor(public navCtrl: NavController,
@@ -75,11 +76,31 @@ private goScanClient(){
     
     console.log('ionViewDidLoad DealExposantPage');
     
-    console.log(typeof(this.objet));
-    if(this.objet != null){
+    if(this.pseudo != null){
+      console.log("ok");
+      let alert = this.alertCtrl.create({
+        title: 'Confirmer la transaction',
+        message: "Voulez vous prendre l'argent de "+ this.transaction.pseudoFestivalier,
+        buttons: [
+          {
+            text: 'Surtout pas',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'OUI',
+            handler: () => {
+              console.log('Buy clicked');
+            }
+          }
+        ]
+      });
+      alert.present();
+    }else if(this.objet != null){
       this.qrdata = this.objet.split("-",6);
       this.transaction.addPrix(parseFloat(this.qrdata[3]));
-      //console.log(this.sommeTotale)
         let alert = this.alertCtrl.create({
           title: 'Bim bam boum',
           subTitle: this.qrdata[2] + " coute " + this.qrdata[3] + " €",
@@ -88,28 +109,7 @@ private goScanClient(){
         alert.present();
     } 
 
-    if(this.pseudo != null){
-      let alert = this.alertCtrl.create({
-        title: 'Confirm purchase',
-        message: 'Do you want to buy this book?',
-        buttons: [
-          {
-            text: 'Cancel',
-            role: 'cancel',
-            handler: () => {
-              console.log('Cancel clicked');
-            }
-          },
-          {
-            text: 'Buy',
-            handler: () => {
-              console.log('Buy clicked');
-            }
-          }
-        ]
-      });
-      alert.present();
-    }
+
     }
 
 }

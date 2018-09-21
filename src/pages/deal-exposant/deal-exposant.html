@@ -18,17 +18,38 @@
 
 <ion-content padding>
 
-  <div *ngIf="prixArticles[0]">
+    <ion-list>
+        <div *ngIf="prixArticles[0]">
+            <div *ngFor="let noms of nomsArticles, let i = index">
+        <ion-item-sliding #item>
+          <ion-item>
+              {{nomsArticles[i]}} pour {{prixArticles[i]}}€
+          </ion-item>
+          <ion-item-options side="left">
+            <button ion-button (click)="favorite(item)">Favorite</button>
+            <button ion-button color="danger" (click)="share(item)">Share</button>
+          </ion-item-options>
+      
+          <ion-item-options side="right">
+            <button ion-button (click)="unread(item)">Unread</button>
+          </ion-item-options>
+        </ion-item-sliding>
+    </div>
+  </div>
+</ion-list>
+  <!-- <div *ngIf="prixArticles[0]">
       <div *ngFor="let noms of nomsArticles, let i = index">
     <ion-card >
   
     <ion-card-content>
      {{nomsArticles[i]}} pour {{prixArticles[i]}}€
+     <button clear (click)="incrementQty()"><ion-icon name="add-circle" ></ion-icon></button>{{qty}}
+    <button clear (click)="decrementQty()"><ion-icon name="remove-circle" ></ion-icon></button>
     </ion-card-content>
   
   </ion-card>
   </div>
-</div>
+</div> -->
 <div id="scanArticle">
   <button ion-button round (tap)="goScan()">Scan Articles</button>
 </div>
