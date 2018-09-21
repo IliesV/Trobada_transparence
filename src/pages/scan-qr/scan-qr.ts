@@ -20,11 +20,14 @@ export class ScanQrPage {
 
   qrdata: string;
   objet: string;
+  source: string;
+  festivalier: string;
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private qrScanner: QRScanner,
     private transaction: TransactionProvider) {
+      this.source = this.navParams.get('source')
   }
 
   showCamera() {
@@ -42,11 +45,9 @@ export class ScanQrPage {
 
   
   ionViewWillEnter(){
-     this.showCamera();
-     
-    
-    
-
+    console.log(this.source)
+    if(this.source == "article"){
+    this.showCamera();
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {
         if (status.authorized) {
@@ -62,6 +63,7 @@ export class ScanQrPage {
           this.transaction.addInfos(text);
           this.navCtrl.push(DealExposantPage, { objet: this.objet})
           });
+        
   
           
           
@@ -72,8 +74,36 @@ export class ScanQrPage {
         }
       })
       .catch((e: any) => console.log('Error is', e));
+
+  }else if(this.source == "client"){
+    console.log("scan client")
+    this.showCamera();
+    this.qrScanner.prepare()
+      .then((status: QRScannerStatus) => {
+        if (status.authorized) {
+          console.log('Camera Permission Given');
+          this.qrScanner.show();
+           let scanSub = this.qrScanner.scan().subscribe((text: string) => {
+  
+           console.log('Scanned something', text);
+           this.festivalier = text;
+           this.qrScanner.hide();
+           scanSub.unsubscribe(); 
+          console.log('tout marche' + this.objet);
+          this.transaction.addInfos(text);
+          this.navCtrl.push(DealExposantPage)
+          });
+        } else if (status.denied) {
+          console.log('Camera permission denied');
+        } else {
+          console.log('Permission denied for this runtime.');
+        }
+      })
+      .catch((e: any) => console.log('Error is', e));
   }
- 
+}
+
+
  ionViewWillLeave(){
     this.hideCamera(); 
  }

@@ -9,6 +9,8 @@ export class TransactionProvider {
   panier: any[] = [];
   nomsArticles: string[] = [];
   prixArticles: number[] = [];
+  idFestivalier: string;
+  pseudoFestivalier: string;
 
   constructor(
     //public http: HttpClient
@@ -25,6 +27,12 @@ export class TransactionProvider {
     this.panier.push(infosArticle);
     this.nomsArticles.push(infosArticle[2]);
     this.prixArticles.push(infosArticle[3]);
+  }
+
+  public infosFestivalier(string){
+    let infosFestivalier = string.split("-",3);
+    this.idFestivalier = infosFestivalier[0];
+    this.pseudoFestivalier = infosFestivalier[1];
   }
 
 }

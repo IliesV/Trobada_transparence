@@ -25,6 +25,7 @@ export class DealExposantPage {
   qrdata: object;
   nomsArticles: string[] = [];
   prixArticles: number[] = [];
+  pseudo: string;
 
 
   constructor(public navCtrl: NavController,
@@ -34,11 +35,16 @@ export class DealExposantPage {
     private transaction: TransactionProvider) {
       this.objet = this.navParams.get('objet'),
       this.nomsArticles = this.transaction.nomsArticles,
-      this.prixArticles = this.transaction.prixArticles;
+      this.prixArticles = this.transaction.prixArticles,
+      this.pseudo = this.transaction.pseudoFestivalier
   }
 
   private goScan(){
-    this.navCtrl.push(ScanQrPage);
+    this.navCtrl.push(ScanQrPage, {source: "article"});
+}
+
+private goScanClient(){
+  this.navCtrl.push(ScanQrPage, {source: "client"});
 }
   private logout(){
     console.log("merde")
@@ -81,6 +87,29 @@ export class DealExposantPage {
         });
         alert.present();
     } 
-  }
+
+    if(this.pseudo != null){
+      let alert = this.alertCtrl.create({
+        title: 'Confirm purchase',
+        message: 'Do you want to buy this book?',
+        buttons: [
+          {
+            text: 'Cancel',
+            role: 'cancel',
+            handler: () => {
+              console.log('Cancel clicked');
+            }
+          },
+          {
+            text: 'Buy',
+            handler: () => {
+              console.log('Buy clicked');
+            }
+          }
+        ]
+      });
+      alert.present();
+    }
+    }
 
 }
