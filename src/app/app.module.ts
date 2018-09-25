@@ -30,6 +30,8 @@ import {ConnexionApiProvider} from '../providers/api/api.connexion';
 import {LoginPage} from '../pages/login/login';
 
 import { TransactionGlobal } from '../models/api.transaction.model';
+import { EntitiesGlobal } from '../models/api.entities.model';
+
 import { JwtHelper } from "angular2-jwt";
 
 @NgModule({
@@ -74,6 +76,7 @@ import { JwtHelper } from "angular2-jwt";
     AppBddProvider,
     ConnexionApiProvider,
     TransactionGlobal,
+    EntitiesGlobal,
     JwtHelper,
     QRScanner,
     GloablsProvider,
