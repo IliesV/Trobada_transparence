@@ -21,9 +21,6 @@ export class ConnexionApiProvider {
 
     private baseUrl: string = 'http://trobadapi.ddns.info/login_check';
     token;
-    role:string;
-    pseudo:string;
-    id:number;
     
     constructor(
         private nativeStorage: NativeStorage,
@@ -34,16 +31,7 @@ export class ConnexionApiProvider {
         //CheckLogin
         public login(username:string,password:string):Promise<any> {
             this.http.setDataSerializer('JSON');
-
-            // const body = {
-            //     username, password
-            // }
-            // const headers = new Headers(
-            //     {
-            //         'Content-Type': 'application/json'
-            //     });
             return this.http.post(this.baseUrl, {"username": username,"password":password}, {"Content-Type": "application/json"});
-            //return this.http.post(this.baseUrl,body,{headers:headers})
         }
 
 

@@ -1,14 +1,9 @@
-// import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
-/*
-  Generated class for the AppBddProvider provider.
+import 'rxjs/add/operator/toPromise';
 
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
-*/
 const DATABASE_NAME: string = 'trobada_db';
 
 @Injectable()
@@ -21,7 +16,7 @@ export class AppBddProvider {
     private sqlite: SQLite
   ) {}
 
-  public createDatabaseFile(): void {
+  public createDatabaseFile():void {
 
     this.sqlite.create({
       name: DATABASE_NAME,
@@ -30,45 +25,25 @@ export class AppBddProvider {
       .then((db: SQLiteObject) => {
         //Creation BDD
         this.db = db;
+        this.createTables();
       })
       .catch(e => console.log(e));
   }
 
-  //Tables pour le vendeur
-  private createTablesForSeller(): void {
+  //Tables
+  private createTables(): void {
 
-    //Table ARTICLE
-    this.db.executeSql('CREATE TABLE IF NOT EXISTS `article` ( `idArticle` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `nom` TEXT NOT NULL )', [])
+    //Table TRANSACTIONS
+    this.db.executeSql('CREATE TABLE IF NOT EXIST "transactions" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `amount` NUMERIC NOT NULL, `created_at` TEXT NOT NULL, `id_fest` INTEGER NOT NULL, `name_fest` TEXT NOT NULL, `id_com` INTEGER NOT NULL, `name_com` TEXT NOT NULL )', [])
       .then(() => {
-        //Table FESTIVAL
-        this.db.executeSql('CREATE TABLE IF NOT EXISTS "festival" ( `idFestival` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `nom` TEXT NOT NULL )', [])
+        //Table TRANSACTION_ENTRIES
+        this.db.executeSql('CREATE TABLE IF NOT EXIST "transactions_entries" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `products_id` INTEGER NOT NULL, `products_name` TEXT, `qty` INTEGER NOT NULL, `events_id` INTEGER NOT NULL )', [])
           .then(() => {
-            //Table TRANSACTION
-            this.db.executeSql('CREATE TABLE IF NOT EXISTS `transaction` ( `transactionId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `quantite` INTEGER NOT NULL, `date_transaction` TEXT NOT NULL, `transaction_clientId` INTEGER NOT NULL, `transaction_articleId` INTEGER NOT NULL, `transaction_festivalId` INTEGER NOT NULL, `transaction_vendeurId` INTEGER NOT NULL, FOREIGN KEY(`transaction_clientId`) REFERENCES userId, FOREIGN KEY(`transaction_articleId`) REFERENCES articleId, FOREIGN KEY(`transaction_festivalId`) REFERENCES festivalId, FOREIGN KEY(`transaction_vendeurId`) REFERENCES userId )', [])
-              .then(() => {
-                //Table QRCODE_ARTICLE
-                this.db.executeSql('CREATE TABLE IF NOT EXISTS `qrcode_article` ( `qrArticle_articleId` INTEGER NOT NULL, `qrArticle_festivalId` INTEGER NOT NULL, `qrArticle_vendeurId` INTEGER NOT NULL, `prix_unitaire` NUMERIC NOT NULL, `qrArticle_image` TEXT, PRIMARY KEY(qrArticle_articleId,qrArticle_festivalId,qrArticle_vendeurId), FOREIGN KEY(`qrArticle_articleId`) REFERENCES articleId, FOREIGN KEY(`qrArticle_festivalId`) REFERENCES festivalId, FOREIGN KEY(`qrArticle_vendeurId`) REFERENCES userId )', [])
-                  .then(() => {
-                    console.log('Toutes les tables sont créées');
-                  })
-                  .catch(e => console.log(e));
-              })
-              .catch(e => console.log(e));
+            console.log('Toutes les tables sont créées');
           })
           .catch(e => console.log(e));
       })
       .catch(e => console.log(e));
-  }
-
-  //Tables pour le client
-  private createTablesForClient(): void {
-
-    //Table TRANSACTION
-    this.db.executeSql('CREATE TABLE IF NOT EXISTS `transaction` ( `transactionId` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT UNIQUE, `quantite` INTEGER NOT NULL, `date_transaction` TEXT NOT NULL, `transaction_clientId` INTEGER NOT NULL, `transaction_articleId` INTEGER NOT NULL, `transaction_festivalId` INTEGER NOT NULL, `transaction_vendeurId` INTEGER NOT NULL, FOREIGN KEY(`transaction_clientId`) REFERENCES userId, FOREIGN KEY(`transaction_articleId`) REFERENCES articleId, FOREIGN KEY(`transaction_festivalId`) REFERENCES festivalId, FOREIGN KEY(`transaction_vendeurId`) REFERENCES userId )', [])
-      .then(() => {
-        console.log('Toutes les tables sont créées');
-      })
-      .catch(e => console.log(e));                    
   }
 
   //PROVISOIRE Add datas

@@ -8,6 +8,8 @@ import {TabsExposantPage} from '../pages/tabs-exposant/tabs-exposant';
 import {LoginPage} from '../pages/login/login';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
 
+import {AppBddProvider} from '../providers/app-bdd/app-bdd';
+
 @Component({
   templateUrl: 'app.html'
 })
@@ -17,6 +19,7 @@ export class MyApp {
   constructor(platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
+    private appBddProvider: AppBddProvider,
     private connexionApiProvider:ConnexionApiProvider
     ) {
 
@@ -46,8 +49,14 @@ export class MyApp {
 
             }else{
 
+              //Creation BDD ou ouverture
+              this.appBddProvider.createDatabaseFile();
+
               //Redirection
               if(INFOSUSER.role == 'vendeur'){
+
+                //Remplissage des tables
+
                 this.rootPage = TabsExposantPage;
               }else{
                 this.rootPage = TabsPage;

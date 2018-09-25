@@ -29,7 +29,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
 import {LoginPage} from '../pages/login/login';
 
-import { ConnexionApiGlobal } from '../models/api.connexion.model';
+import { TransactionGlobal } from '../models/api.transaction.model';
 import { JwtHelper } from "angular2-jwt";
 
 @NgModule({
@@ -73,7 +73,7 @@ import { JwtHelper } from "angular2-jwt";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AppBddProvider,
     ConnexionApiProvider,
-    ConnexionApiGlobal,
+    TransactionGlobal,
     JwtHelper,
     QRScanner,
     GloablsProvider,
