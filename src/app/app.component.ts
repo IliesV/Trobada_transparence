@@ -52,11 +52,10 @@ export class MyApp {
               //Creation BDD ou ouverture
               this.appBddProvider.createDatabaseFile();
 
+              //recup transactions
+
               //Redirection
               if(INFOSUSER.role == 'vendeur'){
-
-                //Remplissage des tables
-
                 this.rootPage = TabsExposantPage;
               }else{
                 this.rootPage = TabsPage;

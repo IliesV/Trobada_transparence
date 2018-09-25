@@ -27,6 +27,7 @@ import { HTTP } from '@ionic-native/http';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../providers/api/api.transactions';
 import {LoginPage} from '../pages/login/login';
 
 import { TransactionGlobal } from '../models/api.transaction.model';
@@ -80,7 +81,8 @@ import { JwtHelper } from "angular2-jwt";
     JwtHelper,
     QRScanner,
     GloablsProvider,
-    TransactionProvider
+    TransactionProvider,
+    TransactionsApiProvider
     
   ]
 })
