@@ -2,11 +2,13 @@ import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
+import { Platform } from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @Component({
   selector: 'page-home',
@@ -14,14 +16,22 @@ import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 })
 export class HomePage {
 
-  solde;
+  solde:string = 'Montant inconnu';
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    platform: Platform,
+    public navCtrl: NavController,
     private alertCtrl: AlertController,
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
-    private transactionsApiProvider: TransactionsApiProvider
-    ) {}
+    private transactionsApiProvider: TransactionsApiProvider,
+    private nativeStorage: NativeStorage
+    ) {
+      platform.ready().then(() => {
+        this.transactionsApiProvider.giveMySolde();
+        console.log("ready")
+      })
+    }
 
   public logout(){
     let alert = this.alertCtrl.create({
@@ -47,8 +57,10 @@ export class HomePage {
   }
 
 
-  ionViewDidLoad(){
-    this.solde = this.transactionsApiProvider.giveMySolde();
+  ionViewWillEnter(){
+        this.nativeStorage.getItem('data')
+        .then( retour => this.solde = retour.solde)
+        .catch(error => console.log(error.error))
   }
 
 }

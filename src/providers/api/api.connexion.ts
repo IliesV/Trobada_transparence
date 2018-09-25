@@ -38,7 +38,7 @@ export class ConnexionApiProvider {
         //Sauvegarde du token
         public saveToken(token): any {
 
-            this.nativeStorage.setItem('userToken', {
+            this.nativeStorage.setItem('data', {
                 'token': token,
             })
             .then(
