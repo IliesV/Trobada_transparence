@@ -5,6 +5,7 @@ import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
 
 @Component({
@@ -13,10 +14,13 @@ import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 })
 export class HomePage {
 
+  solde;
+
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
     private app: App,
-    private connexionApiProvider: ConnexionApiProvider
+    private connexionApiProvider: ConnexionApiProvider,
+    private transactionsApiProvider: TransactionsApiProvider
     ) {}
 
   public logout(){
@@ -43,6 +47,8 @@ export class HomePage {
   }
 
 
-
+  ionViewDidLoad(){
+    this.solde = this.transactionsApiProvider.giveMySolde();
+  }
 
 }

@@ -14,26 +14,30 @@ import {LoginPage} from '../../pages/login/login';
 @Injectable()
 export class TransactionsApiProvider {
 
-    private baseUrl: string = 'http://trobadapi.ddns.info/login_check';
-    token;
-    rootPage:any;
+    private token;
+    private rootPage:any;
+    solde;
     
     constructor(
         private nativeStorage: NativeStorage,
         private http: HTTP,
         private connexionApiProvider:ConnexionApiProvider
         ) {
-        //Recup Token
-        this.connexionApiProvider.getToken()
-        .then(
-            data => {
-            this.token = data.token;
-            })
-        .catch(error => this.rootPage = LoginPage)
+        
         }
 
         //Recup solde
-        public giveMySolde() {
+        public giveMySolde():any {
+
+            console.log('fonction');
+
+            //Recup Token
+            this.connexionApiProvider.getToken()
+            .then(
+                data => {
+                this.token = data.token;
+                })
+            .catch(error => console.log('erreur token'))
 
             const URL = 'http://trobadapi.ddns.info/api/solde'
             this.http.setDataSerializer('JSON');
@@ -41,18 +45,17 @@ export class TransactionsApiProvider {
             .then(
                 data => {
                     //Sauvegarde du solde en dur
+                    this.solde = data.data
                     this.nativeStorage.setItem('solde', data)
                     .then(
-                        (solde) => {
-                            console.log('Token sauvegarde');
-                            return solde;
+                       () => {
+                            console.log('soldec sauvegarde')
+                            return this.solde
                         },
                         error => console.error('Error storing solde', error)
                     );
                 return data;
                 })
-            .catch(error => this.rootPage = LoginPage)
-            }
+            .catch(error => console.log('erreur requete'))
         }
-
 }
