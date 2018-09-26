@@ -6,6 +6,7 @@ import {App} from 'ionic-angular';
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 
+import { NativeStorage } from '@ionic-native/native-storage';
 
 @Component({
   selector: 'page-home',
@@ -13,11 +14,17 @@ import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 })
 export class HomePage {
 
-  constructor(public navCtrl: NavController,
+  solde:string = 'Montant inconnu';
+
+  constructor(
+    public navCtrl: NavController,
     private alertCtrl: AlertController,
     private app: App,
-    private connexionApiProvider: ConnexionApiProvider
-    ) {}
+    private connexionApiProvider: ConnexionApiProvider,
+    private nativeStorage: NativeStorage
+    ) {
+
+    }
 
   public logout(){
     let alert = this.alertCtrl.create({
@@ -42,7 +49,14 @@ export class HomePage {
     alert.present();
   }
 
-
+  ionViewCanEnter(){
+    this.nativeStorage.getItem('solde')
+    .then( retour => {
+      this.solde = retour.solde
+      console.log(this.solde)
+    })
+    .catch(error => console.log('erreur recup solde'))
+   }
 
 
 }

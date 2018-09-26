@@ -21,9 +21,6 @@ export class ConnexionApiProvider {
 
     private baseUrl: string = 'http://trobadapi.ddns.info/login_check';
     token;
-    role:string;
-    pseudo:string;
-    id:number;
     
     constructor(
         private nativeStorage: NativeStorage,
@@ -34,47 +31,7 @@ export class ConnexionApiProvider {
         //CheckLogin
         public login(username:string,password:string):Promise<any> {
             this.http.setDataSerializer('JSON');
-
-            // const body = {
-            //     username, password
-            // }
-            // const headers = new Headers(
-            //     {
-            //         'Content-Type': 'application/json'
-            //     });
             return this.http.post(this.baseUrl, {"username": username,"password":password}, {"Content-Type": "application/json"});
-            //return this.http.post(this.baseUrl,body,{headers:headers})
-        }
-
-
-        //Sauvegarde du token
-        public saveToken(token): any {
-
-            this.nativeStorage.setItem('userToken', {
-                'token': token,
-            })
-            .then(
-                () => console.log('Token sauvegarde'),
-                error => console.error('Error storing item', error)
-            );
-        }
-
-        //Recuperation Token
-        public getToken() {
-            return this.nativeStorage.getItem('userToken');
-        }
-
-        //Recup infos
-        public getInfosUser(token){
-
-            var objetToken = this.decoder.decodeToken(token);
-
-            return {
-                'pseudo': objetToken.username,
-                'role': objetToken.roles[0],
-                'dateCreation': objetToken.iat,
-                'dateExpiration': objetToken.exp
-            }
         }
 
         //Verification validité token
@@ -82,9 +39,15 @@ export class ConnexionApiProvider {
             return this.decoder.isTokenExpired(token);
         }
 
-        //Verification validité token
+        //Delete TOKEN
         public deleteToken(){
-            this.nativeStorage.remove('userToken');
+            this.nativeStorage.setItem('data', {
+                'token': "",
+            })
+            .then(
+                () => console.log('Token supprime'),
+                error => console.error('Error delete token', error)
+            );
         }
 }
 

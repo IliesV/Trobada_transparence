@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
@@ -17,17 +17,23 @@ import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ScanQrPage } from '../pages/scan-qr/scan-qr';
+import { GloablsProvider } from '../providers/gloabls/gloabls';
+import { TransactionProvider } from '../providers/transaction/transaction';
 
 import { SQLite } from '@ionic-native/sqlite';
 import { AppBddProvider } from '../providers/app-bdd/app-bdd';
-// import { HttpClientModule } from '@angular/common/http';
+//import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http';
 
 import { NativeStorage } from '@ionic-native/native-storage';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../providers/api/api.transactions';
 import {LoginPage} from '../pages/login/login';
+import {InfosProvider} from '../providers/infos/infosUser';
 
-import { ConnexionApiGlobal } from '../models/api.connexion.model';
+import { TransactionGlobal } from '../models/api.transaction.model';
+import { EntitiesGlobal } from '../models/api.entities.model';
+
 import { JwtHelper } from "angular2-jwt";
 
 @NgModule({
@@ -71,9 +77,14 @@ import { JwtHelper } from "angular2-jwt";
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     AppBddProvider,
     ConnexionApiProvider,
-    ConnexionApiGlobal,
+    TransactionGlobal,
+    EntitiesGlobal,
     JwtHelper,
-    QRScanner
+    QRScanner,
+    GloablsProvider,
+    TransactionProvider,
+    TransactionsApiProvider,
+    InfosProvider
   ]
 })
 export class AppModule {}

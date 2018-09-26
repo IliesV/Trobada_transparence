@@ -5,8 +5,9 @@ import { AlertController } from 'ionic-angular';
 import {TabsPage} from '../tabs/tabs';
 import {TabsExposantPage} from '../tabs-exposant/tabs-exposant';
 
-//import {AppBddProvider} from '../../providers/app-bdd/app-bdd';
+import {InfosProvider} from '../../providers/infos/infosUser';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
 import 'rxjs/add/operator/toPromise';
 
@@ -19,46 +20,70 @@ export class LoginPage {
 
     email: string = 'michel';
     password: string = 'tutu';
-    infosUser = {};
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
     private alertCtrl: AlertController,
-    //private appBddProvider: AppBddProvider,
-    public connexionApiProvider:ConnexionApiProvider
+    private infosProvider: InfosProvider,
+    public connexionApiProvider:ConnexionApiProvider,
+    private transactionsApiProvider:TransactionsApiProvider
   ) {
     // this.appBddProvider.createDatabaseFile();
   }
 
-    public submitLogin(){
-      
-      this.connexionApiProvider.login(this.email,this.password)
-      .then(
-        response => {
-            const TOKEN = JSON.parse(response.data).token;
-
-            //Sauvegarde du token;
-            this.connexionApiProvider.saveToken(TOKEN);
-
-            //decodage token
-            this.infosUser = this.connexionApiProvider.getInfosUser(TOKEN);
-
-            //Redirection
-            if(this.infosUser['role'] == 'vendeur'){
-              this.navCtrl.setRoot(TabsExposantPage, {infosUser: this.infosUser})
-            }else{
-              this.navCtrl.setRoot(TabsPage, {infosUser: this.infosUser});
-            }
-        })
-        .catch(error => 
-          {
-            console.log(error);
-            let alert = this.alertCtrl.create({
-              title: 'Erreur de connexion',
-              subTitle: 'Vérifiez vos informations',
-              buttons: ['Ok']
-            });
-            alert.present();
+  public submitLogin(){
+    console.log('Check credentials')
+    this.connexionApiProvider.login(this.email,this.password)
+    .then(response => {
+      const TOKEN = JSON.parse(response.data).token;
+      console.log('Token: '+TOKEN)
+      //Sauvegarde du token
+      console.log('sauvegarde token')
+      this.infosProvider.saveTokenInfos(TOKEN)
+      .then(()=> {
+        console.log('recup solde')
+        //recup solde
+        this.transactionsApiProvider.giveMySoldeOnline(TOKEN)
+        .then(data=> {
+          console.log('sauvegarde solde')
+          //sauvegarde solde
+          console.log('solde save: '+data.data)
+          this.infosProvider.saveSolde(data.data)
+          .then(()=> {
+            console.log('recup role')
+            //Recup Role
+            this.infosProvider.giveInfosUser()
+            .then(infosUser => {
+              //Redirection
+              if(infosUser.role == 'vendeur'){
+                this.navCtrl.setRoot(TabsExposantPage)
+              }else{
+                this.navCtrl.setRoot(TabsPage);
+              }
+            })
+            .catch(() => console.log("erreur recup role"))
           })
-    }
+          .catch(() => console.log('erreur save solde'))
+        })
+        .catch(() => console.log('erreur recup solde'))
+      })
+      .catch(() => console.log('erreur sauvegarde token'))
+    })
+    .catch(error => {
+      console.log(error);
+      let alert = this.alertCtrl.create({
+        title: 'Erreur de connexion',
+        subTitle: 'Vérifiez vos informations',
+        buttons: ['Ok']
+      });
+      alert.present();
+    })
+  }
 }
+
+/*
+.then(()=> {
+
+})
+.catch(() => console.log('erreur '))
+*/

@@ -17,5 +17,23 @@
 
 
 <ion-content padding>
+
+  <div *ngIf="prixArticles[0]">
+      <div *ngFor="let noms of nomsArticles, let i = index">
+    <ion-card >
+  
+    <ion-card-content>
+     {{nomsArticles[i]}} pour {{prixArticles[i]}}€
+    </ion-card-content>
+  
+  </ion-card>
+  </div>
+</div>
+<div id="scanArticle">
   <button ion-button round (tap)="goScan()">Scan Articles</button>
+</div>
+
+<div id="scanClient" *ngIf="prixArticles[0]">
+  <button ion-button round (tap)="goScanClient()">Scan client</button>
+</div>
 </ion-content>

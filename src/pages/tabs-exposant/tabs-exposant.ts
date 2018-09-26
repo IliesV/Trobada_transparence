@@ -11,7 +11,7 @@ import { SoldeExposantPage } from '../solde-exposant/solde-exposant';
 })
 export class TabsExposantPage {
 
-  email: string;
+  infosUser = {};
 
   homeExposantRoot = HomeExposantPage;
   dealExposantRoot = DealExposantPage;
@@ -19,6 +19,6 @@ export class TabsExposantPage {
 
 
   constructor(private navParams: NavParams) {
-    this.email = navParams.get('email')
+    // this.email = navParams.get('email')
   }
 }

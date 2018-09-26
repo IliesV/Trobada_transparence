@@ -6,38 +6,43 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import {TabsPage} from '../pages/tabs/tabs';
 import {TabsExposantPage} from '../pages/tabs-exposant/tabs-exposant';
 import {LoginPage} from '../pages/login/login';
+import {InfosProvider} from '../providers/infos/infosUser';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../providers/api/api.transactions';
+
+import {AppBddProvider} from '../providers/app-bdd/app-bdd';
 
 @Component({
   templateUrl: 'app.html'
 })
 export class MyApp {
+  
   rootPage:any;
 
   constructor(platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    private connexionApiProvider:ConnexionApiProvider
+    private appBddProvider: AppBddProvider,
+    private infosProvider:InfosProvider,
+    private connexionApiProvider:ConnexionApiProvider,
+    private transactionsApiProvider:TransactionsApiProvider
     ) {
 
     platform.ready().then(() => {
 
-      statusBar.styleDefault();
+      statusBar.styleLightContent();
 
       //Check Token
-      this.connexionApiProvider.getToken()
+      this.infosProvider.giveInfosUser()
       .then(
-        data => {
-          const TOKEN = data.token;
+        datas => {
+          const TOKEN = datas.token;
 
           if(TOKEN == undefined){  //Pas de Token -> LoginPage
 
             this.rootPage = LoginPage;
     
           }else{  //Token -> Ckeck Token et role
-
-            //Recuperation infos
-            const INFOSUSER = this.connexionApiProvider.getInfosUser(TOKEN);
     
             //Validité token
             if(this.connexionApiProvider.checkTimeToken(TOKEN)){
@@ -46,12 +51,12 @@ export class MyApp {
 
             }else{
 
-              //Redirection
-              if(INFOSUSER.role == 'vendeur'){
+              if(datas.role == 'vendeur'){
                 this.rootPage = TabsExposantPage;
               }else{
                 this.rootPage = TabsPage;
               }
+
             }
           }
         })
