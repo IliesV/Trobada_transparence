@@ -19,4 +19,14 @@ export class TransactionsApiProvider {
         return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
             
     }
+
+    //Recup liste transaction
+    public giveMyTransactions(token):Promise<HTTPResponse> {
+
+        const URL = 'http://trobadapi.ddns.info/api/transactions'
+        console.log('go transac')
+        this.http.setDataSerializer('JSON');
+        return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
+            
+    }
 }

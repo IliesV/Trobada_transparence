@@ -33,6 +33,7 @@ import {InfosProvider} from '../providers/infos/infosUser';
 
 import { TransactionGlobal } from '../models/api.transaction.model';
 import { EntitiesGlobal } from '../models/api.entities.model';
+import { UserGlobal } from '../models/infosUser.model';
 
 import { JwtHelper } from "angular2-jwt";
 
@@ -79,6 +80,7 @@ import { JwtHelper } from "angular2-jwt";
     ConnexionApiProvider,
     TransactionGlobal,
     EntitiesGlobal,
+    UserGlobal,
     JwtHelper,
     QRScanner,
     GloablsProvider,

@@ -8,9 +8,6 @@ import {TabsExposantPage} from '../pages/tabs-exposant/tabs-exposant';
 import {LoginPage} from '../pages/login/login';
 import {InfosProvider} from '../providers/infos/infosUser';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
-import {TransactionsApiProvider} from '../providers/api/api.transactions';
-
-import {AppBddProvider} from '../providers/app-bdd/app-bdd';
 
 @Component({
   templateUrl: 'app.html'
@@ -22,10 +19,8 @@ export class MyApp {
   constructor(platform: Platform,
     statusBar: StatusBar,
     splashScreen: SplashScreen,
-    private appBddProvider: AppBddProvider,
     private infosProvider:InfosProvider,
-    private connexionApiProvider:ConnexionApiProvider,
-    private transactionsApiProvider:TransactionsApiProvider
+    private connexionApiProvider:ConnexionApiProvider
     ) {
 
     platform.ready().then(() => {

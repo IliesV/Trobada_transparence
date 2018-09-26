@@ -5,8 +5,12 @@ import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
 import { NativeStorage } from '@ionic-native/native-storage';
+
+import { UserGlobal } from '../../models/infosUser.model';
+
 
 @Component({
   selector: 'page-home',
@@ -15,12 +19,15 @@ import { NativeStorage } from '@ionic-native/native-storage';
 export class HomePage {
 
   solde:string = 'Montant inconnu';
+  listeTransac:JSON;
+  infosUser:UserGlobal;
 
   constructor(
     public navCtrl: NavController,
     private alertCtrl: AlertController,
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
+    private transactionsApiProvider: TransactionsApiProvider,
     private nativeStorage: NativeStorage
     ) {
 
@@ -50,12 +57,26 @@ export class HomePage {
   }
 
   ionViewCanEnter(){
+    //Recup Solde
     this.nativeStorage.getItem('solde')
     .then( retour => {
       this.solde = retour.solde
-      console.log(this.solde)
+      //Recup Infos
+      this.nativeStorage.getItem('infosUser')
+      .then( infos => {
+        this.infosUser = infos as UserGlobal
+        console.log(this.infosUser.pseudo)
+        //Recup transaction
+        this.transactionsApiProvider.giveMyTransactions(this.infosUser['token'])
+        .then( transac => {
+          this.listeTransac = JSON.parse(transac.data)
+          console.log(this.listeTransac)
+        })
+        .catch(() => console.log('erreur recup transactions'))
+      })
+      .catch(() => console.log('erreur recup infos'))
     })
-    .catch(error => console.log('erreur recup solde'))
+    .catch(() => console.log('erreur recup solde'))
    }
 
 

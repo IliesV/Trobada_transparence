@@ -4,9 +4,6 @@ import { NativeStorage } from '@ionic-native/native-storage';
 // Core components
 import { Injectable }   from '@angular/core';
 
-import {ConnexionApiProvider} from '../../providers/api/api.connexion';
-import {TransactionsApiProvider} from '../../providers/api/api.transactions';
-
 import 'rxjs/add/operator/toPromise';
 
 import { JwtHelper } from "angular2-jwt";
@@ -16,8 +13,6 @@ export class InfosProvider {
 
     constructor(
         private nativeStorage: NativeStorage,
-        private connexionApiProvider:ConnexionApiProvider,
-        private transactionsApiProvider:TransactionsApiProvider,
         private decoder:JwtHelper
         ) {}
 
