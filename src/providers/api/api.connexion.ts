@@ -34,45 +34,20 @@ export class ConnexionApiProvider {
             return this.http.post(this.baseUrl, {"username": username,"password":password}, {"Content-Type": "application/json"});
         }
 
-
-        //Sauvegarde du token
-        public saveToken(token): any {
-
-            this.nativeStorage.setItem('data', {
-                'token': token,
-            })
-            .then(
-                () => console.log('Token sauvegarde'),
-                error => console.error('Error storing item', error)
-            );
-        }
-
-        //Recuperation Token
-        public getToken() {
-            return this.nativeStorage.getItem('userToken');
-        }
-
-        //Recup infos
-        public getInfosUser(token){
-
-            var objetToken = this.decoder.decodeToken(token);
-
-            return {
-                'pseudo': objetToken.username,
-                'role': objetToken.roles[0],
-                'dateCreation': objetToken.iat,
-                'dateExpiration': objetToken.exp
-            }
-        }
-
         //Verification validité token
         public checkTimeToken(token):boolean{
             return this.decoder.isTokenExpired(token);
         }
 
-        //Verification validité token
+        //Delete TOKEN
         public deleteToken(){
-            this.nativeStorage.remove('userToken');
+            this.nativeStorage.setItem('data', {
+                'token': "",
+            })
+            .then(
+                () => console.log('Token supprime'),
+                error => console.error('Error delete token', error)
+            );
         }
 }
 

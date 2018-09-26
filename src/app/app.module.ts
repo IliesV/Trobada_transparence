@@ -1,6 +1,6 @@
 import { NgModule, ErrorHandler } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { AboutPage } from '../pages/about/about';
@@ -29,6 +29,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import {ConnexionApiProvider} from '../providers/api/api.connexion';
 import {TransactionsApiProvider} from '../providers/api/api.transactions';
 import {LoginPage} from '../pages/login/login';
+import {InfosProvider} from '../providers/infos/infosUser';
 
 import { TransactionGlobal } from '../models/api.transaction.model';
 import { EntitiesGlobal } from '../models/api.entities.model';
@@ -82,8 +83,8 @@ import { JwtHelper } from "angular2-jwt";
     QRScanner,
     GloablsProvider,
     TransactionProvider,
-    TransactionsApiProvider
-    
+    TransactionsApiProvider,
+    InfosProvider
   ]
 })
 export class AppModule {}

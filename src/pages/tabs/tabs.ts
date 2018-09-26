@@ -10,13 +10,13 @@ import { HomePage } from '../home/home';
 })
 export class TabsPage {
 
-  email: string;
+  infosUser = {};
 
   tab1Root = HomePage;
   tab2Root = AboutPage;
   tab3Root = ContactPage;
 
   constructor(private navParams: NavParams) {
-    this.email = navParams.get('email')
+    // this.email = navParams.get('email')
   }
 }
