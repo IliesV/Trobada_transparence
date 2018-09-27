@@ -37,6 +37,8 @@ import { UserGlobal } from '../models/infosUser.model';
 
 import { JwtHelper } from "angular2-jwt";
 
+import { QRCodeModule } from 'angularx-qrcode';
+
 @NgModule({
   declarations: [
     MyApp,
@@ -53,7 +55,8 @@ import { JwtHelper } from "angular2-jwt";
   ],
   imports: [
     BrowserModule,
-    IonicModule.forRoot(MyApp)
+    IonicModule.forRoot(MyApp),
+    QRCodeModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [

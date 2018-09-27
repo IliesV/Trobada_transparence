@@ -41,12 +41,10 @@ export class ConnexionApiProvider {
 
         //Delete TOKEN
         public deleteToken(){
-            this.nativeStorage.setItem('data', {
-                'token': "",
-            })
+            this.nativeStorage.clear()
             .then(
-                () => console.log('Token supprime'),
-                error => console.error('Error delete token', error)
+                () => console.log('Datas supprimees'),
+                error => console.error('Error delete infosUser', error)
             );
         }
 }
