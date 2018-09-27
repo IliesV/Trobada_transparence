@@ -9,6 +9,8 @@ import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { UserGlobal } from '../../models/infosUser.model';
 
+import { Brightness } from '@ionic-native/brightness'
+
 @Component({
   selector: 'page-about',
   templateUrl: 'about.html'
@@ -17,12 +19,14 @@ export class AboutPage {
 
   public myQrCode: string = null;
   infosUser:UserGlobal = new UserGlobal();
+  private oldBright:number = 0;
 
   constructor(public navCtrl: NavController,
     private alertCtrl: AlertController,
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    private brightness: Brightness
     ) {
 
   }
@@ -58,5 +62,17 @@ export class AboutPage {
         this.myQrCode = '3-'+this.infosUser.pseudo
       })
       .catch(() => console.log('erreur recup infos'))
+  }
+  ionViewWillEnter(){
+    this.brightness.getBrightness()
+    .then( value => {
+      this.oldBright = value
+      this.brightness.setBrightness(1)
+    })
+    .catch(() => console.log("erreur brightness"))
+  }
+
+  ionViewWillLeave(){
+    this.brightness.setBrightness(this.oldBright)
   }
 }
