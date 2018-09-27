@@ -12,6 +12,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { UserGlobal } from '../../models/infosUser.model';
 import { TransactionGlobal } from '../../models/api.transaction.model'
 
+//https://ionicframework.com/docs/theming/overriding-ionic-variables/
 
 @Component({
   selector: 'page-home',
