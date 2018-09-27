@@ -90,7 +90,7 @@ export class ScanQrPage {
            this.qrScanner.hide();
            scanSub.unsubscribe(); 
           console.log('tout marche' + this.objet);
-          this.transaction.addInfos(text);
+          this.transaction.addInfosFestivalier(text);
           this.navCtrl.push(DealExposantPage)
           });
         } else if (status.denied) {
