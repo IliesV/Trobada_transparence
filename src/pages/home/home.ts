@@ -10,6 +10,7 @@ import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 import { NativeStorage } from '@ionic-native/native-storage';
 
 import { UserGlobal } from '../../models/infosUser.model';
+import { TransactionGlobal } from '../../models/api.transaction.model'
 
 
 @Component({
@@ -19,9 +20,8 @@ import { UserGlobal } from '../../models/infosUser.model';
 export class HomePage {
 
   solde:string = 'Montant inconnu';
-  listeTransac:JSON;
-  infosUser:UserGlobal;
-  pseudo:string = "inconnu";
+  listeTransac:TransactionGlobal[] = new Array<TransactionGlobal>();
+  infosUser:UserGlobal = new UserGlobal();
 
   constructor(
     public navCtrl: NavController,
@@ -66,13 +66,11 @@ export class HomePage {
       this.nativeStorage.getItem('infosUser')
       .then( infos => {
         this.infosUser = infos as UserGlobal
-        console.log(this.infosUser.pseudo)
-        this.pseudo = this.infosUser.pseudo
         //Recup transaction
-        this.transactionsApiProvider.giveMyTransactions(this.infosUser['token'])
+        this.transactionsApiProvider.giveMyTransactions(this.infosUser.token)
         .then( transac => {
           this.listeTransac = JSON.parse(transac.data)
-          console.log(this.listeTransac)
+          console.log(JSON.stringify(JSON.parse(transac.data)))
         })
         .catch(() => console.log('erreur recup transactions'))
       })
