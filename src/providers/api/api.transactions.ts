@@ -14,7 +14,6 @@ export class TransactionsApiProvider {
     public giveMySoldeOnline(token):Promise<HTTPResponse> {
 
         const URL = 'http://trobadapi.ddns.info/api/solde'
-        console.log('go solde')
         this.http.setDataSerializer('JSON');
         return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
             
@@ -24,7 +23,6 @@ export class TransactionsApiProvider {
     public giveMyTransactions(token):Promise<HTTPResponse> {
 
         const URL = 'http://trobadapi.ddns.info/api/transactions'
-        console.log('go transac')
         this.http.setDataSerializer('JSON');
         return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
             

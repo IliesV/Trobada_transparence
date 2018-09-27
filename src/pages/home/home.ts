@@ -21,6 +21,7 @@ export class HomePage {
   solde:string = 'Montant inconnu';
   listeTransac:JSON;
   infosUser:UserGlobal;
+  pseudo:string = "inconnu";
 
   constructor(
     public navCtrl: NavController,
@@ -66,6 +67,7 @@ export class HomePage {
       .then( infos => {
         this.infosUser = infos as UserGlobal
         console.log(this.infosUser.pseudo)
+        this.pseudo = this.infosUser.pseudo
         //Recup transaction
         this.transactionsApiProvider.giveMyTransactions(this.infosUser['token'])
         .then( transac => {

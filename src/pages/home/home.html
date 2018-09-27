@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title>Trobada</ion-title>
+    <ion-title>Mon compte</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="logout()">
         <ion-icon ios="ios-power" md="md-power" name="logout" ></ion-icon>
@@ -10,11 +10,22 @@
 </ion-header>
 
 <ion-content padding>
-  <ion-input type="text" name="dataToken" [(ngModel)]="dataToken"></ion-input>
-  <p>
-    Voici l'interface festivalier .
-  </p>
-  <p>
-    Votre solde est de {{ solde }} €.
-  </p>
+  <ion-card>
+    <ion-card-header text-center>
+        Bonjour {{ pseudo }}
+    </ion-card-header>
+    <ion-card-content text-center>
+        Votre solde est de {{ solde }} €.
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+<ion-content>
+  <ion-list>
+    <ion-list-header>
+      Action
+    </ion-list-header>
+    <ion-item>Terminator II</ion-item>
+    <ion-item>The Empire Strikes Back</ion-item>
+    <ion-item>Blade Runner</ion-item>
+  </ion-list>
 </ion-content>
