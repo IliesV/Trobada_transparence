@@ -15,11 +15,12 @@
         Bonjour {{ infosUser.pseudo }}
     </ion-card-title>
     <ion-card-content text-center>
-        <h1>Votre solde est de {{ solde }} €</h1>
+        <h1>Votre solde :</h1>
+         <h1>{{ solde }} €</h1>
     </ion-card-content>
   </ion-card>
 <br>
-  <h3 text-center>Dernières transactions</h3>
+  <h3 text-center>Derniers paiements</h3>
   <ion-list padding *ngFor="let transaction of listeTransac">
     <ion-list-header>
         {{transaction.created_at | date: 'dd/MM/yyyy H:mm' }} {{ transaction.name_fest}} {{ transaction.amount}} €
