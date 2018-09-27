@@ -25,6 +25,8 @@ $app-direction: ltr;
 
 
 
+
+
 // Named Color Variables
 // --------------------------------------------------
 // Named colors makes it easy to reuse colors on various components.
@@ -34,19 +36,28 @@ $app-direction: ltr;
 // The "primary" color is the only required color in the map.
 
 $colors: (
-  primary:    #488aff,
+  primary:    #0e89b6,
   secondary:  #32db64,
   danger:     #f53d3d,
   light:      #f4f4f4,
-  dark:       #222
-);
+  dark:       #222,
+  trobada:    #27c6fe,
+  gris:       #bbc0c2
+  );
+  
+  
+  // App iOS Variables
+  // --------------------------------------------------
+  // iOS only Sass variables can go here
+  
+  
+  $tabs-background: color($colors, trobada);
+  $tabs-ios-tab-icon-color: color($colors, gris);
+  $tabs-ios-tab-text-color: color($colors,gris);
+  $tabs-ios-tab-icon-color-active: color($colors, light);
+  $tabs-ios-tab-text-color-active: color($colors,light);
 
-
-// App iOS Variables
-// --------------------------------------------------
-// iOS only Sass variables can go here
-
-
+  $toolbar-background: color($colors, trobada);
 
 
 // App Material Design Variables
