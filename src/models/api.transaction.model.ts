@@ -11,5 +11,5 @@ export class TransactionGlobal {
     events_id:number;
     events_name:string;
 
-    entities:EntitiesGlobal[];
+    listeTransactions:EntitiesGlobal[];
 }

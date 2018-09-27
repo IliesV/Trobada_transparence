@@ -36,21 +36,15 @@ export class LoginPage {
     this.connexionApiProvider.login(this.email,this.password)
     .then(response => {
       const TOKEN = JSON.parse(response.data).token;
-      console.log('Token: '+TOKEN)
       //Sauvegarde du token
-      console.log('sauvegarde token')
       this.infosProvider.saveTokenInfos(TOKEN)
       .then(()=> {
-        console.log('recup solde')
         //recup solde
         this.transactionsApiProvider.giveMySoldeOnline(TOKEN)
         .then(data=> {
-          console.log('sauvegarde solde')
           //sauvegarde solde
-          console.log('solde save: '+data.data)
           this.infosProvider.saveSolde(data.data)
           .then(()=> {
-            console.log('recup role')
             //Recup Role
             this.infosProvider.giveInfosUser()
             .then(infosUser => {
