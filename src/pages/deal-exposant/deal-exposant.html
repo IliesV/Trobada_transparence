@@ -9,7 +9,7 @@
     <ion-title>Trobada</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="logout()">
-        <ion-icon ios="ios-power" md="md-power" name="logout" ></ion-icon>
+        <ion-icon ios="ios-power" md="md-power" name="logout"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -18,43 +18,48 @@
 
 <ion-content padding>
 
-    <ion-list>
-        <div *ngIf="prixArticles[0]">
-            <div *ngFor="let noms of nomsArticles, let i = index">
+    <h1 ion-text color="secondary">Prix Total : {{this.transaction.sommeTotale}}</h1>
+
+  <ion-list>
+    <div *ngIf="prixArticles[0]">
+      <div *ngFor="let noms of nomsArticles, let i = index">
         <ion-item-sliding #item>
           <ion-item>
-              {{nomsArticles[i]}} pour {{prixArticles[i]}}€
+            <h6>{{quantity[i]}} X {{nomsArticles[i]}}</h6>
+            <p>{{prixArticles[i]*quantity[i]}}€</p>
           </ion-item>
           <ion-item-options side="left">
-            <button ion-button (click)="favorite(item)">Favorite</button>
-            <button ion-button color="danger" (click)="share(item)">Share</button>
+            <button ion-button clear (tap)="removeQuantity(i)">
+              <ion-icon name="remove-circle"></ion-icon>
+            </button>
+            <button ion-button clear (tap)="addQuantity(i)">
+              <ion-icon name="add-circle"></ion-icon>
+            </button>
           </ion-item-options>
-      
+
           <ion-item-options side="right">
-            <button ion-button (click)="unread(item)">Unread</button>
+            <button ion-button color="danger" (tap)="remove(noms, i)">
+              <ion-icon name="trash"></ion-icon>
+            </button>
           </ion-item-options>
         </ion-item-sliding>
+      </div>
     </div>
-  </div>
-</ion-list>
-  <!-- <div *ngIf="prixArticles[0]">
-      <div *ngFor="let noms of nomsArticles, let i = index">
-    <ion-card >
-  
-    <ion-card-content>
-     {{nomsArticles[i]}} pour {{prixArticles[i]}}€
-     <button clear (click)="incrementQty()"><ion-icon name="add-circle" ></ion-icon></button>{{qty}}
-    <button clear (click)="decrementQty()"><ion-icon name="remove-circle" ></ion-icon></button>
-    </ion-card-content>
-  
-  </ion-card>
-  </div>
-</div> -->
-<div id="scanArticle">
-  <button ion-button round (tap)="goScan()">Scan Articles</button>
-</div>
+  </ion-list>
+  <ion-grid id="boutons">
+    <ion-row>
+      <div id="scanArticle">
+        <button ion-button round (tap)="goScan()">Scan Articles</button>
+      </div>
 
-<div id="scanClient" *ngIf="prixArticles[0]">
-  <button ion-button round (tap)="goScanClient()">Scan client</button>
-</div>
+      <div id="scanClient" *ngIf="prixArticles[0]">
+        <button ion-button round (tap)="goScanClient()">Scan client</button>
+      </div>
+    </ion-row>
+    <ion-row justify-content-center>
+      <div id="clearAll" *ngIf="prixArticles[0]">
+        <button ion-button round color="danger" (tap)="reset()">TOUT VIDER</button>
+      </div>
+    </ion-row>
+  </ion-grid>
 </ion-content>

@@ -5,12 +5,13 @@ import { Injectable } from '@angular/core';
 @Injectable()
 export class TransactionProvider {
 
-  sommeTotal: number = 0;
+  sommeTotale: number = 0;
   panier: any[] = [];
   nomsArticles: string[] = [];
   prixArticles: number[] = [];
   idFestivalier: string;
   pseudoFestivalier: string;
+  quantity: number[]= [];
 
   constructor(
     //public http: HttpClient
@@ -18,8 +19,12 @@ export class TransactionProvider {
     console.log('Hello TransactionProvider Provider');
   }
 
-  public addPrix(number){
-    this.sommeTotal += number
+  public sommeTot(){
+    this.sommeTotale = 0;
+    for(let i=0; i<this.nomsArticles.length; i++ ){
+        this.sommeTotale += (this.prixArticles[i]*this.quantity[i]);
+    }
+    console.log(this.sommeTotale + " sommetotale");
   }
 
   public addInfos(string){
@@ -33,6 +38,15 @@ export class TransactionProvider {
     let infosFestivalier = string.split("-",3);
     this.idFestivalier = infosFestivalier[0];
     this.pseudoFestivalier = infosFestivalier[1];
+  }
+
+  public reset(){
+    console.log("stp");
+    this.nomsArticles = [];
+    this.prixArticles = [];
+    this.panier = [];
+    this.quantity = [];
+    this.sommeTotale = 0;
   }
 
 }
