@@ -70,7 +70,6 @@ export class HomePage {
         this.transactionsApiProvider.giveMyTransactions(this.infosUser.token)
         .then( transac => {
           this.listeTransac = JSON.parse(transac.data)
-          console.log(JSON.stringify(JSON.parse(transac.data)))
         })
         .catch(() => console.log('erreur recup transactions'))
       })
@@ -78,6 +77,4 @@ export class HomePage {
     })
     .catch(() => console.log('erreur recup solde'))
    }
-
-
 }
