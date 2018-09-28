@@ -5,7 +5,12 @@ import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
+import { NativeStorage } from '@ionic-native/native-storage';
+
+import { UserGlobal } from '../../models/infosUser.model';
+import { TransactionGlobal } from '../../models/api.transaction.model'
 
 @Component({
   selector: 'page-home-exposant',
@@ -13,13 +18,18 @@ import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 })
 export class HomeExposantPage {
 
-  infosUser = {};
+  solde:string = 'Montant inconnu';
+  lastTransac:TransactionGlobal = new TransactionGlobal();
+  infosUser:UserGlobal = new UserGlobal();
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     private alertCtrl: AlertController,
     private app: App,
-    private connexionApiProvider: ConnexionApiProvider) {
-  }
+    private connexionApiProvider: ConnexionApiProvider,
+    private transactionsApiProvider: TransactionsApiProvider,
+    private nativeStorage: NativeStorage
+  ) {}
 
   public logout(){
     let alert = this.alertCtrl.create({
@@ -44,8 +54,32 @@ export class HomeExposantPage {
     alert.present();
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad HomeExposantPage');
-  }
-
+  ionViewCanEnter(){
+    //Recup Solde
+    this.nativeStorage.getItem('solde')
+    .then( retour => {
+      this.solde = retour.solde
+      //Recup Infos
+      this.nativeStorage.getItem('infosUser')
+      .then( infos => {
+        this.infosUser = infos as UserGlobal
+        //Recup transaction
+        if(this.infosUser.role === "vendeur"){
+          this.transactionsApiProvider.lastVendeurTransaction(this.infosUser.token)
+          .then( transac => {
+            this.lastTransac = JSON.parse(transac.data)
+          })
+          .catch(() => console.log('erreur recup transactions'))
+        }else{
+          this.transactionsApiProvider.lastClientTransaction(this.infosUser.token)
+          .then( transac => {
+            this.lastTransac = JSON.parse(transac.data)
+          })
+          .catch(() => console.log('erreur recup transactions'))
+        }
+      })
+      .catch(() => console.log('erreur recup infos'))
+    })
+    .catch(() => console.log('erreur recup solde'))
+   }
 }

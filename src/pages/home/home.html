@@ -16,18 +16,25 @@
     </ion-card-title>
     <ion-card-content text-center>
         <h1>Votre solde :</h1>
-         <h1>{{ solde }} €</h1>
+        <h1>{{ solde }} €</h1>
     </ion-card-content>
   </ion-card>
-<br>
-  <h3 text-center>Derniers paiements</h3>
-  <ion-list padding *ngFor="let transaction of listeTransac">
-    <ion-list-header>
-        {{transaction.created_at | date: 'dd/MM/yyyy H:mm' }} {{ transaction.name_fest}} {{ transaction.amount}} €
-    </ion-list-header>
-    <ion-item *ngFor="let entry of transaction.listeTransactions">
-        {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
-      </ion-item>
-  </ion-list>
-
+  <br>
+  <ion-card>
+      <ion-card-title text-center>
+          <b>Dernier paiement</b>
+      </ion-card-title>
+    <ion-card-content>
+      <b>Date: </b>{{lastTransac.created_at | date: 'dd/MM/yyyy H:mm' }}<br>
+      <b>Lieu: </b>{{ lastTransac.events_name }}<br>
+      <b>Vendeur: </b>{{ lastTransac.name_com }}<br>
+      <b>Montant: </b>{{ lastTransac.amount }} €<br>
+      <b>Articles:</b><br>
+      <ion-list padding>
+        <ion-item *ngFor="let entry of lastTransac.listeTransactions">
+          {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
 </ion-content>

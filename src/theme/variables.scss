@@ -42,7 +42,7 @@ $colors: (
   light:      #fffdfd,
   dark:       #222,
   trobada:    #27c6fe,
-  gris:       #bbc0c2
+  gris:       #6f7274
   );
   
   
@@ -69,8 +69,12 @@ $colors: (
   $toolbar-ios-border-color: color($colors, trobada);
   $toolbar-md-border-color: color($colors, trobada);
 
+  //Card
   $card-ios-box-shadow-color: color($colors, trobada);
   $card-md-box-shadow-color: color($colors, trobada);
+  $card-ios-font-size: 1.8rem;
+  $card-md-font-size: 1.8rem;
+
   $list-ios-header-font-size: 1.4rem;
   $list-md-header-font-size: 1.4rem;
   $list-ios-header-font-color: color($colors, trobada);
