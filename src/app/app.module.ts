@@ -4,7 +4,6 @@ import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-a
 import { MyApp } from './app.component';
 
 //import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
@@ -47,7 +46,6 @@ import { Brightness } from '@ionic-native/brightness'
   declarations: [
     MyApp,
     QrcodePage,
-    ContactPage,
     HomePage,
     TabsPage,
     ScanQrPage,
@@ -67,7 +65,6 @@ import { Brightness } from '@ionic-native/brightness'
   entryComponents: [
     MyApp,
     QrcodePage,
-    ContactPage,
     HomePage,
     HomeExposantPage,
     DealExposantPage,
