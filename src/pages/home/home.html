@@ -25,11 +25,11 @@
           <b>Dernier paiement</b>
       </ion-card-title>
     <ion-card-content>
-      <b>Date: </b>{{lastTransac.created_at | date: 'dd/MM/yyyy H:mm' }}<br>
-      <b>Lieu: </b>{{ lastTransac.events_name }}<br>
-      <b>Vendeur: </b>{{ lastTransac.name_com }}<br>
-      <b>Montant: </b>{{ lastTransac.amount }} €<br>
-      <b>Articles:</b><br>
+      <ion-icon name="calendar">   {{lastTransac.created_at | date: 'dd/MM/yyyy H:mm' }}</ion-icon><br>
+      <ion-icon name="map">   {{ lastTransac.events_name }}</ion-icon><br>
+      <ion-icon name="contact">   {{ lastTransac.name_com }}</ion-icon><br>
+      <ion-icon name="cash">   {{ lastTransac.amount }} €</ion-icon><br>
+      <ion-icon name="basket"></ion-icon><br>
       <ion-list padding>
         <ion-item *ngFor="let entry of lastTransac.listeTransactions">
           {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)

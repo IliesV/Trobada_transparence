@@ -10,6 +10,7 @@ import { TabsPage } from '../pages/tabs/tabs';
 import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
 import { DealExposantPage } from '../pages/deal-exposant/deal-exposant';
 import { SoldeExposantPage } from '../pages/solde-exposant/solde-exposant';
+import { TransactionsPage } from '../pages/transactions/transactions'
 
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
@@ -54,7 +55,8 @@ import { Brightness } from '@ionic-native/brightness'
     TabsExposantPage,
     DealExposantPage,
     SoldeExposantPage,
-    LoginPage
+    LoginPage,
+    TransactionsPage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +75,8 @@ import { Brightness } from '@ionic-native/brightness'
     TabsPage,
     ScanQrPage,
     LoginPage,
-    TabsExposantPage
+    TabsExposantPage,
+    TransactionsPage
   ],
   providers: [
     StatusBar,
