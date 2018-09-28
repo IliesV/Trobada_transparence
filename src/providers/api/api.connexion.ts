@@ -47,6 +47,11 @@ export class ConnexionApiProvider {
                 error => console.error('Error delete infosUser', error)
             );
         }
+
+        //Refresh token
+        public refreshToken(token):Promise<any> {
+            return this.http.post(this.baseUrl, {"refresh_token": token}, {"Content-Type": "application/x-www-form-urlencoded"});
+        }
 }
 
 //ngOnInit() {
