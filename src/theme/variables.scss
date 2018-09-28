@@ -53,18 +53,28 @@ $colors: (
   
   $tabs-background: color($colors, trobada);
   $tabs-ios-tab-icon-color: color($colors, gris);
+  $tabs-md-tab-icon-color: color($colors, gris);
   $tabs-ios-tab-text-color: color($colors,gris);
+  $tabs-md-tab-text-color: color($colors,gris);
   $tabs-ios-tab-icon-color-active: color($colors, light);
+  $tabs-md-tab-icon-color-active: color($colors, light);
   $tabs-ios-tab-text-color-active: color($colors,light);
+  $tabs-md-tab-text-color-active: color($colors,light);
 
   $toolbar-background: color($colors, light);
   $toolbar-ios-button-color: color($colors, trobada);
+  $toolbar-md-button-color: color($colors, trobada);
   $toolbar-ios-title-text-color: color($colors, trobada);
+  $toolbar-md-title-text-color: color($colors, trobada);
   $toolbar-ios-border-color: color($colors, trobada);
+  $toolbar-md-border-color: color($colors, trobada);
 
   $card-ios-box-shadow-color: color($colors, trobada);
+  $card-md-box-shadow-color: color($colors, trobada);
   $list-ios-header-font-size: 1.4rem;
+  $list-md-header-font-size: 1.4rem;
   $list-ios-header-font-color: color($colors, trobada);
+  $list-md-header-font-color: color($colors, trobada);
 
 
 // App Material Design Variables
