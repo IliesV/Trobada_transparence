@@ -13,7 +13,7 @@ import { Brightness } from '@ionic-native/brightness'
 
 @Component({
   selector: 'page-qrcode',
-  templateUrl: 'qrcode.html',
+  templateUrl: 'qrcode.html'
 })
 export class QrcodePage {
 

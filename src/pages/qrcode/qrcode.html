@@ -9,8 +9,24 @@
     </ion-navbar>
   </ion-header>
   
-  <ion-content padding>
-      <div class="fixed-size-square">
-        <span><qrcode [qrdata]="myQrCode" [size]="250" [level]="'M'"></qrcode></span>
-    </div>
+  <ion-content>
+      <ion-grid>
+          <ion-row>
+            <ion-col col-1>
+              <ion-img width="20" height="20" src="../../assets/imgs/one.png"></ion-img>
+            </ion-col>
+            <ion-col col-11 text-center>
+                Présentez votre QR Code au commerçant pour vérifier votre solde
+            </ion-col>
+          </ion-row>
+          <ion-row>
+              <div class="qrCode">
+                  <span><qrcode [qrdata]="myQrCode" [size]="250" [level]="'M'"></qrcode></span>
+              </div>
+          </ion-row>
+          <ion-row>
+          <button ion-button small color="secondary">Suivant</button>
+        </ion-row>
+        </ion-grid>
+
   </ion-content>
