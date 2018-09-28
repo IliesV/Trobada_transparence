@@ -67,19 +67,11 @@ export class HomePage {
       .then( infos => {
         this.infosUser = infos as UserGlobal
         //Recup transaction
-        if(this.infosUser.role === "vendeur"){
-          this.transactionsApiProvider.lastVendeurTransaction(this.infosUser.token)
-          .then( transac => {
-            this.lastTransac = JSON.parse(transac.data)
-          })
-          .catch(() => console.log('erreur recup transactions'))
-        }else{
-          this.transactionsApiProvider.lastClientTransaction(this.infosUser.token)
-          .then( transac => {
-            this.lastTransac = JSON.parse(transac.data)
-          })
-          .catch(() => console.log('erreur recup transactions'))
-        }
+        this.transactionsApiProvider.lastClientTransaction(this.infosUser.token)
+        .then( transac => {
+          this.lastTransac = JSON.parse(transac.data)
+        })
+        .catch(() => console.log('erreur recup transactions'))
       })
       .catch(() => console.log('erreur recup infos'))
     })

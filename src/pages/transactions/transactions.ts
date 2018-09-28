@@ -13,13 +13,12 @@ import { UserGlobal } from '../../models/infosUser.model';
 import { TransactionGlobal } from '../../models/api.transaction.model'
 
 @Component({
-  selector: 'page-home-exposant',
-  templateUrl: 'home-exposant.html',
+  selector: 'page-transactions',
+  templateUrl: 'transactions.html',
 })
-export class HomeExposantPage {
+export class TransactionsPage {
 
-  solde:string = 'Montant inconnu';
-  lastTransac:TransactionGlobal = new TransactionGlobal();
+  listeTransac:TransactionGlobal[] = new Array<TransactionGlobal>();
   infosUser:UserGlobal = new UserGlobal();
 
   constructor(
@@ -39,7 +38,7 @@ export class HomeExposantPage {
         {
           text: 'Annuler',
           role: 'cancel',
-          handler: () => {;
+          handler: () => {
           }
         },
         {
@@ -55,23 +54,17 @@ export class HomeExposantPage {
   }
 
   ionViewCanEnter(){
-    //Recup Solde
-    this.nativeStorage.getItem('solde')
-    .then( retour => {
-      this.solde = retour.solde
-      //Recup Infos
-      this.nativeStorage.getItem('infosUser')
-      .then( infos => {
-        this.infosUser = infos as UserGlobal
-        //Recup transaction
-        this.transactionsApiProvider.lastVendeurTransaction(this.infosUser.token)
-        .then( transac => {
-          this.lastTransac = JSON.parse(transac.data)
-        })
-        .catch(() => console.log('erreur recup transactions'))
+    //Recup Infos
+    this.nativeStorage.getItem('infosUser')
+    .then( infos => {
+      this.infosUser = infos as UserGlobal
+      //Recup transaction
+      this.transactionsApiProvider.giveMyTransactions(this.infosUser.token)
+      .then( transac => {
+        this.listeTransac = JSON.parse(transac.data)
       })
-      .catch(() => console.log('erreur recup infos'))
+      .catch(() => console.log('erreur recup transactions'))
     })
-    .catch(() => console.log('erreur recup solde'))
-   }
+    .catch(() => console.log('erreur recup infos'))
+  }
 }
