@@ -1,12 +1,6 @@
-<!--
-  Generated template for the HomeExposantPage page.
-
-  See http://ionicframework.com/docs/components/#navigation for more info on
-  Ionic pages and navigation.
--->
 <ion-header>
   <ion-navbar>
-    <ion-title>Trobada</ion-title>
+    <ion-title>Mon compte</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="logout()">
         <ion-icon ios="ios-power" md="md-power" name="logout" ></ion-icon>
@@ -15,10 +9,32 @@
   </ion-navbar>
 </ion-header>
 
-
 <ion-content padding>
-  <h2>Welcome to Ionic!</h2>
-  <p>
-    Voici l'interface exposant.
-  </p>
-</ion-content>
+    <ion-card>
+      <ion-card-title text-center>
+          Bonjour {{ infosUser.pseudo }}
+      </ion-card-title>
+      <ion-card-content text-center>
+          <h1>Vos gains :</h1>
+          <h1>{{ solde }} €</h1>
+      </ion-card-content>
+    </ion-card>
+    <br>
+    <ion-card>
+        <ion-card-title text-center>
+            <b>Dernière vente</b>
+        </ion-card-title>
+      <ion-card-content>
+        <b>Date: </b>{{lastTransac.created_at | date: 'dd/MM/yyyy H:mm' }}<br>
+        <b>Lieu: </b>{{ lastTransac.events_name }}<br>
+        <b>Client: </b>{{ lastTransac.name_com }}<br>
+        <b>Montant: </b>{{ lastTransac.amount }} €<br>
+        <b>Articles:</b><br>
+        <ion-list padding>
+          <ion-item *ngFor="let entry of lastTransac.listeTransactions">
+            {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
+          </ion-item>
+        </ion-list>
+      </ion-card-content>
+    </ion-card>
+  </ion-content>

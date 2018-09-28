@@ -27,4 +27,22 @@ export class TransactionsApiProvider {
         return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
             
     }
+
+    //Recup last transaction Vendeur
+    public lastVendeurTransaction(token):Promise<HTTPResponse> {
+
+        const URL = 'http://trobadapi.ddns.info/api/lastTransacVendeur'
+        this.http.setDataSerializer('JSON');
+        return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
+            
+    }
+
+    //Recup last transaction Vendeur
+    public lastClientTransaction(token):Promise<HTTPResponse> {
+
+        const URL = 'http://trobadapi.ddns.info/api/lastTransacClient'
+        this.http.setDataSerializer('JSON');
+        return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
+            
+    }
 }
