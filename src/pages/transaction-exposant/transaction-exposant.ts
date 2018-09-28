@@ -5,31 +5,30 @@ import {App} from 'ionic-angular';
 
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
 import { NativeStorage } from '@ionic-native/native-storage';
-import { UserGlobal } from '../../models/infosUser.model';
 
-import { Brightness } from '@ionic-native/brightness'
+import { UserGlobal } from '../../models/infosUser.model';
+import { TransactionGlobal } from '../../models/api.transaction.model'
 
 @Component({
-  selector: 'page-about',
-  templateUrl: 'about.html'
+  selector: 'page-transaction-exposant',
+  templateUrl: 'transaction-exposant.html',
 })
-export class AboutPage {
+export class TransactionExposantPage {
 
-  public myQrCode: string = null;
+  listeTransac:TransactionGlobal[] = new Array<TransactionGlobal>();
   infosUser:UserGlobal = new UserGlobal();
-  private oldBright:number = 0;
 
-  constructor(public navCtrl: NavController,
+  constructor(
+    public navCtrl: NavController,
     private alertCtrl: AlertController,
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
-    private nativeStorage: NativeStorage,
-    private brightness: Brightness
-    ) {
-
-  }
+    private transactionsApiProvider: TransactionsApiProvider,
+    private nativeStorage: NativeStorage
+  ) {}
 
   public logout(){
     let alert = this.alertCtrl.create({
@@ -55,24 +54,17 @@ export class AboutPage {
   }
 
   ionViewCanEnter(){
-      //Recup Infos
-      this.nativeStorage.getItem('infosUser')
-      .then( infos => {
-        this.infosUser = infos as UserGlobal
-        this.myQrCode = '3-'+this.infosUser.pseudo
+    //Recup Infos
+    this.nativeStorage.getItem('infosUser')
+    .then( infos => {
+      this.infosUser = infos as UserGlobal
+      //Recup transaction
+      this.transactionsApiProvider.giveMyTransactions(this.infosUser.token)
+      .then( transac => {
+        this.listeTransac = JSON.parse(transac.data)
       })
-      .catch(() => console.log('erreur recup infos'))
-  }
-  ionViewWillEnter(){
-    this.brightness.getBrightness()
-    .then( value => {
-      this.oldBright = value
-      this.brightness.setBrightness(1)
+      .catch(() => console.log('erreur recup transactions'))
     })
-    .catch(() => console.log("erreur brightness"))
-  }
-
-  ionViewWillLeave(){
-    this.brightness.setBrightness(this.oldBright)
+    .catch(() => console.log('erreur recup infos'))
   }
 }
