@@ -3,7 +3,7 @@ import { NavParams } from 'ionic-angular';
 
 import { HomeExposantPage } from '../home-exposant/home-exposant';
 import { DealExposantPage } from '../deal-exposant/deal-exposant';
-import { SoldeExposantPage } from '../solde-exposant/solde-exposant';
+import { TransactionExposantPage } from '../transaction-exposant/transaction-exposant';
 
 @Component({
   selector: 'page-tabs-exposant',
@@ -15,7 +15,7 @@ export class TabsExposantPage {
 
   homeExposantRoot = HomeExposantPage;
   dealExposantRoot = DealExposantPage;
-  soldeExposantRoot = SoldeExposantPage;
+  transactionExposantRoot = TransactionExposantPage;
 
 
   constructor(private navParams: NavParams) {

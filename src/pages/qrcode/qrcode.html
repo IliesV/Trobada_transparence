@@ -1,0 +1,16 @@
+<ion-header>
+    <ion-navbar>
+      <ion-title>QR-Code</ion-title>
+      <ion-buttons end>
+        <button ion-button icon-only clear (tap)="logout()">
+          <ion-icon ios="ios-power" md="md-power" name="logout"></ion-icon>
+        </button>
+      </ion-buttons>
+    </ion-navbar>
+  </ion-header>
+  
+  <ion-content padding>
+      <div class="fixed-size-square">
+        <span><qrcode [qrdata]="myQrCode" [size]="250" [level]="'M'"></qrcode></span>
+    </div>
+  </ion-content>

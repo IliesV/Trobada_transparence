@@ -3,14 +3,15 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
+//import { AboutPage } from '../pages/about/about';
 import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
 import { DealExposantPage } from '../pages/deal-exposant/deal-exposant';
-import { SoldeExposantPage } from '../pages/solde-exposant/solde-exposant';
-import { TransactionsPage } from '../pages/transactions/transactions'
+import { TransactionExposantPage } from '../pages/transaction-exposant/transaction-exposant';
+import { TransactionsPage } from '../pages/transactions/transactions';
+import { QrcodePage } from '../pages/qrcode/qrcode';
 
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
@@ -23,7 +24,6 @@ import { TransactionProvider } from '../providers/transaction/transaction';
 
 import { SQLite } from '@ionic-native/sqlite';
 import { AppBddProvider } from '../providers/app-bdd/app-bdd';
-//import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http';
 
 import { NativeStorage } from '@ionic-native/native-storage';
@@ -46,7 +46,7 @@ import { Brightness } from '@ionic-native/brightness'
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
+    QrcodePage,
     ContactPage,
     HomePage,
     TabsPage,
@@ -54,7 +54,7 @@ import { Brightness } from '@ionic-native/brightness'
     HomeExposantPage,
     TabsExposantPage,
     DealExposantPage,
-    SoldeExposantPage,
+    TransactionExposantPage,
     LoginPage,
     TransactionsPage
   ],
@@ -66,12 +66,12 @@ import { Brightness } from '@ionic-native/brightness'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
+    QrcodePage,
     ContactPage,
     HomePage,
     HomeExposantPage,
     DealExposantPage,
-    SoldeExposantPage,
+    TransactionExposantPage,
     TabsPage,
     ScanQrPage,
     LoginPage,
