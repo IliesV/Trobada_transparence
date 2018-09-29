@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, App} from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ValidationFestivalierPage } from '../validation-festivalier/validation-festivalier';
-import { QrcodePage } from '../qrcode/qrcode';
 import { TabsPage } from '../tabs/tabs';
 
 @Component({
@@ -34,7 +33,6 @@ export class ScannerFestivalierPage {
   }
 
   ionViewWillEnter(){
-    console.log(this.source)
     this.showCamera();
     this.qrScanner.prepare()
       .then((status: QRScannerStatus) => {

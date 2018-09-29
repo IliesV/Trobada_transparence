@@ -47,6 +47,7 @@ export class QrcodePage {
         {
           text: 'Oui',
           handler: () => {
+            this.brightness.setBrightness(this.oldBright);
             this.connexionApiProvider.deleteToken();
             this.app.getRootNav().setRoot(LoginPage);
           }
@@ -57,7 +58,11 @@ export class QrcodePage {
   }
 
   public goScan(){
-    this.app.getRootNav().setRoot(ScannerFestivalierPage);
+    this.brightness.setBrightness(this.oldBright)
+    .then( () => {
+      this.app.getRootNav().setRoot(ScannerFestivalierPage);
+    })
+    .catch(() => console.log("erreur brightness"))
   }
 
   ionViewCanEnter(){
@@ -76,9 +81,5 @@ export class QrcodePage {
       this.brightness.setBrightness(1)
     })
     .catch(() => console.log("erreur brightness"))
-  }
-
-  ionViewWillLeave(){
-    this.brightness.setBrightness(this.oldBright)
   }
 }
