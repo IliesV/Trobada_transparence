@@ -5,6 +5,8 @@ import { AlertController } from 'ionic-angular';
 import {TabsPage} from '../tabs/tabs';
 import {TabsExposantPage} from '../tabs-exposant/tabs-exposant';
 
+import { AppBddProvider } from '../../providers/app-bdd/app-bdd';
+
 import {InfosProvider} from '../../providers/infos/infosUser';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
@@ -23,12 +25,13 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
+    public appBddProvider: AppBddProvider,
     private alertCtrl: AlertController,
     private infosProvider: InfosProvider,
     public connexionApiProvider:ConnexionApiProvider,
     private transactionsApiProvider:TransactionsApiProvider
   ) {
-    // this.appBddProvider.createDatabaseFile();
+    this.appBddProvider.createDatabaseFile();
   }
 
   public submitLogin(){
@@ -48,6 +51,9 @@ export class LoginPage {
             //Recup Role
             this.infosProvider.giveInfosUser()
             .then(infosUser => {
+              //Creation BDD
+
+
               //Redirection
               if(infosUser.role == 'vendeur'){
                 this.navCtrl.setRoot(TabsExposantPage)

@@ -49,10 +49,6 @@ export class ScannerFestivalierPage {
            scanSub.unsubscribe();
            this.app.getRootNav().setRoot(ValidationFestivalierPage);
           });
-        
-  
-          
-          
         } else if (status.denied) {
           console.log('Camera permission denied');
         } else {
