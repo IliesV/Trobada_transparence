@@ -90,7 +90,8 @@
     <plugin name="cordova-plugin-advanced-http" spec="^2.0.1" />
     <allow-navigation href="http://192.168.1.59:8100" sessionid="c2d2e865" />
     <plugin name="cordova-plugin-brightness" spec="^0.2.0" />
-    <allow-navigation href="http://192.168.1.27:8100" sessionid="c802e110" />
+    <plugin name="cordova-plugin-network-information" spec="~2.0.1" />
+    <allow-navigation href="http://192.168.1.27:8100" sessionid="89c8ebeb" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="ios" spec="^4.5.5" />
     <engine name="android" spec="^7.0.0" />

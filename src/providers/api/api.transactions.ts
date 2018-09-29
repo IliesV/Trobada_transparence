@@ -3,11 +3,13 @@ import { HTTP, HTTPResponse } from '@ionic-native/http';
 // RxJS
 import 'rxjs/add/operator/toPromise';
 
+
+
 @Injectable()
 export class TransactionsApiProvider {
 
     constructor(
-        private http: HTTP,
+        private http: HTTP
         ) {}
 
     //Recup solde API

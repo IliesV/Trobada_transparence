@@ -31,10 +31,12 @@ export class LoginPage {
     public connexionApiProvider:ConnexionApiProvider,
     private transactionsApiProvider:TransactionsApiProvider
   ) {
+    //Creation BDD
     this.appBddProvider.createDatabaseFile();
   }
 
   public submitLogin(){
+    this.attentionOnline();
     console.log('Check credentials')
     this.connexionApiProvider.login(this.email,this.password)
     .then(response => {
@@ -51,9 +53,6 @@ export class LoginPage {
             //Recup Role
             this.infosProvider.giveInfosUser()
             .then(infosUser => {
-              //Creation BDD
-
-
               //Redirection
               if(infosUser.role == 'vendeur'){
                 this.navCtrl.setRoot(TabsExposantPage)
@@ -79,8 +78,23 @@ export class LoginPage {
       alert.present();
     })
   }
+
+
+ionViewDidEnter(){
+  this.attentionOnline();
 }
 
+public attentionOnline(){
+  if(!this.connexionApiProvider.checkOnline()){
+    let alert = this.alertCtrl.create({
+      title: 'Attention',
+      subTitle: 'Une connexion à internet est indispensable',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+}
+}
 /*
 .then(()=> {
 

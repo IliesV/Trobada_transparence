@@ -8,7 +8,7 @@
 import { NativeStorage } from '@ionic-native/native-storage';
 
 // Core components
-import { Injectable }   from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http';
 // RxJS
 import 'rxjs/add/operator/toPromise';
@@ -16,42 +16,55 @@ import 'rxjs/add/operator/toPromise';
 
 import { JwtHelper } from "angular2-jwt";
 
+import { Network } from '@ionic-native/network';
+
 @Injectable()
 export class ConnexionApiProvider {
 
     private baseUrl: string = 'http://trobadapi.ddns.info/login_check';
     token;
-    
+
     constructor(
         private nativeStorage: NativeStorage,
         private http: HTTP,
-        private decoder:JwtHelper
-        ) { }
+        private decoder: JwtHelper,
+        private network: Network
+    ) { }
 
-        //CheckLogin
-        public login(username:string,password:string):Promise<any> {
-            this.http.setDataSerializer('JSON');
-            return this.http.post(this.baseUrl, {"username": username,"password":password}, {"Content-Type": "application/json"});
+    //Check connexion internet
+    public checkOnline(): boolean {
+
+        if (this.network.type === 'unknown' || this.network.type === 'none') {
+            return false;
+        } else {
+            return true;
         }
+    }
 
-        //Verification validité token
-        public checkTimeToken(token):boolean{
-            return this.decoder.isTokenExpired(token);
-        }
+    //CheckLogin
+    public login(username: string, password: string): Promise<any> {
+        this.http.setDataSerializer('JSON');
+        return this.http.post(this.baseUrl, { "username": username, "password": password }, { "Content-Type": "application/json" });
+    }
 
-        //Delete TOKEN
-        public deleteToken(){
-            this.nativeStorage.clear()
+    //Verification validité token
+    public checkTimeToken(token): boolean {
+        return this.decoder.isTokenExpired(token);
+    }
+
+    //Delete TOKEN
+    public deleteToken() {
+        this.nativeStorage.clear()
             .then(
                 () => console.log('Datas supprimees'),
                 error => console.error('Error delete infosUser', error)
             );
-        }
+    }
 
-        //Refresh token
-        public refreshToken(token):Promise<any> {
-            return this.http.post(this.baseUrl, {"refresh_token": token}, {"Content-Type": "application/x-www-form-urlencoded"});
-        }
+    //Refresh token
+    public refreshToken(token): Promise<any> {
+        return this.http.post(this.baseUrl, { "refresh_token": token }, { "Content-Type": "application/x-www-form-urlencoded" });
+    }
 }
 
 //ngOnInit() {

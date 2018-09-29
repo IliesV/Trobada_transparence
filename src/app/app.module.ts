@@ -40,7 +40,9 @@ import { JwtHelper } from "angular2-jwt";
 
 import { QRCodeModule } from 'angularx-qrcode';
 
-import { Brightness } from '@ionic-native/brightness'
+import { Brightness } from '@ionic-native/brightness';
+
+import { Network } from '@ionic-native/network';
 
 
 @NgModule({
@@ -98,7 +100,8 @@ import { Brightness } from '@ionic-native/brightness'
     TransactionProvider,
     TransactionsApiProvider,
     InfosProvider,
-    Brightness
+    Brightness,
+    Network
   ]
 })
 export class AppModule {}
