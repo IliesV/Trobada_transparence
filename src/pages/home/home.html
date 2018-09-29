@@ -3,7 +3,7 @@
     <ion-title>Mon compte</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="logout()">
-        <ion-icon ios="ios-power" md="md-power" name="logout" ></ion-icon>
+        <ion-icon ios="ios-power" md="md-power" name="logout"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -12,29 +12,63 @@
 <ion-content padding>
   <ion-card>
     <ion-card-title text-center>
-        Bonjour {{ infosUser.pseudo }}
+      Bonjour {{ infosUser.pseudo }}
     </ion-card-title>
-    <ion-card-content text-center>
-        <h1>Votre solde :</h1>
-        <h1>{{ solde }} €</h1>
-    </ion-card-content>
   </ion-card>
   <br>
   <ion-card>
-      <ion-card-title text-center>
-          <b>Dernier paiement</b>
-      </ion-card-title>
-    <ion-card-content>
-      <ion-icon name="calendar">   {{lastTransac.created_at | date: 'dd/MM/yyyy H:mm' }}</ion-icon><br>
-      <ion-icon name="map">   {{ lastTransac.events_name }}</ion-icon><br>
-      <ion-icon name="contact">   {{ lastTransac.name_com }}</ion-icon><br>
-      <ion-icon name="cash">   {{ lastTransac.amount }} €</ion-icon><br>
-      <ion-icon name="basket"></ion-icon><br>
-      <ion-list padding>
-        <ion-item *ngFor="let entry of lastTransac.listeTransactions">
-          {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
-        </ion-item>
-      </ion-list>
+    <ion-card-title text-center>
+      Votre solde
+    </ion-card-title>
+    <ion-card-content text-center class="bigTitle">
+      <h1>{{ solde }} €</h1>
+    </ion-card-content>
+  </ion-card>
+  <br>
+
+  <ion-card>
+    <ion-card-title text-center>
+      <b>Dernier paiement</b>
+    </ion-card-title>
+
+    <ion-card-content text-center>
+      <ion-grid>
+        <ion-row>
+          <ion-col col-6>
+            <div class='titleCard'>
+                <ion-icon name="calendar"> Date</ion-icon>
+            </div>
+            {{lastTransac.created_at | date: 'dd/MM/yyyy H:mm' }}
+          </ion-col>
+          <ion-col col-6>
+              <div class='titleCard'>
+                  <ion-icon name="map"> Lieu</ion-icon>
+              </div>
+              {{ lastTransac.events_name }}
+            </ion-col>
+        </ion-row>
+        <ion-row>
+            <ion-col col-6>
+              <div class='titleCard'>
+                  <ion-icon name="contact"> Vendeur</ion-icon>
+              </div>
+              {{ lastTransac.name_com }}
+            </ion-col>
+            <ion-col col-6>
+                <div class='titleCard'>
+                    <ion-icon name="cash"> Montant</ion-icon>
+                </div>
+                {{ lastTransac.amount }}
+              </ion-col>
+          </ion-row>
+          <ion-row>
+              <ion-col col-10 offset-1>
+                <div class='titleCard'>
+                    <ion-icon name="basket"> Panier</ion-icon>
+                </div>
+              </ion-col>
+            </ion-row>
+      </ion-grid>
     </ion-card-content>
   </ion-card>
 </ion-content>

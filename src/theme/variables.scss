@@ -42,6 +42,7 @@ $colors: (
   light:      #fffdfd,
   dark:       #222,
   trobada:    #17a2b8,
+  trobadalight: rgba(23, 162, 184, 0.5),
   gris:       #6f7274
   );
   
@@ -70,10 +71,14 @@ $colors: (
   $toolbar-md-border-color: color($colors, trobada);
 
   //Card
-  $card-ios-box-shadow-color: color($colors, trobada);
-  $card-md-box-shadow-color: color($colors, trobada);
+  // $card-ios-box-shadow-color: color($colors, trobada);
+  // $card-md-box-shadow-color: color($colors, trobada);
+  $card-md-background-color: color($colors, trobadalight);
   $card-ios-font-size: 1.8rem;
   $card-md-font-size: 1.8rem;
+  $card-ios-title-text-color: color($colors, light);
+  $card-md-title-text-color: color($colors, light);
+  $card-md-text-color: color($colors, light);
 
   $list-ios-header-font-size: 1.4rem;
   $list-md-header-font-size: 1.4rem;
