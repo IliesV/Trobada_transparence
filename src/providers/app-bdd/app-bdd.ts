@@ -41,28 +41,8 @@ export class AppBddProvider {
           .then(() => {
             console.log('Toutes les tables sont créées');
           })
-          .catch(e => console.log('toto'+JSON.stringify(e)));
+          .catch(e => console.log(JSON.stringify(e)));
       })
       .catch(e => console.log(JSON.stringify(e)));
   }
-
-  //PROVISOIRE Add datas
-  // private addDatas(): void {
-
-  //   this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (1,\'Client\')', [])
-  //   .then(() => {
-  //     this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (2,\'Vendeur\')', [])
-  //     .then(() => {
-  //       this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Ruquier\',\'Laurent\',2)', [])
-  //       .then(() => {
-  //         this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Drucker\',\'Michel\',1)', [])
-  //         .then(() => console.log('Les données sont enregistrées'))
-  //         .catch(e => console.log(e));
-  //       })
-  //       .catch(e => console.log(e));
-  //     })
-  //     .catch(e => console.log(e));
-  //   })
-  //   .catch(e => console.log(e));
-  // }
 }
