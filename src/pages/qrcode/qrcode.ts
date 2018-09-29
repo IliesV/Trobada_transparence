@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
@@ -9,7 +8,10 @@ import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { UserGlobal } from '../../models/infosUser.model';
 
-import { Brightness } from '@ionic-native/brightness'
+import { Brightness } from '@ionic-native/brightness';
+
+import {ScannerFestivalierPage} from '../scanner-festivalier/scanner-festivalier';
+
 
 @Component({
   selector: 'page-qrcode',
@@ -21,7 +23,7 @@ export class QrcodePage {
   infosUser:UserGlobal = new UserGlobal();
   private oldBright:number = 0;
 
-  constructor(public navCtrl: NavController,
+  constructor(
     private alertCtrl: AlertController,
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
@@ -52,6 +54,10 @@ export class QrcodePage {
       ]
     });
     alert.present();
+  }
+
+  public goScan(){
+    this.app.getRootNav().setRoot(ScannerFestivalierPage);
   }
 
   ionViewCanEnter(){

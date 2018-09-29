@@ -3,7 +3,6 @@ import { BrowserModule } from '@angular/platform-browser';
 import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
 import { MyApp } from './app.component';
 
-//import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
@@ -11,6 +10,8 @@ import { DealExposantPage } from '../pages/deal-exposant/deal-exposant';
 import { TransactionExposantPage } from '../pages/transaction-exposant/transaction-exposant';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { QrcodePage } from '../pages/qrcode/qrcode';
+import { ScannerFestivalierPage } from '../pages/scanner-festivalier/scanner-festivalier';
+import { ValidationFestivalierPage } from '../pages/validation-festivalier/validation-festivalier';
 
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
@@ -54,7 +55,9 @@ import { Brightness } from '@ionic-native/brightness'
     DealExposantPage,
     TransactionExposantPage,
     LoginPage,
-    TransactionsPage
+    TransactionsPage,
+    ScannerFestivalierPage,
+    ValidationFestivalierPage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +76,9 @@ import { Brightness } from '@ionic-native/brightness'
     ScanQrPage,
     LoginPage,
     TabsExposantPage,
-    TransactionsPage
+    TransactionsPage,
+    ScannerFestivalierPage,
+    ValidationFestivalierPage
   ],
   providers: [
     StatusBar,
