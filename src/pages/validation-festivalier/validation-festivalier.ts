@@ -89,22 +89,22 @@ export class ValidationFestivalierPage {
       case 1:
         setTimeout(() => {
           this.key1Input.setFocus();
-        },200)
+        },100)
         break;
       case 2:
         setTimeout(() => {
           this.key2Input.setFocus();
-        },200)
+        },100)
         break;
       case 3:
         setTimeout(() => {
           this.key3Input.setFocus();
-        },200)
+        },100)
         break;
       case 4:
         setTimeout(() => {
           this.key4Input.setFocus();
-        },200)
+        },100)
         break;
       case 5:
           this.keyboard.hide();
