@@ -1,0 +1,26 @@
+page-validation-festivalier {  
+    .inputKey {
+        border-radius: 5px !important;
+        font-size: 0.9em;
+        margin: 10px;
+        border: 1px solid #000000;
+        box-shadow: none !important;
+        text-align: center;
+    }
+
+    .resultatRequeteOk{
+        border: 2px solid green;
+        border-radius: 5px;
+        font-size: 2.5rem;
+        padding:5px;
+        color:green;
+    }
+
+    .resultatRequeteWrong{
+        border: 2px solid red;
+        border-radius: 5px;
+        font-size: 2.5rem;
+        padding:5px;
+        color:red;
+    }
+}

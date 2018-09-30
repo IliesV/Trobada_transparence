@@ -1,14 +1,17 @@
 page-qrcode {
-    .fixed-size-square {
-        position: absolute;
-        left: 50%;
-        top: 50%;
-        transform: translate(-50%, -50%);
-        display: table;
 
+.texte{
+    width: 100%;
+    vertical-align: middle;
+}
+
+
+    .qrCode{
+        margin: 30px auto;
+        display: table;
     }
 
-    .fixed-size-square span {
+    .qrCode span {
         display: table-cell;
         text-align: center;
         vertical-align: middle;

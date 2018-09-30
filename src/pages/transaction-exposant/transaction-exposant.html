@@ -10,21 +10,48 @@
   </ion-header>
   
   <ion-content padding>
-  
-    <ion-card *ngFor="let transaction of listeTransac">
-      <ion-card-title text-center>
-        {{transaction.created_at | date: 'dd/MM/yyyy H:mm' }}
-      </ion-card-title>
-      <ion-card-content>
-        <ion-icon name="map">   {{ transaction.events_name }}</ion-icon><br>
-        <ion-icon name="contact">   {{ transaction.name_fest }}</ion-icon><br>
-        <ion-icon name="cash">   {{ transaction.amount }} €</ion-icon><br>
-        <ion-icon name="basket"></ion-icon><br>
-        <ion-list no-lines>
-          <ion-item *ngFor="let entry of transaction.listeTransactions">
-              {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
-          </ion-item>
-        </ion-list>
-      </ion-card-content>
-    </ion-card>
-  </ion-content>
+
+      <ion-card *ngFor="let transaction of listeTransac">
+        <ion-card-content>
+          <ion-grid>
+            <ion-row>
+              <ion-col col-md-6 col-12>
+                <div class='dataCardTransacLeft'>
+                  <ion-icon name="calendar"> {{transaction.created_at | date: 'dd/MM/yyyy H:mm' }}</ion-icon>
+                </div>
+              </ion-col>
+              <ion-col col-md-6 col-12>
+                <div class='dataCardTransacLeft'>
+                  <ion-icon name="cash"> {{ transaction.amount }} €</ion-icon>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-md-6 col-12>
+                <div class='dataCardTransacLeft'>
+                  <ion-icon name="contact"> {{ transaction.name_com }}</ion-icon>
+                </div>
+              </ion-col>
+              <ion-col col-md-6 col-12>
+                <div class='dataCardTransacLeft'>
+                  <ion-icon name="map"> {{ transaction.events_name }}</ion-icon>
+                </div>
+              </ion-col>
+            </ion-row>
+            <ion-row>
+              <ion-col col-md-10 offset-md-1 col-12>
+                <div class='dataCardTransacCenter'>
+                  <ion-icon name="basket"> Panier</ion-icon>
+                </div>
+              </ion-col>
+              <ion-col col-md-10 offset-md-1 col-12 *ngFor="let entry of transaction.listeTransactions">
+                <div class='dataCardTransacCenterBlack'>
+                  {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
+                </div>
+              </ion-col>
+            </ion-row>
+          </ion-grid>
+        </ion-card-content>
+      </ion-card>
+    </ion-content>
+    

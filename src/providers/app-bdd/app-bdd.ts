@@ -34,35 +34,15 @@ export class AppBddProvider {
   private createTables(): void {
 
     //Table TRANSACTIONS
-    this.db.executeSql('CREATE TABLE IF NOT EXIST "transactions" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `amount` NUMERIC NOT NULL, `created_at` TEXT NOT NULL, `id_fest` INTEGER NOT NULL, `name_fest` TEXT NOT NULL, `id_com` INTEGER NOT NULL, `name_com` TEXT NOT NULL )', [])
-      .then(() => {
-        //Table TRANSACTION_ENTRIES
-        this.db.executeSql('CREATE TABLE IF NOT EXIST "transactions_entries" ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `products_id` INTEGER NOT NULL, `products_name` TEXT, `qty` INTEGER NOT NULL, `events_id` INTEGER NOT NULL )', [])
+    this.db.executeSql('CREATE TABLE IF NOT EXISTS `transactions_entries` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `products_id` INTEGER NOT NULL, `products_name` TEXT, `qty` INTEGER NOT NULL, `events_id` INTEGER NOT NULL )', [])
+    .then(() => {
+      //Table TRANSACTION_ENTRIES
+        this.db.executeSql('CREATE TABLE IF NOT EXISTS `transactions` ( `id` INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT, `amount` NUMERIC NOT NULL, `created_at` TEXT NOT NULL, `id_fest` INTEGER NOT NULL, `name_fest` TEXT NOT NULL, `id_com` INTEGER NOT NULL, `name_com` TEXT NOT NULL, `entities` INTEGER, `validated` INTEGER NOT NULL, FOREIGN KEY(`entities`) REFERENCES `transactions_entries`(`id`) )', [])
           .then(() => {
             console.log('Toutes les tables sont créées');
           })
-          .catch(e => console.log(e));
+          .catch(e => console.log(JSON.stringify(e)));
       })
-      .catch(e => console.log(e));
+      .catch(e => console.log(JSON.stringify(e)));
   }
-
-  //PROVISOIRE Add datas
-  // private addDatas(): void {
-
-  //   this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (1,\'Client\')', [])
-  //   .then(() => {
-  //     this.db.executeSql('INSERT INTO `role` (roleId,nom) VALUES (2,\'Vendeur\')', [])
-  //     .then(() => {
-  //       this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Ruquier\',\'Laurent\',2)', [])
-  //       .then(() => {
-  //         this.db.executeSql('INSERT INTO `user` (nom,prenom,roleId) VALUES (\'Drucker\',\'Michel\',1)', [])
-  //         .then(() => console.log('Les données sont enregistrées'))
-  //         .catch(e => console.log(e));
-  //       })
-  //       .catch(e => console.log(e));
-  //     })
-  //     .catch(e => console.log(e));
-  //   })
-  //   .catch(e => console.log(e));
-  // }
 }

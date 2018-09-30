@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
@@ -9,19 +8,23 @@ import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { UserGlobal } from '../../models/infosUser.model';
 
-import { Brightness } from '@ionic-native/brightness'
+import { Brightness } from '@ionic-native/brightness';
+
+import {ScannerFestivalierPage} from '../scanner-festivalier/scanner-festivalier';
+
 
 @Component({
   selector: 'page-qrcode',
-  templateUrl: 'qrcode.html',
+  templateUrl: 'qrcode.html'
 })
 export class QrcodePage {
 
   public myQrCode: string = null;
   infosUser:UserGlobal = new UserGlobal();
   private oldBright:number = 0;
+  solde:string = 'Montant inconnu';
 
-  constructor(public navCtrl: NavController,
+  constructor(
     private alertCtrl: AlertController,
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
@@ -45,6 +48,7 @@ export class QrcodePage {
         {
           text: 'Oui',
           handler: () => {
+            this.brightness.setBrightness(this.oldBright);
             this.connexionApiProvider.deleteToken();
             this.app.getRootNav().setRoot(LoginPage);
           }
@@ -54,12 +58,25 @@ export class QrcodePage {
     alert.present();
   }
 
+  public goScan(){
+    this.brightness.setBrightness(this.oldBright)
+    .then( () => {
+      this.app.getRootNav().setRoot(ScannerFestivalierPage);
+    })
+    .catch(() => console.log("erreur brightness"))
+  }
+
   ionViewCanEnter(){
       //Recup Infos
       this.nativeStorage.getItem('infosUser')
       .then( infos => {
-        this.infosUser = infos as UserGlobal
-        this.myQrCode = '3-'+this.infosUser.pseudo
+        this.infosUser = infos as UserGlobal;
+        this.nativeStorage.getItem('solde')
+        .then( retour => {
+        this.solde = retour.solde;
+        this.myQrCode = this.infosUser.id+'-'+this.infosUser.pseudo+'-'+this.solde;
+      })
+      .catch(() => console.log('erreur recup solde'))
       })
       .catch(() => console.log('erreur recup infos'))
   }
@@ -70,9 +87,5 @@ export class QrcodePage {
       this.brightness.setBrightness(1)
     })
     .catch(() => console.log("erreur brightness"))
-  }
-
-  ionViewWillLeave(){
-    this.brightness.setBrightness(this.oldBright)
   }
 }
