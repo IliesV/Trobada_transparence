@@ -23,6 +23,7 @@
     "@ionic-native/brightness": "^4.15.0",
     "@ionic-native/core": "~4.12.0",
     "@ionic-native/http": "^4.15.0",
+    "@ionic-native/keyboard": "^4.15.0",
     "@ionic-native/native-storage": "^4.15.0",
     "@ionic-native/network": "^4.15.0",
     "@ionic-native/qr-scanner": "^4.15.0",

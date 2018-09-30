@@ -1,6 +1,6 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, Input, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, NavController, Events} from 'ionic-angular';
 import { MyApp } from './app.component';
 
 import { HomePage } from '../pages/home/home';
@@ -43,6 +43,8 @@ import { QRCodeModule } from 'angularx-qrcode';
 import { Brightness } from '@ionic-native/brightness';
 
 import { Network } from '@ionic-native/network';
+
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 @NgModule({
@@ -101,7 +103,11 @@ import { Network } from '@ionic-native/network';
     TransactionsApiProvider,
     InfosProvider,
     Brightness,
-    Network
+    Network,
+    Keyboard,
+    Input,
+    ViewChild,
+    Events
   ]
 })
 export class AppModule {}

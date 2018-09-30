@@ -22,6 +22,7 @@ export class QrcodePage {
   public myQrCode: string = null;
   infosUser:UserGlobal = new UserGlobal();
   private oldBright:number = 0;
+  solde:string = 'Montant inconnu';
 
   constructor(
     private alertCtrl: AlertController,
@@ -69,8 +70,13 @@ export class QrcodePage {
       //Recup Infos
       this.nativeStorage.getItem('infosUser')
       .then( infos => {
-        this.infosUser = infos as UserGlobal
-        this.myQrCode = '3-'+this.infosUser.pseudo
+        this.infosUser = infos as UserGlobal;
+        this.nativeStorage.getItem('solde')
+        .then( retour => {
+        this.solde = retour.solde;
+        this.myQrCode = this.infosUser.id+'-'+this.infosUser.pseudo+'-'+this.solde;
+      })
+      .catch(() => console.log('erreur recup solde'))
       })
       .catch(() => console.log('erreur recup infos'))
   }

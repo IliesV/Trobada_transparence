@@ -45,7 +45,7 @@ export class ScannerFestivalierPage {
            this.objet = text;
            this.qrScanner.hide();
            scanSub.unsubscribe();
-           this.app.getRootNav().setRoot(ValidationFestivalierPage);
+           this.app.getRootNav().setRoot(ValidationFestivalierPage,{ objet: this.objet});
           });
         } else if (status.denied) {
           console.log('Camera permission denied');
