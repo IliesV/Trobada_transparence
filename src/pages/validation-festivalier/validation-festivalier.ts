@@ -13,14 +13,30 @@ export class ValidationFestivalierPage {
   @ViewChild('key3') key3Input;
   @ViewChild('key4') key4Input;
 
-  montant:string = "0";
+  datasString:string = "";
   password: string = '****';
+  idCom: string = "0";
+  idTransac: string = "0";
+  pseudoCom: string = "inconnu";
+  montant: string = "0";
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private keyboard: Keyboard) {
-    this.montant = navParams.get('objet');
+    private keyboard: Keyboard
+    ){
+    this.datasString = navParams.get('objet');
+    const DATASARRAY = this.datasString.split("-");
+    this.idCom = DATASARRAY[0];
+    this.pseudoCom = DATASARRAY[1];
+    this.idTransac = DATASARRAY[2];
+    this.montant = DATASARRAY[3];
+  }
+
+  //Pattern qrCode: idVendeur-pseudoVendeur-idTransac-montant
+  private validateTransacFromFest(idTransac){
+
+
   }
 
   ionViewDidLoad()

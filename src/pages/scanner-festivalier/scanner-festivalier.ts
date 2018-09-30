@@ -24,6 +24,8 @@ export class ScannerFestivalierPage {
   ) {
   }
 
+  //Pattern qrCode: idVendeur-pseudoVendeur-idTransac-montant
+
   showCamera() {
     (window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
   }
