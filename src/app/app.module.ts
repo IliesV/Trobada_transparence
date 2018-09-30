@@ -1,9 +1,8 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, Input, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, NavController, Events} from 'ionic-angular';
 import { MyApp } from './app.component';
 
-//import { AboutPage } from '../pages/about/about';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
@@ -11,6 +10,8 @@ import { DealExposantPage } from '../pages/deal-exposant/deal-exposant';
 import { TransactionExposantPage } from '../pages/transaction-exposant/transaction-exposant';
 import { TransactionsPage } from '../pages/transactions/transactions';
 import { QrcodePage } from '../pages/qrcode/qrcode';
+import { ScannerFestivalierPage } from '../pages/scanner-festivalier/scanner-festivalier';
+import { ValidationFestivalierPage } from '../pages/validation-festivalier/validation-festivalier';
 
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
@@ -39,7 +40,11 @@ import { JwtHelper } from "angular2-jwt";
 
 import { QRCodeModule } from 'angularx-qrcode';
 
-import { Brightness } from '@ionic-native/brightness'
+import { Brightness } from '@ionic-native/brightness';
+
+import { Network } from '@ionic-native/network';
+
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 @NgModule({
@@ -54,7 +59,9 @@ import { Brightness } from '@ionic-native/brightness'
     DealExposantPage,
     TransactionExposantPage,
     LoginPage,
-    TransactionsPage
+    TransactionsPage,
+    ScannerFestivalierPage,
+    ValidationFestivalierPage
   ],
   imports: [
     BrowserModule,
@@ -73,7 +80,9 @@ import { Brightness } from '@ionic-native/brightness'
     ScanQrPage,
     LoginPage,
     TabsExposantPage,
-    TransactionsPage
+    TransactionsPage,
+    ScannerFestivalierPage,
+    ValidationFestivalierPage
   ],
   providers: [
     StatusBar,
@@ -93,7 +102,12 @@ import { Brightness } from '@ionic-native/brightness'
     TransactionProvider,
     TransactionsApiProvider,
     InfosProvider,
-    Brightness
+    Brightness,
+    Network,
+    Keyboard,
+    Input,
+    ViewChild,
+    Events
   ]
 })
 export class AppModule {}
