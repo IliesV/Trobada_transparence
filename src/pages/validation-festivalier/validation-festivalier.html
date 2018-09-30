@@ -19,20 +19,26 @@
             <ion-input text-center #key1 type=number style="-webkit-text-security:disc;" maxlength="1" (keyup)="setInputFocus(2)"></ion-input>
           </ion-col>
           <ion-col class="inputKey">
-            <ion-input text-center #key2 type=number style="-webkit-text-security:disc;"  maxlength="1" (keyup)="setInputFocus(3)"></ion-input>
+            <ion-input text-center #key2 type=number style="-webkit-text-security:disc;" maxlength="1" (keyup)="setInputFocus(3)"></ion-input>
           </ion-col>
           <ion-col class="inputKey">
-            <ion-input text-center #key3 type=number style="-webkit-text-security:disc;"  maxlength="1" (keyup)="setInputFocus(4)"></ion-input>
+            <ion-input text-center #key3 type=number style="-webkit-text-security:disc;" maxlength="1" (keyup)="setInputFocus(4)"></ion-input>
           </ion-col>
           <ion-col class="inputKey">
-            <ion-input text-center #key4 type=number style="-webkit-text-security:disc;"  maxlength="1" (keyup)="setInputFocus(5)"></ion-input>
+            <ion-input text-center #key4 type=number style="-webkit-text-security:disc;" maxlength="1" (keyup)="setInputFocus(5)"></ion-input>
           </ion-col>
         </ion-row>
       </ion-col>
     </ion-row>
     <ion-row text-center>
       <ion-col>
-        <button ion-button color="trobada" (tap)="goScan()">Validez</button>
+        <button ion-button color="trobada" (tap)="validateTransacFromFest()">Validez</button>
+      </ion-col>
+    </ion-row>
+    <br>
+    <ion-row text-center class="resultatRequete">
+      <ion-col>
+        {{ resultat }}
       </ion-col>
     </ion-row>
   </ion-grid>

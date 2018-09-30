@@ -1,7 +1,9 @@
 import { Component, ViewChild, Input } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-
+import { UserGlobal } from '../../models/infosUser.model';
 import { Keyboard } from '@ionic-native/keyboard';
+import { NativeStorage } from '@ionic-native/native-storage';
+import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
 @Component({
   selector: 'page-validation-festivalier',
@@ -13,17 +15,22 @@ export class ValidationFestivalierPage {
   @ViewChild('key3') key3Input;
   @ViewChild('key4') key4Input;
 
+  infosUser:UserGlobal = new UserGlobal();
   datasString:string = "";
   password: string = '****';
   idCom: string = "0";
   idTransac: string = "0";
   pseudoCom: string = "inconnu";
   montant: string = "0";
+  token:string = "";
+  resultat: string = "";
 
   constructor(
     public navCtrl: NavController,
     public navParams: NavParams,
-    private keyboard: Keyboard
+    private transactionsApiProvider: TransactionsApiProvider,
+    private keyboard: Keyboard,
+    private nativeStorage: NativeStorage
     ){
     this.datasString = navParams.get('objet');
     const DATASARRAY = this.datasString.split("-");
@@ -34,9 +41,14 @@ export class ValidationFestivalierPage {
   }
 
   //Pattern qrCode: idVendeur-pseudoVendeur-idTransac-montant
-  private validateTransacFromFest(idTransac){
+  public validateTransacFromFest(){
 
-
+    return this.transactionsApiProvider.checkClient(this.idCom,this.pseudoCom,this.idTransac,this.montant,this.infosUser.token)
+    .then( result => {
+      console.log(this.idCom+" "+this.pseudoCom+" "+this.idTransac+" "+this.montant)
+      this.resultat = result.data;
+    })
+    .catch(() => console.log('erreur Verification'))
   }
 
   ionViewDidLoad()
@@ -75,5 +87,14 @@ export class ValidationFestivalierPage {
       default:
         break;
     }
+  }
+
+  ionViewCanEnter(){
+    //Recup Infos
+    this.nativeStorage.getItem('infosUser')
+    .then( infos => {
+      this.infosUser = infos as UserGlobal
+    })
+    .catch(() => console.log('erreur recup infos'))
   }
 }
