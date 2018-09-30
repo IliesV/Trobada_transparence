@@ -1,9 +1,10 @@
 import { Component, ViewChild, Input } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, App } from 'ionic-angular';
 import { UserGlobal } from '../../models/infosUser.model';
 import { Keyboard } from '@ionic-native/keyboard';
 import { NativeStorage } from '@ionic-native/native-storage';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
+import { TabsPage } from '../tabs/tabs';
 
 @Component({
   selector: 'page-validation-festivalier',
@@ -24,9 +25,11 @@ export class ValidationFestivalierPage {
   montant: string = "0";
   token:string = "";
   resultat: string = "";
+  hideResultat:boolean = true;
 
   constructor(
     public navCtrl: NavController,
+    private app: App,
     public navParams: NavParams,
     private transactionsApiProvider: TransactionsApiProvider,
     private keyboard: Keyboard,
@@ -40,20 +43,44 @@ export class ValidationFestivalierPage {
     this.montant = DATASARRAY[3];
   }
 
-  //Pattern qrCode: idVendeur-pseudoVendeur-idTransac-montant
-  public validateTransacFromFest(){
+    //Pattern qrCode: idVendeur-pseudoVendeur-idTransac-montant
+    public validateTransacFromFest(){
 
-    return this.transactionsApiProvider.checkClient(this.idCom,this.pseudoCom,this.idTransac,this.montant,this.infosUser.token)
-    .then( result => {
-      console.log(this.idCom+" "+this.pseudoCom+" "+this.idTransac+" "+this.montant)
-      this.resultat = result.data;
-    })
-    .catch(() => console.log('erreur Verification'))
+    //recup code pin
+    const CODEPIN = this.key1Input.value+this.key2Input.value+this.key3Input.value+this.key4Input.value;
+
+    if(CODEPIN != this.infosUser.pass){
+      this.hideResultat = false;
+      this.resultat = "Erreur code pin, nouvel essai";
+
+      //Reset inputs + focus
+      this.key1Input.value = "";
+      this.key2Input.value = "";
+      this.key3Input.value = "";
+      this.key4Input.value = "";
+
+      this.setInputFocus(1)
+
+    }else{
+      this.hideResultat = false;
+
+      //Validation code pin => CheckClient
+
+      return this.transactionsApiProvider.checkClient(this.idCom,this.pseudoCom,this.idTransac,this.montant,this.infosUser.token)
+      .then( result => {
+        this.resultat = result.data;
+      })
+      .catch(() => console.log('erreur Verification'))
+    }
   }
 
   ionViewDidLoad()
   {
     this.setInputFocus(1);
+  }
+
+  public cancelPin(){
+    this.app.getRootNav().setRoot(TabsPage)
   }
 
   public setInputFocus(key){
@@ -80,9 +107,8 @@ export class ValidationFestivalierPage {
         },200)
         break;
       case 5:
-        setTimeout(() => {
           this.keyboard.hide();
-        },200)
+          this.validateTransacFromFest();
         break;
       default:
         break;

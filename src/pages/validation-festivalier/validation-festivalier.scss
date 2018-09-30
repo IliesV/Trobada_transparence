@@ -8,7 +8,19 @@ page-validation-festivalier {
         text-align: center;
     }
 
-    .resultatRequete{
-        font-size: 1.8rem;
+    .resultatRequeteOk{
+        border: 2px solid green;
+        border-radius: 5px;
+        font-size: 2.5rem;
+        padding:5px;
+        color:green;
+    }
+
+    .resultatRequeteWrong{
+        border: 2px solid red;
+        border-radius: 5px;
+        font-size: 2.5rem;
+        padding:5px;
+        color:red;
     }
 }
