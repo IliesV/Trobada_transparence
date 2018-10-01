@@ -19,12 +19,10 @@ export class ValidationFestivalierPage {
 
   infosUser:UserGlobal = new UserGlobal();
   datasString:string = "";
-  password: string = '****';
   idCom: string = "0";
   idTransac: string = "0";
   pseudoCom: string = "inconnu";
   montant: string = "0";
-  token:string = "";
   resultat: string = "";
   hideResultat:boolean = true;
   solde: string = "";

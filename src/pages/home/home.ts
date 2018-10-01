@@ -21,7 +21,6 @@ import { TransactionGlobal } from '../../models/api.transaction.model'
 export class HomePage {
 
   solde:string = 'Montant inconnu';
-  //listeTransac:TransactionGlobal[] = new Array<TransactionGlobal>();
   lastTransac:TransactionGlobal = new TransactionGlobal();
   infosUser:UserGlobal = new UserGlobal();
 

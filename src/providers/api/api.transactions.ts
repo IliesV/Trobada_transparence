@@ -65,4 +65,15 @@ export class TransactionsApiProvider {
             "Authorization":"Bearer " + token
         });
     }
+
+    //CheckTransac from vendeur
+    public checkVendeur(idTransac:string, token:string): Promise<any> {
+        const URL = 'http://trobadapi.ddns.info/api/checkVendeur'
+        this.http.setDataSerializer('JSON');
+        return this.http.post(URL, {"idTransac": idTransac},
+        {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer " + token
+        });
+    }
 }
