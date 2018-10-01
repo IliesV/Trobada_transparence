@@ -5,6 +5,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 import { NativeStorage } from '@ionic-native/native-storage';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 import { TabsPage } from '../tabs/tabs';
+import {InfosProvider} from '../../providers/infos/infosUser';
 
 @Component({
   selector: 'page-validation-festivalier',
@@ -34,6 +35,7 @@ export class ValidationFestivalierPage {
     public navParams: NavParams,
     private transactionsApiProvider: TransactionsApiProvider,
     private keyboard: Keyboard,
+    private infosProvider: InfosProvider,
     private nativeStorage: NativeStorage
     ){
     this.datasString = navParams.get('objet');
@@ -73,7 +75,9 @@ export class ValidationFestivalierPage {
         if(this.resultat === "Transaction validée"){
           this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
           .then( retour => {
-            this.solde = retour.data
+            //Update solde
+            this.solde = retour.data;
+            this.infosProvider.saveSolde(this.solde)
           })
           .catch(() => console.log("erreur recup solde"))
         }
