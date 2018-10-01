@@ -78,7 +78,7 @@ export class ValidationFestivalierPage {
           .catch(() => console.log("erreur recup solde"))
         }
       })
-      .catch(() => console.log('erreur Verification'))
+      .catch(err => console.log((err.error)))
     }
   }
 

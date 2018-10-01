@@ -68,8 +68,7 @@ export class LoginPage {
       })
       .catch(() => console.log('erreur sauvegarde token'))
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
       let alert = this.alertCtrl.create({
         title: 'Erreur de connexion',
         subTitle: 'Vérifiez vos informations',
