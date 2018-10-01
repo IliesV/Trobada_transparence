@@ -45,4 +45,12 @@ export class TransactionsApiProvider {
         return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
             
     }
+
+    //Envoi de la transaction.
+    public login(username:string,password:string):Promise<any> {
+
+        const URL = 'http://trobadapi.ddns.info/api/addTransaction';
+        this.http.setDataSerializer('JSON');
+        return this.http.post(URL, {"username": username,"password":password}, {"Content-Type": "application/json"});
+            }
 }

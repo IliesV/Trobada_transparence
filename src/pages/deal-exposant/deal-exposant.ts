@@ -70,7 +70,6 @@ private addQuantity(number){
   this.quantity[number]++;
   console.log(this.quantity[number])
   this.transaction.sommeTot();
-  //console.log(this.sommeTotale + " sommetotale");
 }
 
 private removeQuantity(number){
