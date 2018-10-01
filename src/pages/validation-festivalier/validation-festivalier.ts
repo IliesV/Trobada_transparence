@@ -5,6 +5,7 @@ import { Keyboard } from '@ionic-native/keyboard';
 import { NativeStorage } from '@ionic-native/native-storage';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 import { TabsPage } from '../tabs/tabs';
+import {InfosProvider} from '../../providers/infos/infosUser';
 
 @Component({
   selector: 'page-validation-festivalier',
@@ -18,14 +19,13 @@ export class ValidationFestivalierPage {
 
   infosUser:UserGlobal = new UserGlobal();
   datasString:string = "";
-  password: string = '****';
   idCom: string = "0";
   idTransac: string = "0";
   pseudoCom: string = "inconnu";
   montant: string = "0";
-  token:string = "";
   resultat: string = "";
   hideResultat:boolean = true;
+  solde: string = "";
 
   constructor(
     public navCtrl: NavController,
@@ -33,6 +33,7 @@ export class ValidationFestivalierPage {
     public navParams: NavParams,
     private transactionsApiProvider: TransactionsApiProvider,
     private keyboard: Keyboard,
+    private infosProvider: InfosProvider,
     private nativeStorage: NativeStorage
     ){
     this.datasString = navParams.get('objet');
@@ -50,8 +51,8 @@ export class ValidationFestivalierPage {
     const CODEPIN = this.key1Input.value+this.key2Input.value+this.key3Input.value+this.key4Input.value;
 
     if(CODEPIN != this.infosUser.pass){
-      this.hideResultat = false;
       this.resultat = "Erreur code pin, nouvel essai";
+      this.hideResultat = false;
 
       //Reset inputs + focus
       this.key1Input.value = "";
@@ -69,8 +70,17 @@ export class ValidationFestivalierPage {
       return this.transactionsApiProvider.checkClient(this.idCom,this.pseudoCom,this.idTransac,this.montant,this.infosUser.token)
       .then( result => {
         this.resultat = result.data;
+        if(this.resultat === "Transaction validée"){
+          this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
+          .then( retour => {
+            //Update solde
+            this.solde = retour.data;
+            this.infosProvider.saveSolde(this.solde)
+          })
+          .catch(() => console.log("erreur recup solde"))
+        }
       })
-      .catch(() => console.log('erreur Verification'))
+      .catch(err => console.log((err.error)))
     }
   }
 
@@ -89,7 +99,7 @@ export class ValidationFestivalierPage {
       case 1:
         setTimeout(() => {
           this.key1Input.setFocus();
-        },100)
+        },200)
         break;
       case 2:
         setTimeout(() => {

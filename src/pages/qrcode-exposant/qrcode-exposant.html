@@ -1,0 +1,29 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>QR-Code</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid>
+    <ion-row text-center>
+      <ion-col>
+        <ion-img width="20" height="20" src="../../assets/imgs/two.png"></ion-img>
+        Présentez votre QR Code au client pour valider la transaction
+      </ion-col>
+    </ion-row>
+    <ion-row>
+      <div class="qrCode">
+        <span>
+          <qrcode [qrdata]="myQrCode" [size]="250" [level]="'M'"></qrcode>
+        </span>
+      </div>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col>
+        <button ion-button color="trobada" (tap)="goValidation()">Suivant</button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+
+</ion-content>

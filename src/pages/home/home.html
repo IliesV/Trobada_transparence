@@ -62,15 +62,15 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-md-10 offset-md-1>
+          <ion-col col-12>
             <div class='titleCard'>
               <ion-icon name="basket"> Panier</ion-icon>
             </div>
           </ion-col>
-          <ion-col col-md-10 offset-md-1>
-            <ion-item *ngFor="let entry of lastTransac.listeTransactions">
-              {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
-            </ion-item>
+          <ion-col col-12>
+            <div class='titleCardBlack' *ngFor="let entry of lastTransac.listeTransactions">
+              -> {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>

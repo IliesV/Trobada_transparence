@@ -38,15 +38,16 @@
             </div>
           </ion-col>
         </ion-row>
+        <hr>
         <ion-row>
-          <ion-col col-md-10 offset-md-1 col-12>
+          <ion-col col-md-10 col-12>
             <div class='dataCardTransacCenter'>
               <ion-icon name="basket"> Panier</ion-icon>
             </div>
           </ion-col>
-          <ion-col col-md-10 offset-md-1 col-12 *ngFor="let entry of transaction.listeTransactions">
-            <div class='dataCardTransacCenterBlack'>
-              {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
+          <ion-col col-md-10 col-12 *ngFor="let entry of transaction.listeTransactions">
+            <div class='dataCardTransacCenter'>
+              -> {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
             </div>
           </ion-col>
         </ion-row>

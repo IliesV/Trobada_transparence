@@ -3,7 +3,7 @@
     <ion-title>Mon compte</ion-title>
     <ion-buttons end>
       <button ion-button icon-only clear (tap)="logout()">
-        <ion-icon ios="ios-power" md="md-power" name="logout" ></ion-icon>
+        <ion-icon ios="ios-power" md="md-power" name="logout"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -62,15 +62,15 @@
           </ion-col>
         </ion-row>
         <ion-row>
-          <ion-col col-md-10 offset-md-1>
+          <ion-col col-12>
             <div class='titleCard'>
               <ion-icon name="basket"> Panier</ion-icon>
             </div>
           </ion-col>
-          <ion-col col-md-10 offset-md-1>
-            <ion-item *ngFor="let entry of lastTransac.listeTransactions">
-              {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
-            </ion-item>
+          <ion-col col-12>
+            <div class='titleCardBlack' *ngFor="let entry of lastTransac.listeTransactions">
+              -> {{ entry.qty }}x {{ entry.product_name }} ({{ entry.price }} €)
+            </div>
           </ion-col>
         </ion-row>
       </ion-grid>
