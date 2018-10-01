@@ -52,6 +52,17 @@ export class TransactionsApiProvider {
     public checkClient(idCom: string, pseudoCom: string, idTransac: string, montant: string, token:string): Promise<any> {
         const URL = 'http://trobadapi.ddns.info/api/checkClient'
         this.http.setDataSerializer('JSON');
-        return this.http.post(URL, { "id_com": idCom, "pseudo": pseudoCom, "idTransac": idTransac, "montant": montant }, {"Content-Type": "application/json","Authorization":"Bearer " + token});
+        return this.http.post(URL, {
+            "id_com": idCom,
+            "id_fest": 3, //SUPPR
+            "pseudo": pseudoCom,
+            "idTransac": idTransac,
+            "events_id": 1, //SUPPR
+            "montant": montant
+        },
+        {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer " + token
+        });
     }
 }
