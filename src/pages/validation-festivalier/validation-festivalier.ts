@@ -71,7 +71,7 @@ export class ValidationFestivalierPage {
       .then( result => {
         this.resultat = result.data;
         if(this.resultat === "Transaction validée"){
-          this.transactionsApiProvider.giveMySoldeOnline(this.token)
+          this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
           .then( retour => {
             this.solde = retour.data
           })
