@@ -26,6 +26,7 @@ export class ValidationFestivalierPage {
   token:string = "";
   resultat: string = "";
   hideResultat:boolean = true;
+  solde: string = "";
 
   constructor(
     public navCtrl: NavController,
@@ -69,6 +70,13 @@ export class ValidationFestivalierPage {
       return this.transactionsApiProvider.checkClient(this.idCom,this.pseudoCom,this.idTransac,this.montant,this.infosUser.token)
       .then( result => {
         this.resultat = result.data;
+        if(this.resultat === "Transaction validée"){
+          this.transactionsApiProvider.giveMySoldeOnline(this.token)
+          .then( retour => {
+            this.solde = retour.data
+          })
+          .catch(() => console.log("erreur recup solde"))
+        }
       })
       .catch(() => console.log('erreur Verification'))
     }
