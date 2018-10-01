@@ -38,7 +38,9 @@
     <ion-row text-center>
       <ion-col [hidden]=hideResultat [ngClass]='(resultat == "Transaction validée") ? "resultatRequeteOk" : "resultatRequeteWrong"'>
         {{ resultat }}<br>
-        Votre nouveau solde: {{ solde }} €
+        <div [hidden]='(resultat != "Transaction validée")'>
+          Votre nouveau solde: {{ solde }} €
+        </div>
       </ion-col>
     </ion-row>
     <br>

@@ -20,7 +20,7 @@ import 'rxjs/add/operator/toPromise';
 })
 export class LoginPage {
 
-    email: string = 'laurent';
+    email: string = 'michel';
     password: string = 'tutu';
 
   constructor(public navCtrl: NavController, 

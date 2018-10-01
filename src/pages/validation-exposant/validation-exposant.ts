@@ -30,49 +30,30 @@ export class ValidationExposantPage {
     //RECUP IDTRANSAC FROM PREVIOUS PAGE
   }
 
-  //public validateTransacFromCom():Promise<string>{
-    public validateTransacFromCom(){
+  public validateTransacFromCom(){
+
       this.hideResultat = true;
     setTimeout(() => {
-      // return this.transactionsApiProvider.checkVendeur(this.idTransac,this.infosUser.token)
-      // .then(result => {
+      return this.transactionsApiProvider.checkVendeur(this.idTransac,this.infosUser.token)
+      .then(result => {
             
-      //   if(result.data == "true"){
-      //     
-              // this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
-              // .then( retour => {
-              //   //Update solde
-              //   this.solde = retour.data;
-              //   this.infosProvider.saveSolde(this.solde)
-              //    this.resultat="Transaction validée";
-                    //this.hideResultat = false;
-              // })
-              // .catch(() => console.log("erreur recup solde"))
-      //   }else{
-      //     this.resultat="Transaction en attente";
-            //this.hideResultat = false;
-      //   }
-      // })
-      // .catch(()=>console.log("erreur check vendeur"))
-
-
-
-      //PROVISOIRE
-      const RESULT = false;
-      if(RESULT){
-        this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
-          .then( retour => {
-            //Update solde
-            this.solde = retour.data;
-            this.infosProvider.saveSolde(this.solde)
-            this.resultat = "Transaction validée";
+        if(result.data == "true"){
+          
+              this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
+              .then( retour => {
+                //Update solde
+                this.solde = retour.data;
+                this.infosProvider.saveSolde(this.solde)
+                 this.resultat="Transaction validée";
+                    this.hideResultat = false;
+              })
+              .catch(() => console.log("erreur recup solde"))
+        }else{
+          this.resultat="Transaction en attente";
             this.hideResultat = false;
-          })
-          .catch(() => console.log("erreur recup solde"))
-      }else{
-        this.resultat = "Transaction en attente";
-        this.hideResultat = false;
-      }
+        }
+      })
+      .catch(()=>console.log("erreur check vendeur"))
     }, 3000); 
   }
 

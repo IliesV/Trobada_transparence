@@ -51,8 +51,8 @@ export class ValidationFestivalierPage {
     const CODEPIN = this.key1Input.value+this.key2Input.value+this.key3Input.value+this.key4Input.value;
 
     if(CODEPIN != this.infosUser.pass){
-      this.hideResultat = false;
       this.resultat = "Erreur code pin, nouvel essai";
+      this.hideResultat = false;
 
       //Reset inputs + focus
       this.key1Input.value = "";
@@ -99,7 +99,7 @@ export class ValidationFestivalierPage {
       case 1:
         setTimeout(() => {
           this.key1Input.setFocus();
-        },100)
+        },200)
         break;
       case 2:
         setTimeout(() => {

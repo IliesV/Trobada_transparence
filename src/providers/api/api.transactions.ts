@@ -54,10 +54,8 @@ export class TransactionsApiProvider {
         this.http.setDataSerializer('JSON');
         return this.http.post(URL, {
             "id_com": idCom,
-            "id_fest": 3, //SUPPR
             "pseudo": pseudoCom,
             "idTransac": idTransac,
-            "events_id": 1, //SUPPR
             "montant": montant
         },
         {
