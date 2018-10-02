@@ -53,25 +53,7 @@ export class TransactionsApiProvider {
     //Envoi de la transaction.
     public sendTransactions(token, datas):Promise<HTTPResponse> {
 
-        // let articles: string = "";
-        //     for(let i = 0; i<this.transaction.nomsArticles.length; i++){
-        //         articles += "{"+
-        //             'product_id:'+ this.transaction.idArticles[i] +','+
-        //             'qty:'+ this.transaction.quantity[i]+
-        //         "},"
-        //     }
-        //     articles = articles.slice(0, -1);
-
-        // let datas = {
-        //     "amount": this.transaction.sommeTotale,
-        //     "id_fest": this.transaction.idFestivalier,
-        //     "id_com": this.transaction.idVendeur,
-        //     "events_id": this.transaction.idFestoche,
-        //     "listeTransactions": [
-        //         articles
-        //     ]
-        // }
-        console.log(datas)
+        console.log("datas: "+datas)
         const URL = 'http://trobadapi.ddns.info/api/addTransaction';
         this.http.setDataSerializer('JSON');
         return this.http.post(URL, datas, {"Content-Type": "application/json", "Authorization":"Bearer " + token});

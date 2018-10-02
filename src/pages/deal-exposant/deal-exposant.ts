@@ -118,29 +118,29 @@ private remove(noms){
   ionViewDidLoad() {
     
     console.log('ionViewDidLoad DealExposantPage');
-    let articles: string = "";
+    var articles = [];
     for(let i = 0; i<this.transaction.nomsArticles.length; i++){
-        articles += "{"+
-            'product_id:'+ this.transaction.idArticles[i] +','+
-            'qty:'+ this.transaction.quantity[i]+
-        "},"
+        var article = {
+            "product_id": this.transaction.idArticles[i],
+            "qty": this.transaction.quantity[i]
+        }
+        articles.push(article);
     }
-    articles = articles.slice(0, -1);
 
-let trouduc = {
+    
+
+var trouduc = {
     "amount": this.transaction.sommeTotale,
     "id_fest": this.transaction.idFestivalier,
     "id_com": this.transaction.idVendeur,
     "events_id": this.transaction.idFestoche,
-    "listeTransactions": [
-        articles
-    ]
+    "listeTransactions": articles
 }
-console.log(trouduc.id_fest);
-    
+console.log("idcom: "+this.transaction.idVendeur)
+console.log(JSON.stringify(trouduc))
     
     if(this.pseudo != null){
-      console.log("ok");
+      //console.log("ok");
       let alert = this.alertCtrl.create({
         title: 'Confirmer la transaction',
         message: "Voulez vous prendre l'argent de "+ this.transaction.pseudoFestivalier,
@@ -161,7 +161,7 @@ console.log(trouduc.id_fest);
               } 
                 
               )
-              .catch(err => console.log(err.error))
+              .catch(err => console.log(err.toString()))
             }
           }
         ]

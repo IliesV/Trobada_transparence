@@ -1,7 +1,6 @@
 //import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { NativeStorage } from '@ionic-native/native-storage';
-import {InfosProvider} from '../../providers/infos/infosUser';
 import { UserGlobal } from '../../models/infosUser.model';
 
 @Injectable()
@@ -21,7 +20,6 @@ export class TransactionProvider {
 
   constructor(
     //public http: HttpClient
-    private infosProvider: InfosProvider,
     private nativeStorage: NativeStorage
     ) {
     console.log('Hello TransactionProvider Provider');
@@ -51,10 +49,12 @@ export class TransactionProvider {
     this.nativeStorage.getItem('infosUser')
     .then( infos => {
       this.infosUser = infos as UserGlobal
+      this.idVendeur = this.infosUser.id;
+      console.log("isCom= "+this.infosUser.id);
     })
     .catch(() => console.log('erreur recup infos'))
-  this.idVendeur = this.infosUser.id;
-  console.log(this.infosUser.id);
+
+
     
   }
 
