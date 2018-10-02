@@ -1,0 +1,53 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Finalisation</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row text-center>
+      <ion-col>
+        <ion-img width="20" height="20" src="../../assets/imgs/three.png"></ion-img>
+        Pour finaliser la transaction de {{ montant }} €, entrez votre code pin
+      </ion-col>
+      <ion-col col-md-4 col-12>
+          <button [hidden]='(resultat == "Transaction validée")' ion-button small color="danger" (tap)="cancelPin()">Annuler</button>
+      </ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col col-md-6 offset-md-3 col-12>
+        <ion-row text-center>
+          <ion-col class="inputKey">
+            <ion-input text-center #key1 type=number style="-webkit-text-security:disc;" maxlength="1" (keyup)="setInputFocus(2)"></ion-input>
+          </ion-col>
+          <ion-col class="inputKey">
+            <ion-input text-center #key2 type=number style="-webkit-text-security:disc;" maxlength="1" (keyup)="setInputFocus(3)"></ion-input>
+          </ion-col>
+          <ion-col class="inputKey">
+            <ion-input text-center #key3 type=number style="-webkit-text-security:disc;" maxlength="1" (keyup)="setInputFocus(4)"></ion-input>
+          </ion-col>
+          <ion-col class="inputKey">
+            <ion-input text-center #key4 type=number style="-webkit-text-security:disc;" maxlength="1" (keyup)="setInputFocus(5)"></ion-input>
+          </ion-col>
+        </ion-row>
+      </ion-col>
+    </ion-row>
+    <br>
+    <br>
+    <ion-row text-center>
+      <ion-col [hidden]=hideResultat [ngClass]='(resultat == "Transaction validée") ? "resultatRequeteOk" : "resultatRequeteWrong"'>
+        {{ resultat }}<br>
+        <div [hidden]='(resultat != "Transaction validée")'>
+          Votre nouveau solde: {{ solde }} €
+        </div>
+      </ion-col>
+    </ion-row>
+    <br>
+    <ion-row text-center>
+        <ion-col>
+            <button [hidden]='(resultat != "Transaction validée")' ion-button color="trobada" (tap)="cancelPin()">Retour</button>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>

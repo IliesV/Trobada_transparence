@@ -12,7 +12,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { UserGlobal } from '../../models/infosUser.model';
 import { TransactionGlobal } from '../../models/api.transaction.model'
 
-//https://ionicframework.com/docs/theming/overriding-ionic-variables/
+
 
 @Component({
   selector: 'page-home',
@@ -21,7 +21,6 @@ import { TransactionGlobal } from '../../models/api.transaction.model'
 export class HomePage {
 
   solde:string = 'Montant inconnu';
-  //listeTransac:TransactionGlobal[] = new Array<TransactionGlobal>();
   lastTransac:TransactionGlobal = new TransactionGlobal();
   infosUser:UserGlobal = new UserGlobal();
 
@@ -77,4 +76,5 @@ export class HomePage {
     })
     .catch(() => console.log('erreur recup solde'))
    }
+
 }

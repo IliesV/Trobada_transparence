@@ -5,6 +5,8 @@ import { AlertController } from 'ionic-angular';
 import {TabsPage} from '../tabs/tabs';
 import {TabsExposantPage} from '../tabs-exposant/tabs-exposant';
 
+import { AppBddProvider } from '../../providers/app-bdd/app-bdd';
+
 import {InfosProvider} from '../../providers/infos/infosUser';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
@@ -23,15 +25,18 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
+    public appBddProvider: AppBddProvider,
     private alertCtrl: AlertController,
     private infosProvider: InfosProvider,
     public connexionApiProvider:ConnexionApiProvider,
     private transactionsApiProvider:TransactionsApiProvider
   ) {
-    // this.appBddProvider.createDatabaseFile();
+    //Creation BDD
+    this.appBddProvider.createDatabaseFile();
   }
 
   public submitLogin(){
+    this.attentionOnline();
     console.log('Check credentials')
     this.connexionApiProvider.login(this.email,this.password)
     .then(response => {
@@ -63,8 +68,7 @@ export class LoginPage {
       })
       .catch(() => console.log('erreur sauvegarde token'))
     })
-    .catch(error => {
-      console.log(error);
+    .catch(() => {
       let alert = this.alertCtrl.create({
         title: 'Erreur de connexion',
         subTitle: 'Vérifiez vos informations',
@@ -73,8 +77,23 @@ export class LoginPage {
       alert.present();
     })
   }
+
+
+ionViewDidEnter(){
+  this.attentionOnline();
 }
 
+public attentionOnline(){
+  if(!this.connexionApiProvider.checkOnline()){
+    let alert = this.alertCtrl.create({
+      title: 'Attention',
+      subTitle: 'Une connexion à internet est indispensable',
+      buttons: ['Ok']
+    });
+    alert.present();
+  }
+}
+}
 /*
 .then(()=> {
 

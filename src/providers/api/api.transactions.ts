@@ -3,11 +3,13 @@ import { HTTP, HTTPResponse } from '@ionic-native/http';
 // RxJS
 import 'rxjs/add/operator/toPromise';
 
+
+
 @Injectable()
 export class TransactionsApiProvider {
 
     constructor(
-        private http: HTTP,
+        private http: HTTP
         ) {}
 
     //Recup solde API
@@ -44,5 +46,32 @@ export class TransactionsApiProvider {
         this.http.setDataSerializer('JSON');
         return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
             
+    }
+
+    //CheckTransac from client
+    public checkClient(idCom: string, pseudoCom: string, idTransac: string, montant: string, token:string): Promise<any> {
+        const URL = 'http://trobadapi.ddns.info/api/checkClient'
+        this.http.setDataSerializer('JSON');
+        return this.http.post(URL, {
+            "id_com": idCom,
+            "pseudo": pseudoCom,
+            "idTransac": idTransac,
+            "montant": montant
+        },
+        {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer " + token
+        });
+    }
+
+    //CheckTransac from vendeur
+    public checkVendeur(idTransac:string, token:string): Promise<any> {
+        const URL = 'http://trobadapi.ddns.info/api/checkVendeur'
+        this.http.setDataSerializer('JSON');
+        return this.http.post(URL, {"idTransac": idTransac},
+        {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer " + token
+        });
     }
 }

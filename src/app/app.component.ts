@@ -41,9 +41,7 @@ export class MyApp {
     
             //Validité token
             if(this.connexionApiProvider.checkTimeToken(TOKEN)){
-              
-              //REGENERATION TOKEN
-
+                this.rootPage = LoginPage;
             }else{
 
               if(datas.role == 'vendeur'){

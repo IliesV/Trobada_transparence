@@ -27,8 +27,10 @@ export class InfosProvider {
         var objetToken = this.decoder.decodeToken(token);
 
         return this.nativeStorage.setItem('infosUser', {
+            id: objetToken.roles[1],
             pseudo: objetToken.username,
             role: objetToken.roles[0],
+            pass: objetToken.roles[2],
             dateCreation: objetToken.iat,
             dateExpiration: objetToken.exp,
             token: token

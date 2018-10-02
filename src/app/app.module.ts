@@ -1,16 +1,19 @@
-import { NgModule, ErrorHandler } from '@angular/core';
+import { NgModule, ErrorHandler, Input, ViewChild } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { IonicApp, IonicModule, IonicErrorHandler, NavController } from 'ionic-angular';
+import { IonicApp, IonicModule, IonicErrorHandler, NavController, Events} from 'ionic-angular';
 import { MyApp } from './app.component';
 
-import { AboutPage } from '../pages/about/about';
-import { ContactPage } from '../pages/contact/contact';
 import { HomePage } from '../pages/home/home';
 import { TabsPage } from '../pages/tabs/tabs';
 import {HomeExposantPage} from '../pages/home-exposant/home-exposant';
 import { DealExposantPage } from '../pages/deal-exposant/deal-exposant';
-import { SoldeExposantPage } from '../pages/solde-exposant/solde-exposant';
-import { TransactionsPage } from '../pages/transactions/transactions'
+import { TransactionExposantPage } from '../pages/transaction-exposant/transaction-exposant';
+import { TransactionsPage } from '../pages/transactions/transactions';
+import { QrcodePage } from '../pages/qrcode/qrcode';
+import { ScannerFestivalierPage } from '../pages/scanner-festivalier/scanner-festivalier';
+import { ValidationFestivalierPage } from '../pages/validation-festivalier/validation-festivalier';
+import { ValidationExposantPage } from '../pages/validation-exposant/validation-exposant';
+import { QrcodeExposantPage } from '../pages/qrcode-exposant/qrcode-exposant';
 
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
@@ -23,7 +26,6 @@ import { TransactionProvider } from '../providers/transaction/transaction';
 
 import { SQLite } from '@ionic-native/sqlite';
 import { AppBddProvider } from '../providers/app-bdd/app-bdd';
-//import { HttpClientModule } from '@angular/common/http';
 import { HTTP } from '@ionic-native/http';
 
 import { NativeStorage } from '@ionic-native/native-storage';
@@ -40,23 +42,30 @@ import { JwtHelper } from "angular2-jwt";
 
 import { QRCodeModule } from 'angularx-qrcode';
 
-import { Brightness } from '@ionic-native/brightness'
+import { Brightness } from '@ionic-native/brightness';
+
+import { Network } from '@ionic-native/network';
+
+import { Keyboard } from '@ionic-native/keyboard';
 
 
 @NgModule({
   declarations: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    QrcodePage,
     HomePage,
     TabsPage,
     ScanQrPage,
     HomeExposantPage,
     TabsExposantPage,
     DealExposantPage,
-    SoldeExposantPage,
+    TransactionExposantPage,
     LoginPage,
-    TransactionsPage
+    TransactionsPage,
+    ScannerFestivalierPage,
+    ValidationFestivalierPage,
+    ValidationExposantPage,
+    QrcodeExposantPage
   ],
   imports: [
     BrowserModule,
@@ -66,17 +75,20 @@ import { Brightness } from '@ionic-native/brightness'
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    AboutPage,
-    ContactPage,
+    QrcodePage,
     HomePage,
     HomeExposantPage,
     DealExposantPage,
-    SoldeExposantPage,
+    TransactionExposantPage,
     TabsPage,
     ScanQrPage,
     LoginPage,
     TabsExposantPage,
-    TransactionsPage
+    TransactionsPage,
+    ScannerFestivalierPage,
+    ValidationFestivalierPage,
+    ValidationExposantPage,
+    QrcodeExposantPage
   ],
   providers: [
     StatusBar,
@@ -96,7 +108,12 @@ import { Brightness } from '@ionic-native/brightness'
     TransactionProvider,
     TransactionsApiProvider,
     InfosProvider,
-    Brightness
+    Brightness,
+    Network,
+    Keyboard,
+    Input,
+    ViewChild,
+    Events
   ]
 })
 export class AppModule {}
