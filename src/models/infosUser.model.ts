@@ -1,5 +1,5 @@
 export class UserGlobal {
-    //id:number;
+    id:string;
     pseudo: string;
     role: string;
     dateCreation: string;

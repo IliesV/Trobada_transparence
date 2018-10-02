@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
 import { ScanQrPage } from '../scan-qr/scan-qr';
 
@@ -39,7 +40,8 @@ export class DealExposantPage {
     private alertCtrl: AlertController,
     private connexionApiProvider: ConnexionApiProvider,
     private app: App,
-    private transaction: TransactionProvider
+    private transaction: TransactionProvider,
+    private transactionApi: TransactionsApiProvider
     ) {
       this.objet = this.navParams.get('objet'),
       this.nomsArticles = this.transaction.nomsArticles,
@@ -116,6 +118,25 @@ private remove(noms){
   ionViewDidLoad() {
     
     console.log('ionViewDidLoad DealExposantPage');
+    let articles: string = "";
+    for(let i = 0; i<this.transaction.nomsArticles.length; i++){
+        articles += "{"+
+            'product_id:'+ this.transaction.idArticles[i] +','+
+            'qty:'+ this.transaction.quantity[i]+
+        "},"
+    }
+    articles = articles.slice(0, -1);
+
+let trouduc = {
+    "amount": this.transaction.sommeTotale,
+    "id_fest": this.transaction.idFestivalier,
+    "id_com": this.transaction.idVendeur,
+    "events_id": this.transaction.idFestoche,
+    "listeTransactions": [
+        articles
+    ]
+}
+console.log(trouduc.id_fest);
     
     
     if(this.pseudo != null){
@@ -134,7 +155,13 @@ private remove(noms){
           {
             text: 'OUI',
             handler: () => {
-              console.log('Buy clicked');
+              this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
+              .then( retour =>{
+                console.log('Thomas suce')
+              } 
+                
+              )
+              .catch(err => console.log(err.error))
             }
           }
         ]
