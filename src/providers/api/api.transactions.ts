@@ -53,7 +53,6 @@ export class TransactionsApiProvider {
     //Envoi de la transaction.
     public sendTransactions(token, datas):Promise<HTTPResponse> {
 
-        console.log("datas: "+datas)
         const URL = 'http://trobadapi.ddns.info/api/addTransaction';
         this.http.setDataSerializer('JSON');
         return this.http.post(URL, datas, {"Content-Type": "application/json", "Authorization":"Bearer " + token});
