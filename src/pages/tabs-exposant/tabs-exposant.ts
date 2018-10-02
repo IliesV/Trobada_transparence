@@ -15,7 +15,7 @@ export class TabsExposantPage {
   infosUser = {};
 
   homeExposantRoot = HomeExposantPage;
-  dealExposantRoot = QrcodeExposantPage;
+  dealExposantRoot = DealExposantPage;
   transactionExposantRoot = TransactionExposantPage;
 
 
