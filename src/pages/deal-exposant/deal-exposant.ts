@@ -10,6 +10,7 @@ import {ConnexionApiProvider} from '../../providers/api/api.connexion';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
 import { ScanQrPage } from '../scan-qr/scan-qr';
+import {QrcodeExposantPage} from '../qrcode-exposant/qrcode-exposant';
 
 /**
  * Generated class for the DealExposantPage page.
@@ -33,6 +34,8 @@ export class DealExposantPage {
   quantity: number[] = [];
   sommeTotale: number = 0;
   nombre: number = 0;
+  newIdTransac: number = 0;
+  qrCode:string = "";
 
   constructor(
     public navCtrl: NavController,
@@ -136,11 +139,8 @@ var trouduc = {
     "events_id": this.transaction.idFestoche,
     "listeTransactions": articles
 }
-console.log("idcom: "+this.transaction.idVendeur)
-console.log(JSON.stringify(trouduc))
     
     if(this.pseudo != null){
-      //console.log("ok");
       let alert = this.alertCtrl.create({
         title: 'Confirmer la transaction',
         message: "Voulez vous prendre l'argent de "+ this.transaction.pseudoFestivalier,
@@ -157,7 +157,10 @@ console.log(JSON.stringify(trouduc))
             handler: () => {
               this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
               .then( retour =>{
-                console.log('Thomas suce')
+                this.newIdTransac = 5; //RECUP FROM API
+                this.qrCode = this.transaction.idVendeur+"-"+this.transaction.pseudoVendeur+"-"+this.newIdTransac+"-"+this.transaction.sommeTotale;
+
+                this.app.getRootNav().setRoot(QrcodeExposantPage,{myQrCode: this.qrCode});
               } 
                 
               )
