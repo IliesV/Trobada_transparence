@@ -14,9 +14,10 @@ export class ValidationExposantPage {
 
   infosUser:UserGlobal = new UserGlobal();
   idTransac: string = "5";
-  resultat: string = "";
+  resultat: string = "Transaction en attente";
   hideResultat:boolean = true;
   solde: string = "";
+  timer;
 
   constructor(
     public navCtrl: NavController,
@@ -33,28 +34,29 @@ export class ValidationExposantPage {
   public validateTransacFromCom(){
 
       this.hideResultat = true;
-    setTimeout(() => {
       return this.transactionsApiProvider.checkVendeur(this.idTransac,this.infosUser.token)
       .then(result => {
             
         if(result.data == "true"){
-          
-              this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
-              .then( retour => {
-                //Update solde
-                this.solde = retour.data;
-                this.infosProvider.saveSolde(this.solde)
-                 this.resultat="Transaction validée";
-                    this.hideResultat = false;
-              })
-              .catch(() => console.log("erreur recup solde"))
+          //Stop timer
+          clearInterval(this.timer);
+
+          //Update message écran et solde
+          this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
+          .then( retour => {
+            //Update solde
+            this.solde = retour.data;
+            this.infosProvider.saveSolde(this.solde)
+              this.resultat="Transaction validée";
+                this.hideResultat = false;
+          })
+          .catch(() => console.log("erreur recup solde"))
         }else{
           this.resultat="Transaction en attente";
             this.hideResultat = false;
         }
       })
       .catch(()=>console.log("erreur check vendeur"))
-    }, 3000); 
   }
 
   public cancelVerif(){
@@ -66,8 +68,14 @@ export class ValidationExposantPage {
     this.nativeStorage.getItem('infosUser')
     .then( infos => {
       this.infosUser = infos as UserGlobal
-      this.validateTransacFromCom();
     })
     .catch(() => console.log('erreur recup infos'))
+  }
+
+  ionViewDidLoad(){
+    this.timer = setInterval(() => {
+      console.log("start verif")
+      this.validateTransacFromCom();
+    }, 5000); 
   }
 }
