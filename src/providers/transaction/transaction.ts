@@ -65,7 +65,6 @@ export class TransactionProvider {
   }
 
   public reset(){
-    console.log("stp");
     this.nomsArticles = [];
     this.prixArticles = [];
     this.panier = [];
