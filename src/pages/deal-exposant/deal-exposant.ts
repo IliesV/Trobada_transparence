@@ -170,6 +170,7 @@ console.log(JSON.stringify(trouduc))
     }else if(this.objet != null){
       this.qrdata = this.objet.split("-",6);
       this.transaction.quantity.push(1);
+      this.transaction.sommeTot();
         let alert = this.alertCtrl.create({
           title: 'Bim bam boum',
           subTitle: this.qrdata[2] + " coute " + this.qrdata[3] + " €",
