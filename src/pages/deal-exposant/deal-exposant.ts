@@ -157,10 +157,11 @@ var trouduc = {
             handler: () => {
               this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
               .then( retour =>{
-                this.newIdTransac = 5; //RECUP FROM API
+                const DATAS = JSON.parse(retour.data)
+                this.newIdTransac = DATAS.idTransac
                 this.qrCode = this.transaction.idVendeur+"-"+this.transaction.pseudoVendeur+"-"+this.newIdTransac+"-"+this.transaction.sommeTotale;
 
-                this.app.getRootNav().setRoot(QrcodeExposantPage,{myQrCode: this.qrCode});
+                this.app.getRootNav().setRoot(QrcodeExposantPage,{myQrCode: this.qrCode,idTransac: this.newIdTransac});
               } 
                 
               )
