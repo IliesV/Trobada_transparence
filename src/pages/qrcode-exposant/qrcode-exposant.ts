@@ -13,6 +13,7 @@ export class QrcodeExposantPage {
 
   public myQrCode: string = "1-laurent-5-54";
   private oldBright:number = 0;
+  public idTransac = 5; //RECUP IDTRANSAC FROM PREVIOUS PAGE
 
   constructor(
     public navCtrl: NavController,
@@ -20,12 +21,17 @@ export class QrcodeExposantPage {
     private app: App,
     private brightness: Brightness
     ) {
+
+          
+          //RECUP IDTRANSAC FROM PREVIOUS PAGE
+
+
   }
 
   public goValidation(){
     this.brightness.setBrightness(this.oldBright)
     .then( () => {
-      this.app.getRootNav().setRoot(ValidationExposantPage);
+      this.app.getRootNav().setRoot(ValidationExposantPage,{ idTransac: this.idTransac});
     })
     .catch(() => console.log("erreur brightness"))
   }

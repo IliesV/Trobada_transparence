@@ -13,7 +13,7 @@ import { InfosProvider } from '../../providers/infos/infosUser';
 export class ValidationExposantPage {
 
   infosUser:UserGlobal = new UserGlobal();
-  idTransac: string = "5";
+  idTransac: string = "0";
   resultat: string = "Transaction en attente";
   hideResultat:boolean = true;
   hideVerif:boolean = true;
@@ -28,33 +28,22 @@ export class ValidationExposantPage {
     private infosProvider: InfosProvider,
     private nativeStorage: NativeStorage
   ) {
-    
-    //RECUP IDTRANSAC FROM PREVIOUS PAGE
+    this.idTransac = navParams.get('idTransac');
   }
 
   public startVerif(){
+    this.hideResultat = true;
     var i = 0;
 
     this.timer = setInterval(() => {
       i++;
       console.log("start verif")
-      this.validateTransacFromCom();
-      if(i == 5 || (this.resultat == "Transaction validée")){
-        clearInterval(this.timer);
-      }
-    }, 3000);
-
-    this.hideVerif = true;
-  }
-
-  private validateTransacFromCom(){
-
-      this.hideResultat = true;
-      return this.transactionsApiProvider.checkVendeur(this.idTransac,this.infosUser.token)
+      this.validateTransacFromCom()
       .then(result => {
             
         if(result.data == "true"){
-
+          clearInterval(this.timer);
+          this.hideVerif = true;
           //Update message écran et solde
           this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
           .then( retour => {
@@ -66,11 +55,24 @@ export class ValidationExposantPage {
           })
           .catch(() => console.log("erreur recup solde"))
         }else{
-          this.resultat="Transaction en attente";
-            this.hideResultat = false;
+          this.resultat="Transaction en attente, essai "+i+"/5";
+          this.hideResultat = false;
+          if(i == 5){
+            clearInterval(this.timer);
+            this.resultat="Transaction non validée";
+            this.hideVerif =false;
+          }
         }
       })
       .catch(()=>console.log("erreur check vendeur"))
+    }, 3000);
+  }
+
+  private validateTransacFromCom(){
+
+      this.hideResultat = true;
+      return this.transactionsApiProvider.checkVendeur(this.idTransac,this.infosUser.token)
+      
   }
 
   public cancelVerif(){
