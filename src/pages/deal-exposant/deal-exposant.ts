@@ -7,6 +7,7 @@ import { Observable } from 'rxjs/Observable';
 
 import {LoginPage} from '../login/login';
 import {ConnexionApiProvider} from '../../providers/api/api.connexion';
+import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 
 import { ScanQrPage } from '../scan-qr/scan-qr';
 
@@ -39,7 +40,8 @@ export class DealExposantPage {
     private alertCtrl: AlertController,
     private connexionApiProvider: ConnexionApiProvider,
     private app: App,
-    private transaction: TransactionProvider
+    private transaction: TransactionProvider,
+    private transactionApi: TransactionsApiProvider
     ) {
       this.objet = this.navParams.get('objet'),
       this.nomsArticles = this.transaction.nomsArticles,
@@ -70,7 +72,6 @@ private addQuantity(number){
   this.quantity[number]++;
   console.log(this.quantity[number])
   this.transaction.sommeTot();
-  //console.log(this.sommeTotale + " sommetotale");
 }
 
 private removeQuantity(number){
@@ -117,10 +118,29 @@ private remove(noms){
   ionViewDidLoad() {
     
     console.log('ionViewDidLoad DealExposantPage');
+    var articles = [];
+    for(let i = 0; i<this.transaction.nomsArticles.length; i++){
+        var article = {
+            "product_id": this.transaction.idArticles[i],
+            "qty": this.transaction.quantity[i]
+        }
+        articles.push(article);
+    }
+
     
+
+var trouduc = {
+    "amount": this.transaction.sommeTotale,
+    "id_fest": this.transaction.idFestivalier,
+    "id_com": this.transaction.idVendeur,
+    "events_id": this.transaction.idFestoche,
+    "listeTransactions": articles
+}
+console.log("idcom: "+this.transaction.idVendeur)
+console.log(JSON.stringify(trouduc))
     
     if(this.pseudo != null){
-      console.log("ok");
+      //console.log("ok");
       let alert = this.alertCtrl.create({
         title: 'Confirmer la transaction',
         message: "Voulez vous prendre l'argent de "+ this.transaction.pseudoFestivalier,
@@ -135,7 +155,13 @@ private remove(noms){
           {
             text: 'OUI',
             handler: () => {
-              console.log('Buy clicked');
+              this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
+              .then( retour =>{
+                console.log('Thomas suce')
+              } 
+                
+              )
+              .catch(err => console.log(err.toString()))
             }
           }
         ]
@@ -144,6 +170,7 @@ private remove(noms){
     }else if(this.objet != null){
       this.qrdata = this.objet.split("-",6);
       this.transaction.quantity.push(1);
+      this.transaction.sommeTot();
         let alert = this.alertCtrl.create({
           title: 'Bim bam boum',
           subTitle: this.qrdata[2] + " coute " + this.qrdata[3] + " €",
