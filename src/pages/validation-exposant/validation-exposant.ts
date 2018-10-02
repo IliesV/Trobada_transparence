@@ -13,10 +13,12 @@ import { InfosProvider } from '../../providers/infos/infosUser';
 export class ValidationExposantPage {
 
   infosUser:UserGlobal = new UserGlobal();
-  idTransac: string = "5";
-  resultat: string = "";
+  idTransac: string = "0";
+  resultat: string = "Transaction en attente";
   hideResultat:boolean = true;
+  hideVerif:boolean = true;
   solde: string = "";
+  timer;
 
   constructor(
     public navCtrl: NavController,
@@ -26,35 +28,51 @@ export class ValidationExposantPage {
     private infosProvider: InfosProvider,
     private nativeStorage: NativeStorage
   ) {
-    
-    //RECUP IDTRANSAC FROM PREVIOUS PAGE
+    this.idTransac = navParams.get('idTransac');
   }
 
-  public validateTransacFromCom(){
+  public startVerif(){
+    this.hideResultat = true;
+    var i = 0;
 
-      this.hideResultat = true;
-    setTimeout(() => {
-      return this.transactionsApiProvider.checkVendeur(this.idTransac,this.infosUser.token)
+    this.timer = setInterval(() => {
+      i++;
+      console.log("start verif")
+      this.validateTransacFromCom()
       .then(result => {
             
         if(result.data == "true"){
-          
-              this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
-              .then( retour => {
-                //Update solde
-                this.solde = retour.data;
-                this.infosProvider.saveSolde(this.solde)
-                 this.resultat="Transaction validée";
-                    this.hideResultat = false;
-              })
-              .catch(() => console.log("erreur recup solde"))
+          clearInterval(this.timer);
+          this.hideVerif = true;
+          //Update message écran et solde
+          this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
+          .then( retour => {
+            //Update solde
+            this.solde = retour.data;
+            this.infosProvider.saveSolde(this.solde)
+              this.resultat="Transaction validée";
+                this.hideResultat = false;
+          })
+          .catch(() => console.log("erreur recup solde"))
         }else{
-          this.resultat="Transaction en attente";
-            this.hideResultat = false;
+          this.resultat="Transaction en attente, essai "+i+"/5";
+          this.hideResultat = false;
+          if(i == 5){
+            clearInterval(this.timer);
+            this.resultat="Transaction non validée";
+            this.hideVerif =false;
+          }
         }
       })
       .catch(()=>console.log("erreur check vendeur"))
-    }, 3000); 
+    }, 3000);
+  }
+
+  private validateTransacFromCom(){
+
+      this.hideResultat = true;
+      return this.transactionsApiProvider.checkVendeur(this.idTransac,this.infosUser.token)
+      
   }
 
   public cancelVerif(){
@@ -66,8 +84,11 @@ export class ValidationExposantPage {
     this.nativeStorage.getItem('infosUser')
     .then( infos => {
       this.infosUser = infos as UserGlobal
-      this.validateTransacFromCom();
     })
     .catch(() => console.log('erreur recup infos'))
+  }
+
+  ionViewDidLoad(){
+    this.startVerif();
   }
 }
