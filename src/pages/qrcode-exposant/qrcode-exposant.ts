@@ -11,9 +11,9 @@ import { ValidationExposantPage } from '../validation-exposant/validation-exposa
 })
 export class QrcodeExposantPage {
 
-  public myQrCode: string = "1-laurent-5-54";
+  public myQrCode: string = "Inconnu";
   private oldBright:number = 0;
-  public idTransac = 5; //RECUP IDTRANSAC FROM PREVIOUS PAGE
+  public idTransac = 0;
 
   constructor(
     public navCtrl: NavController,
@@ -21,11 +21,8 @@ export class QrcodeExposantPage {
     private app: App,
     private brightness: Brightness
     ) {
-
-          
-          //RECUP IDTRANSAC FROM PREVIOUS PAGE
-
-
+      this.myQrCode = navParams.get('myQrCode');
+      this.idTransac = navParams.get('idTransac');
   }
 
   public goValidation(){

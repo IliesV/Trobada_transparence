@@ -34,6 +34,7 @@ export class DealExposantPage {
   quantity: number[] = [];
   sommeTotale: number = 0;
   nombre: number = 0;
+  newIdTransac: number = 0;
   qrCode:string = "";
 
   constructor(
@@ -156,8 +157,8 @@ var trouduc = {
             handler: () => {
               this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
               .then( retour =>{
-
-                this.qrCode = this.transaction.idVendeur+"-"+this.transaction.pseudoVendeur+"-"+"5"+"-"+this.transaction.sommeTotale;
+                this.newIdTransac = 5; //RECUP FROM API
+                this.qrCode = this.transaction.idVendeur+"-"+this.transaction.pseudoVendeur+"-"+this.newIdTransac+"-"+this.transaction.sommeTotale;
 
                 this.app.getRootNav().setRoot(QrcodeExposantPage,{myQrCode: this.qrCode});
               } 
