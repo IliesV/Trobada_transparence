@@ -16,6 +16,7 @@ export class ValidationExposantPage {
   idTransac: string = "5";
   resultat: string = "Transaction en attente";
   hideResultat:boolean = true;
+  hideVerif:boolean = true;
   solde: string = "";
   timer;
 
@@ -31,15 +32,28 @@ export class ValidationExposantPage {
     //RECUP IDTRANSAC FROM PREVIOUS PAGE
   }
 
-  public validateTransacFromCom(){
+  public startVerif(){
+    var i = 0;
+
+    this.timer = setInterval(() => {
+      i++;
+      console.log("start verif")
+      this.validateTransacFromCom();
+      if(i == 5 || (this.resultat == "Transaction validée")){
+        clearInterval(this.timer);
+      }
+    }, 3000);
+
+    this.hideVerif = true;
+  }
+
+  private validateTransacFromCom(){
 
       this.hideResultat = true;
       return this.transactionsApiProvider.checkVendeur(this.idTransac,this.infosUser.token)
       .then(result => {
             
         if(result.data == "true"){
-          //Stop timer
-          clearInterval(this.timer);
 
           //Update message écran et solde
           this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
@@ -73,9 +87,6 @@ export class ValidationExposantPage {
   }
 
   ionViewDidLoad(){
-    this.timer = setInterval(() => {
-      console.log("start verif")
-      this.validateTransacFromCom();
-    }, 5000); 
+    this.startVerif();
   }
 }
