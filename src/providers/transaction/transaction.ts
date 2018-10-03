@@ -70,6 +70,7 @@ export class TransactionProvider {
     this.panier = [];
     this.quantity = [];
     this.sommeTotale = 0;
+    this.pseudoFestivalier = null;
   }
 
 }

@@ -66,6 +66,7 @@ private reset(){
   this.nomsArticles = [];
   this.prixArticles = [];
   this.quantity = [];
+  this.pseudo = null;
 }
 
 private addQuantity(number){
@@ -158,6 +159,7 @@ console.log(JSON.stringify(trouduc))
               this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
               .then( retour =>{
                 console.log('Thomas suce')
+                this.reset();
               } 
                 
               )
