@@ -131,16 +131,17 @@ private reset(){
       articles.push(article);
     }
 
-
+    
 
     var datasClient = {
       "amount": this.transaction.sommeTotale,
       "id_fest": this.transaction.idFestivalier,
       "id_com": this.transaction.idVendeur,
       "events_id": this.transaction.idFestoche,
+      "isConnected": this.transaction.isConnected,
       "listeTransactions": articles
     }
-
+    console.log(JSON.stringify(datasClient))
     if (this.pseudo != null) {
       let alert = this.alertCtrl.create({
         title: 'Confirmer la transaction',
@@ -161,10 +162,17 @@ private reset(){
                   const DATAS = JSON.parse(retour.data)
 
                   if (DATAS.resultat == "true") { //Credit client suffisant
+                    
+                    //Ckeck connectivité client
+                    if(datasClient.isConnected == "true"){
+                      console.log("connected")
+                    }else{
+                      console.log("disconnected")
+                    }
 
-                    this.newIdTransac = DATAS.idTransac
-                    this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
-                    this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac });
+                    // this.newIdTransac = DATAS.idTransac
+                    // this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
+                    // this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac });
 
                   } else {
                     let alert2 = this.alertCtrl.create({

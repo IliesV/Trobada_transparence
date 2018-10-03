@@ -94,5 +94,5 @@
     <allow-navigation href="http://192.168.1.27:8100" sessionid="2a57cd3d" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="ios" spec="^4.5.5" />
-    <engine name="android" spec="^7.0.0" />
+    <engine name="android" spec="^7.1.1" />
 </widget>
