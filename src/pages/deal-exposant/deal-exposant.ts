@@ -160,14 +160,15 @@ export class DealExposantPage {
 
                   if (DATAS.resultat == "true") { //Credit client suffisant
 
-                    //Reset du provider
-                    this.reset();
-
                     //Id de la nouvelle transaction
                     this.newIdTransac = DATAS.idTransac
 
                     //redirection vers qrcode vendeur
                     this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
+                    
+                    //Reset du provider
+                    this.reset();
+                    
                     this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac , statutConnection: this.transaction.isConnected});
 
                   } else {
