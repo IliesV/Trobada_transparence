@@ -1,0 +1,24 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Finalisation</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-grid>
+    <ion-row text-center>
+      <ion-col class="resultatRequeteOk">
+        {{ resultat }}<br>
+        <div>
+          Votre nouveau solde: {{ solde }} €
+        </div>
+      </ion-col>
+    </ion-row>
+    <br>
+    <ion-row text-center>
+        <ion-col>
+            <button ion-button color="trobada" (tap)="retour()">Retour</button>
+        </ion-col>
+      </ion-row>
+  </ion-grid>
+</ion-content>
