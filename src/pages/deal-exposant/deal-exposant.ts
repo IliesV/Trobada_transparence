@@ -11,6 +11,7 @@ import { TransactionsApiProvider } from '../../providers/api/api.transactions';
 
 import { ScanQrPage } from '../scan-qr/scan-qr';
 import { QrcodeExposantPage } from '../qrcode-exposant/qrcode-exposant';
+import { ValidationExposantPage } from '../validation-exposant/validation-exposant';
 
 /**
  * Generated class for the DealExposantPage page.
@@ -64,13 +65,13 @@ export class DealExposantPage {
     this.navCtrl.push(ScanQrPage, { source: "client" });
   }
 
-private reset(){
-  this.transaction.reset();
-  this.nomsArticles = [];
-  this.prixArticles = [];
-  this.quantity = [];
-  this.pseudo = null;
-}
+  private reset() {
+    this.transaction.reset();
+    this.nomsArticles = [];
+    this.prixArticles = [];
+    this.quantity = [];
+    this.pseudo = null;
+  }
 
   private addQuantity(number) {
     this.quantity[number]++;
@@ -131,8 +132,6 @@ private reset(){
       articles.push(article);
     }
 
-    
-
     var datasClient = {
       "amount": this.transaction.sommeTotale,
       "id_fest": this.transaction.idFestivalier,
@@ -141,7 +140,7 @@ private reset(){
       "isConnected": this.transaction.isConnected,
       "listeTransactions": articles
     }
-    console.log(JSON.stringify(datasClient))
+
     if (this.pseudo != null) {
       let alert = this.alertCtrl.create({
         title: 'Confirmer la transaction',
@@ -162,18 +161,16 @@ private reset(){
                   const DATAS = JSON.parse(retour.data)
 
                   if (DATAS.resultat == "true") { //Credit client suffisant
-                    
+
                     //Ckeck connectivité client
-                    if(datasClient.isConnected == "true"){
-                      console.log("connected")
-                    }else{
-                      console.log("disconnected")
+                    if (datasClient.isConnected == "true") { //Client connecté => Validation par le client
+                      this.newIdTransac = DATAS.idTransac
+                      this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
+                      this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac });
+
+                    } else { //Transaction validée, direct page validation
+                      this.app.getRootNav().setRoot(ValidationExposantPage, { idTransac: this.newIdTransac });
                     }
-
-                    // this.newIdTransac = DATAS.idTransac
-                    // this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
-                    // this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac });
-
                   } else {
                     let alert2 = this.alertCtrl.create({
                       title: 'Solde insuffisant',
