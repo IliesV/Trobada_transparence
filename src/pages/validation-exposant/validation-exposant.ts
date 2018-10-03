@@ -76,6 +76,7 @@ export class ValidationExposantPage {
   }
 
   public cancelVerif(){
+    clearInterval(this.timer);
     this.app.getRootNav().setRoot(TabsExposantPage)
   }
 

@@ -64,13 +64,13 @@ export class DealExposantPage {
     this.navCtrl.push(ScanQrPage, { source: "client" });
   }
 
-private reset(){
-  this.transaction.reset();
-  this.nomsArticles = [];
-  this.prixArticles = [];
-  this.quantity = [];
-  this.pseudo = null;
-}
+  private reset() {
+    this.transaction.reset();
+    this.nomsArticles = [];
+    this.prixArticles = [];
+    this.quantity = [];
+    this.pseudo = null;
+  }
 
   private addQuantity(number) {
     this.quantity[number]++;
@@ -130,13 +130,12 @@ private reset(){
       articles.push(article);
     }
 
-
-
-    var trouduc = {
+    var datasClient = {
       "amount": this.transaction.sommeTotale,
       "id_fest": this.transaction.idFestivalier,
       "id_com": this.transaction.idVendeur,
       "events_id": this.transaction.idFestoche,
+      "isConnected": this.transaction.isConnected,
       "listeTransactions": articles
     }
 
@@ -155,16 +154,21 @@ private reset(){
           {
             text: 'Oui',
             handler: () => {
-              this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
+              this.transactionApi.sendTransactions(this.transaction.infosUser.token, datasClient)
                 .then(retour => {
                   const DATAS = JSON.parse(retour.data)
 
                   if (DATAS.resultat == "true") { //Credit client suffisant
 
+                    //Reset du provider
                     this.reset();
+
+                    //Id de la nouvelle transaction
                     this.newIdTransac = DATAS.idTransac
+
+                    //redirection vers qrcode vendeur
                     this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
-                    this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac });
+                    this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac , statutConnection: this.transaction.isConnected});
 
                   } else {
                     let alert2 = this.alertCtrl.create({
@@ -175,7 +179,7 @@ private reset(){
                     alert2.present();
                   }
                 })
-                .catch(err => console.log(err.toString()))
+                .catch(() => console.log("erreur envoi transaction"))
             }
           }
         ]
