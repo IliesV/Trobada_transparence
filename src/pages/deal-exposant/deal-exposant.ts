@@ -74,7 +74,6 @@ private reset(){
 
   private addQuantity(number) {
     this.quantity[number]++;
-    console.log(this.quantity[number])
     this.transaction.sommeTot();
   }
 
@@ -144,17 +143,17 @@ private reset(){
     if (this.pseudo != null) {
       let alert = this.alertCtrl.create({
         title: 'Confirmer la transaction',
-        message: "Voulez vous prendre l'argent de " + this.transaction.pseudoFestivalier,
+        message: "Confirmez vous cette vente d'une valeur de " + this.sommeTotale + "€",
         buttons: [
           {
-            text: 'Surtout pas',
+            text: 'Annuler',
             role: 'cancel',
             handler: () => {
               console.log('Cancel clicked');
             }
           },
           {
-            text: 'OUI',
+            text: 'Oui',
             handler: () => {
               this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
                 .then(retour => {
@@ -187,8 +186,8 @@ private reset(){
       this.transaction.quantity.push(1);
       this.transaction.sommeTot();
       let alert = this.alertCtrl.create({
-        title: 'Bim bam boum',
-        subTitle: this.qrdata[2] + " coute " + this.qrdata[3] + " €",
+        title: 'Article scanné',
+        subTitle: "1 X " + this.qrdata[2] + " coute " + this.qrdata[3] + " €",
         buttons: ['OK']
       });
       alert.present();
