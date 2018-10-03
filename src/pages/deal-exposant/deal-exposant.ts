@@ -162,6 +162,7 @@ private reset(){
 
                   if (DATAS.resultat == "true") { //Credit client suffisant
 
+                    this.reset();
                     this.newIdTransac = DATAS.idTransac
                     this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
                     this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac });
