@@ -53,6 +53,7 @@ export class TransactionProvider {
       this.infosUser = infos as UserGlobal
       this.idVendeur = this.infosUser.id;
       this.pseudoVendeur = this.infosUser.pseudo;
+      this.isConnected = this.infosUser.isConnected;
       console.log("isCom= "+this.infosUser.id);
     })
     .catch(() => console.log('erreur recup infos'))
@@ -74,7 +75,6 @@ export class TransactionProvider {
     this.quantity = [];
     this.sommeTotale = 0;
     this.pseudoFestivalier = null;
-    this.isConnected = null;
   }
 
 }
