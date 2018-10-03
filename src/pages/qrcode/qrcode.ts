@@ -12,7 +12,6 @@ import { Brightness } from '@ionic-native/brightness';
 
 import { ScannerFestivalierPage } from '../scanner-festivalier/scanner-festivalier';
 
-
 @Component({
   selector: 'page-qrcode',
   templateUrl: 'qrcode.html'
@@ -62,7 +61,7 @@ export class QrcodePage {
   public goScan() {
     this.brightness.setBrightness(this.oldBright)
       .then(() => {
-        this.app.getRootNav().setRoot(ScannerFestivalierPage);
+        this.app.getRootNav().setRoot(ScannerFestivalierPage, {statusConnect: this.connected});
       })
       .catch(() => console.log("erreur brightness"))
   }
@@ -92,5 +91,9 @@ export class QrcodePage {
         this.brightness.setBrightness(1)
       })
       .catch(() => console.log("erreur brightness"))
+  }
+
+  ionViewWillLeave() {
+    this.brightness.setBrightness(this.oldBright);
   }
 }
