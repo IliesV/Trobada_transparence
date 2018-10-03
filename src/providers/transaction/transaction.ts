@@ -18,7 +18,7 @@ export class TransactionProvider {
   pseudoFestivalier: string;
   pseudoVendeur: string;
   quantity: number[]= [];
-  isConnected: boolean;
+  isConnected: string;
 
   constructor(
     //public http: HttpClient
@@ -53,7 +53,6 @@ export class TransactionProvider {
       this.infosUser = infos as UserGlobal
       this.idVendeur = this.infosUser.id;
       this.pseudoVendeur = this.infosUser.pseudo;
-      this.isConnected = this.infosUser.isConnected;
       console.log("isCom= "+this.infosUser.id);
     })
     .catch(() => console.log('erreur recup infos'))
@@ -63,9 +62,10 @@ export class TransactionProvider {
   }
 
   public addInfosFestivalier(string){
-    let infosFestivalier = string.split("-",3);
+    let infosFestivalier = string.split("-",4);
     this.idFestivalier = infosFestivalier[0];
     this.pseudoFestivalier = infosFestivalier[1];
+    this.isConnected = infosFestivalier[3];
   }
 
   public reset(){
