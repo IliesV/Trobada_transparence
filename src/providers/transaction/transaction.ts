@@ -59,9 +59,10 @@ export class TransactionProvider {
   }
 
   public addInfosFestivalier(string){
-    let infosFestivalier = string.split("-",3);
+    let infosFestivalier = string.split("-",4);
     this.idFestivalier = infosFestivalier[0];
     this.pseudoFestivalier = infosFestivalier[1];
+    this.isConnected = infosFestivalier[3];
   }
 
   public reset(){
@@ -71,7 +72,6 @@ export class TransactionProvider {
     this.quantity = [];
     this.sommeTotale = 0;
     this.pseudoFestivalier = null;
-    this.isConnected = null;
   }
 
 }
