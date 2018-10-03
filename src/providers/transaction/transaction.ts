@@ -18,7 +18,7 @@ export class TransactionProvider {
   pseudoFestivalier: string;
   pseudoVendeur: string;
   quantity: number[]= [];
-  isConnected: string;
+  isConnected: boolean;
 
   constructor(
     //public http: HttpClient
