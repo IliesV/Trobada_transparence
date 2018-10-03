@@ -132,7 +132,7 @@ export class DealExposantPage {
 
 
 
-    var trouduc = {
+    var datasClient = {
       "amount": this.transaction.sommeTotale,
       "id_fest": this.transaction.idFestivalier,
       "id_com": this.transaction.idVendeur,
@@ -155,7 +155,7 @@ export class DealExposantPage {
           {
             text: 'OUI',
             handler: () => {
-              this.transactionApi.sendTransactions(this.transaction.infosUser.token, trouduc)
+              this.transactionApi.sendTransactions(this.transaction.infosUser.token, datasClient)
                 .then(retour => {
                   const DATAS = JSON.parse(retour.data)
 
@@ -174,7 +174,7 @@ export class DealExposantPage {
                     alert2.present();
                   }
                 })
-                .catch(err => console.log(err.toString()))
+                .catch(() => console.log("erreur envoi transaction"))
             }
           }
         ]
