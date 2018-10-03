@@ -35,9 +35,6 @@ export class TransactionProvider {
     console.log(this.sommeTotale + " sommetotale");
   }
 
-
-
-
   public addInfos(string){
     let infosArticle = string.split("-",6);
     this.panier.push(infosArticle);
