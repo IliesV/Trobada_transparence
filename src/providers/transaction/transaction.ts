@@ -16,6 +16,7 @@ export class TransactionProvider {
   idFestoche: string;
   idVendeur : string;
   pseudoFestivalier: string;
+  pseudoVendeur: string;
   quantity: number[]= [];
 
   constructor(
@@ -50,6 +51,7 @@ export class TransactionProvider {
     .then( infos => {
       this.infosUser = infos as UserGlobal
       this.idVendeur = this.infosUser.id;
+      this.pseudoVendeur = this.infosUser.pseudo;
       console.log("isCom= "+this.infosUser.id);
     })
     .catch(() => console.log('erreur recup infos'))
