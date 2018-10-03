@@ -18,6 +18,7 @@ export class TransactionProvider {
   pseudoFestivalier: string;
   pseudoVendeur: string;
   quantity: number[]= [];
+  isConnected: string;
 
   constructor(
     //public http: HttpClient
@@ -72,6 +73,8 @@ export class TransactionProvider {
     this.panier = [];
     this.quantity = [];
     this.sommeTotale = 0;
+    this.pseudoFestivalier = null;
+    this.isConnected = null;
   }
 
 }

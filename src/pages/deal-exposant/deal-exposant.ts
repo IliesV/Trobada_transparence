@@ -64,12 +64,13 @@ export class DealExposantPage {
     this.navCtrl.push(ScanQrPage, { source: "client" });
   }
 
-  private reset() {
-    this.transaction.reset();
-    this.nomsArticles = [];
-    this.prixArticles = [];
-    this.quantity = [];
-  }
+private reset(){
+  this.transaction.reset();
+  this.nomsArticles = [];
+  this.prixArticles = [];
+  this.quantity = [];
+  this.pseudo = null;
+}
 
   private addQuantity(number) {
     this.quantity[number]++;
@@ -183,6 +184,7 @@ export class DealExposantPage {
     } else if (this.objet != null) {
       this.qrdata = this.objet.split("-", 6);
       this.transaction.quantity.push(1);
+      this.transaction.isConnected = this.qrdata[4]
       this.transaction.sommeTot();
       let alert = this.alertCtrl.create({
         title: 'Bim bam boum',
