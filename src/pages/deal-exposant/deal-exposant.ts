@@ -11,7 +11,6 @@ import { TransactionsApiProvider } from '../../providers/api/api.transactions';
 
 import { ScanQrPage } from '../scan-qr/scan-qr';
 import { QrcodeExposantPage } from '../qrcode-exposant/qrcode-exposant';
-import { ValidationExposantPage } from '../validation-exposant/validation-exposant';
 
 /**
  * Generated class for the DealExposantPage page.
@@ -162,15 +161,16 @@ export class DealExposantPage {
 
                   if (DATAS.resultat == "true") { //Credit client suffisant
 
-                    //Ckeck connectivité client
-                    if (datasClient.isConnected == "true") { //Client connecté => Validation par le client
-                      this.newIdTransac = DATAS.idTransac
-                      this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
-                      this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac });
+                    //Reset du provider
+                    this.reset();
 
-                    } else { //Transaction validée, direct page validation
-                      this.app.getRootNav().setRoot(ValidationExposantPage, { idTransac: this.newIdTransac });
-                    }
+                    //Id de la nouvelle transaction
+                    this.newIdTransac = DATAS.idTransac
+
+                    //redirection vers qrcode vendeur
+                    this.qrCode = this.transaction.idVendeur + "-" + this.transaction.pseudoVendeur + "-" + this.newIdTransac + "-" + this.transaction.sommeTotale;
+                    this.app.getRootNav().setRoot(QrcodeExposantPage, { myQrCode: this.qrCode, idTransac: this.newIdTransac , statutConnection: this.transaction.isConnected});
+
                   } else {
                     let alert2 = this.alertCtrl.create({
                       title: 'Solde insuffisant',
