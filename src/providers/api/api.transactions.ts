@@ -84,4 +84,15 @@ export class TransactionsApiProvider {
             "Authorization":"Bearer " + token
         });
     }
+
+    //validate transaction from vendeur
+    public validateTransac(idTransac:string, token:string): Promise<any> {
+        const URL = 'http://trobadapi.ddns.info/api/validation'
+        this.http.setDataSerializer('JSON');
+        return this.http.post(URL, {"idTransac": idTransac},
+        {
+            "Content-Type": "application/json",
+            "Authorization":"Bearer " + token
+        });
+    }
 }

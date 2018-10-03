@@ -14,6 +14,7 @@ import { ScannerFestivalierPage } from '../pages/scanner-festivalier/scanner-fes
 import { ValidationFestivalierPage } from '../pages/validation-festivalier/validation-festivalier';
 import { ValidationExposantPage } from '../pages/validation-exposant/validation-exposant';
 import { QrcodeExposantPage } from '../pages/qrcode-exposant/qrcode-exposant';
+import { ValidationOfflinePage } from '../pages/validation-offline/validation-offline';
 
 import { TabsExposantPage } from '../pages/tabs-exposant/tabs-exposant';
 
@@ -65,7 +66,8 @@ import { Keyboard } from '@ionic-native/keyboard';
     ScannerFestivalierPage,
     ValidationFestivalierPage,
     ValidationExposantPage,
-    QrcodeExposantPage
+    QrcodeExposantPage,
+    ValidationOfflinePage
   ],
   imports: [
     BrowserModule,
@@ -88,7 +90,8 @@ import { Keyboard } from '@ionic-native/keyboard';
     ScannerFestivalierPage,
     ValidationFestivalierPage,
     ValidationExposantPage,
-    QrcodeExposantPage
+    QrcodeExposantPage,
+    ValidationOfflinePage
   ],
   providers: [
     StatusBar,
