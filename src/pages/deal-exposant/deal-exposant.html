@@ -29,10 +29,10 @@
             <p>{{prixArticles[i]*quantity[i]}}€</p>
           </ion-item>
           <ion-item-options side="left">
-            <button ion-button clear (tap)="removeQuantity(i)">
+            <button ion-button clear large (tap)="removeQuantity(i)">
               <ion-icon name="remove-circle"></ion-icon>
             </button>
-            <button ion-button clear (tap)="addQuantity(i)">
+            <button ion-button clear large (tap)="addQuantity(i)">
               <ion-icon name="add-circle"></ion-icon>
             </button>
           </ion-item-options>
