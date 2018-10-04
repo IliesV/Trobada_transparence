@@ -10,4 +10,12 @@ page-transactions {
         color: #fffdfd;
         text-align: left;
     }
+
+    .errorConnexion{
+        color:red;
+        text-align: center;
+        margin:10px;
+        padding:5px;
+        border: 2px solid red;
+    }
 }

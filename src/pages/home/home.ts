@@ -15,14 +15,6 @@ import { AppBddProvider } from '../../providers/app-bdd/app-bdd';
 
 import { SQLite, SQLiteObject } from '@ionic-native/sqlite';
 
-/**
- * AFAIRE
- * MAJ SOLDE CLIENT HORS LIGNE
- * ENREGISTREMENT SQLITE TRANSACTION SI CLIENT HORS LIGNE
- * affichage last transaction si client hors ligne
- */
-
-
 @Component({
   selector: 'page-home',
   templateUrl: 'home.html'
@@ -34,7 +26,6 @@ export class HomePage {
   infosUser: UserGlobal = new UserGlobal();
   connected: string = "true";
   showLast: boolean = false;
-  statut
 
   constructor(
     public navCtrl: NavController,
