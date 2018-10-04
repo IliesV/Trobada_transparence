@@ -41,7 +41,7 @@ export class TransactionsApiProvider {
             
     }
 
-    //Recup last transaction Vendeur
+    //Recup last transaction Client
     public lastClientTransaction(token):Promise<HTTPResponse> {
 
         const URL = 'http://trobadapi.ddns.info/api/lastTransacClient'
@@ -56,7 +56,7 @@ export class TransactionsApiProvider {
         const URL = 'http://trobadapi.ddns.info/api/addTransaction';
         this.http.setDataSerializer('JSON');
         return this.http.post(URL, datas, {"Content-Type": "application/json", "Authorization":"Bearer " + token});
-            }
+    }
 
     //CheckTransac from client
     public checkClient(idCom: string, pseudoCom: string, idTransac: string, montant: string, token:string): Promise<any> {

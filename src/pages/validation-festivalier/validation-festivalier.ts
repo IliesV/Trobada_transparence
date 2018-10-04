@@ -1,4 +1,4 @@
-import { Component, ViewChild, Input } from '@angular/core';
+import { Component, ViewChild, Input, ElementRef } from '@angular/core';
 import { NavController, NavParams, App } from 'ionic-angular';
 import { UserGlobal } from '../../models/infosUser.model';
 import { Keyboard } from '@ionic-native/keyboard';
@@ -25,7 +25,9 @@ export class ValidationFestivalierPage {
   montant: string = "0";
   resultat: string = "";
   hideResultat:boolean = true;
+  showResultat:boolean = false;
   solde: string = "";
+  classVariable:string = "resultatRequeteWrong"
 
   constructor(
     public navCtrl: NavController,
@@ -63,19 +65,26 @@ export class ValidationFestivalierPage {
       this.setInputFocus(1)
 
     }else{
-      this.hideResultat = false;
+      
 
       //Validation code pin => CheckClient
 
       return this.transactionsApiProvider.checkClient(this.idCom,this.pseudoCom,this.idTransac,this.montant,this.infosUser.token)
       .then( result => {
-        this.resultat = result.data;
-        if(this.resultat === "Transaction validée"){
+        if(result.data == "Transaction validée"){
           this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
           .then( retour => {
             //Update solde
             this.solde = retour.data;
             this.infosProvider.saveSolde(this.solde)
+            .then(() => {
+              this.classVariable = "resultatRequeteOk"
+              this.hideResultat = false;
+              this.resultat = result.data;
+              this.showResultat = true;
+              this.keyboard.hide();
+            })
+            .catch(() => console.log("erreur save sold"))
           })
           .catch(() => console.log("erreur recup solde"))
         }
@@ -104,17 +113,17 @@ export class ValidationFestivalierPage {
       case 2:
         setTimeout(() => {
           this.key2Input.setFocus();
-        },100)
+        },200)
         break;
       case 3:
         setTimeout(() => {
           this.key3Input.setFocus();
-        },100)
+        },200)
         break;
       case 4:
         setTimeout(() => {
           this.key4Input.setFocus();
-        },100)
+        },200)
         break;
       case 5:
           this.keyboard.hide();

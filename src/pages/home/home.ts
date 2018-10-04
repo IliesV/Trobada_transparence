@@ -12,6 +12,12 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import { UserGlobal } from '../../models/infosUser.model';
 import { TransactionGlobal } from '../../models/api.transaction.model'
 
+/**
+ * AFAIRE
+ * MAJ SOLDE CLIENT HORS LIGNE
+ * ENREGISTREMENT SQLITE TRANSACTION SI CLIENT HORS LIGNE
+ * affichage last transaction si client hors ligne
+ */
 
 
 @Component({
