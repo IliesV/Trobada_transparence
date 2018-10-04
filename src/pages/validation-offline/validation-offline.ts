@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, App } from 'ionic-angular';
 import { NativeStorage } from '@ionic-native/native-storage';
 import { TabsPage } from '../tabs/tabs';
+import {InfosProvider} from '../../providers/infos/infosUser';
 
 @Component({
   selector: 'page-validation-offline',
@@ -17,6 +18,7 @@ export class ValidationOfflinePage {
     (public navCtrl: NavController,
     private app: App,
     public navParams: NavParams,
+    private infosProvider: InfosProvider,
     private nativeStorage: NativeStorage
     ) {
     this.montant = navParams.get('montant');
@@ -27,6 +29,7 @@ export class ValidationOfflinePage {
     this.nativeStorage.getItem('solde')
       .then(retour => {
         this.solde = retour.solde - this.montant
+        this.infosProvider.saveSolde(this.solde)
       })
       .catch(() => console.log('erreur recup solde'))
   }
