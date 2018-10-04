@@ -25,9 +25,8 @@ export class ValidationFestivalierPage {
   montant: number;
   resultat: string = "";
   hideResultat:boolean = true;
-  showResultat:boolean = false;
   solde: string = "";
-  classVariable:string = "resultatRequeteWrong"
+  classVariable:string = "resultatRequeteWrong";
 
   constructor(
     public navCtrl: NavController,
@@ -52,8 +51,10 @@ export class ValidationFestivalierPage {
     const CODEPIN = this.key1Input.value+this.key2Input.value+this.key3Input.value+this.key4Input.value;
 
     if(CODEPIN != this.infosUser.pass){
-      this.resultat = "Erreur code pin, nouvel essai";
+      this.classVariable = "resultatRequeteWrong"
       this.hideResultat = false;
+      this.resultat = "Erreur code pin, nouvel essai";
+      this.keyboard.hide();
 
       //Reset inputs + focus
       this.key1Input.value = "";
@@ -62,6 +63,9 @@ export class ValidationFestivalierPage {
       this.key4Input.value = "";
 
       this.setInputFocus(1)
+      // setTimeout(() => {
+      // }, 1000);
+      
 
     }else{  //Validation code pin
       
@@ -82,7 +86,6 @@ export class ValidationFestivalierPage {
               this.classVariable = "resultatRequeteOk"
               this.hideResultat = false;
               this.resultat = result.data;
-              this.showResultat = true;
               this.keyboard.hide();
             })
             .catch(() => console.log("erreur save sold"))
