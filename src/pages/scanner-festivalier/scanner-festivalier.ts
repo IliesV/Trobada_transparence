@@ -4,6 +4,7 @@ import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { ValidationFestivalierPage } from '../validation-festivalier/validation-festivalier';
 import { ValidationOfflinePage } from '../validation-offline/validation-offline';
 import { TabsPage } from '../tabs/tabs';
+import { AppBddProvider } from '../../providers/app-bdd/app-bdd';
 
 @Component({
   selector: 'page-scanner-festivalier',
@@ -15,13 +16,16 @@ export class ScannerFestivalierPage {
   qrdata: string;
   objet: string;
   source: string;
-  festivalier: string;
   statusConnect: string;
   montant: number;
+  idCom:string;
+  pseudoCom:string;
+  idTransac:number;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
+    public appBddProvider: AppBddProvider,
     private app: App,
     private qrScanner: QRScanner
   ) {
@@ -51,17 +55,29 @@ export class ScannerFestivalierPage {
            this.objet = text;
            this.qrScanner.hide();
            scanSub.unsubscribe();
+
+           //Decryptage qrcode
+           const DATASARRAY = this.objet.split("-");
+           this.idCom = DATASARRAY[0];
+           this.pseudoCom = DATASARRAY[1];
+           this.idTransac = parseInt(DATASARRAY[2]);
+           this.montant = parseFloat(DATASARRAY[3]);
+
            if(this.statusConnect == "true"){ //Client connecté => validation code pin
 
-            this.app.getRootNav().setRoot(ValidationFestivalierPage,{ objet: this.objet});
+            this.app.getRootNav().setRoot(ValidationFestivalierPage,{
+              montant: this.montant,
+              idCom: this.idCom,
+              pseudoCom: this.pseudoCom,
+              idTransac: this.idTransac
+            });
 
            }else{
-
-            //Recup du montant de la transac
-            const DATASARRAY =text.split("-");
-            this.montant = parseFloat(DATASARRAY[3]);
+            //Sauvegarde en bdd locale
+            this.appBddProvider.createTransac(this.idTransac,this.montant,this.pseudoCom);
+            
+            //Client deconnecté, validtion par le vendeur
             this.app.getRootNav().setRoot(ValidationOfflinePage,{ montant: this.montant});
-
            }
 
           });
