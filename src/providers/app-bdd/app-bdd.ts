@@ -50,7 +50,6 @@ export class AppBddProvider {
       location: 'default'
     })
       .then((db: SQLiteObject) => {
-
         this.db = db;
         var dateTransac = Date.now()
         this.db.executeSql('INSERT INTO `transactions` (`id`,`amount`,`created_at`,`name_com`) VALUES (' + idTransac + ',' + montant + ',\'' + dateTransac + '\',\'' + vendeur + '\')', [])
@@ -59,20 +58,18 @@ export class AppBddProvider {
       })
 
       .catch(e => console.log(JSON.stringify(e)));
-
-
-
   }
 
-  public recupLastTransac() {
-    this.sqlite.create({
+  public recupLastTransac(db: SQLiteObject) {
+        this.db = db;
+        return this.db.executeSql('SELECT * FROM transactions ORDER BY `created_at` LIMIT 1', [])
+  }
+
+  public openDB():Promise<SQLiteObject> {
+    return this.sqlite.create({
       name: 'trobada_db',
       location: 'default'
     })
-      .then(() => {
-        return this.db.executeSql('SELECT * FROM transactions ORDER BY `created_at` LIMIT 1', [])
-      })
-      .catch(e => console.log(e));
   }
 
 }
