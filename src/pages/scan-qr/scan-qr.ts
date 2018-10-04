@@ -105,7 +105,8 @@ export class ScanQrPage {
 
 
  ionViewWillLeave(){
-    this.hideCamera(); 
+    this.qrScanner.destroy();
+    this.hideCamera();
  }
 
 }
