@@ -26,7 +26,7 @@ import { QrcodeExposantPage } from '../qrcode-exposant/qrcode-exposant';
 })
 export class DealExposantPage {
 
-  objet: string;
+  objet: string = null;
   qrdata: object;
   nomsArticles: string[] = [];
   prixArticles: number[] = [];
@@ -187,14 +187,14 @@ export class DealExposantPage {
       alert.present();
     } else if (this.objet != null) {
       this.qrdata = this.objet.split("-", 6);
-      this.transaction.quantity.push(1);
-      this.transaction.sommeTot();
-      let alert = this.alertCtrl.create({
-        title: 'Article scanné',
-        subTitle: "1 X " + this.qrdata[2] + " coute " + this.qrdata[3] + " €",
-        buttons: ['OK']
-      });
-      alert.present();
-    }
-  }
-}
+        this.transaction.quantity.push(1);
+        this.transaction.sommeTot();
+        let alert = this.alertCtrl.create({
+          title: 'Article scanné',
+          subTitle: "1 X " + this.qrdata[2] + " coute " + this.qrdata[3] + " €",
+          buttons: ['OK']
+        });
+        alert.present();
+       }
+      }
+      }

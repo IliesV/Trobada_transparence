@@ -8,7 +8,6 @@ export class TransactionProvider {
 
   infosUser: UserGlobal = new UserGlobal();
   sommeTotale: number = 0;
-  panier: any[] = [];
   nomsArticles: string[] = [];
   prixArticles: number[] = [];
   idArticles: number[] = [];
@@ -37,11 +36,11 @@ export class TransactionProvider {
 
   public addInfos(string){
     let infosArticle = string.split("-",6);
-    this.panier.push(infosArticle);
 
     if (this.idFestoche == null){
       this.idFestoche = infosArticle[0] ;
     }
+    if(this.nomsArticles.indexOf(infosArticle[2])== -1){
     this.nomsArticles.push(infosArticle[2]);
     this.prixArticles.push(infosArticle[3]);
     this.idArticles.push(infosArticle[1]);
@@ -53,7 +52,9 @@ export class TransactionProvider {
       console.log("isCom= "+this.infosUser.id);
     })
     .catch(() => console.log('erreur recup infos'))
-
+  }else{
+    this.quantity[this.nomsArticles.indexOf(infosArticle[2])]++;
+  }
 
     
   }
@@ -68,7 +69,6 @@ export class TransactionProvider {
   public reset(){
     this.nomsArticles = [];
     this.prixArticles = [];
-    this.panier = [];
     this.quantity = [];
     this.sommeTotale = 0;
     this.pseudoFestivalier = null;
