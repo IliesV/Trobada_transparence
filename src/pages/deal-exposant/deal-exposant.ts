@@ -154,9 +154,12 @@ export class DealExposantPage {
           {
             text: 'Oui',
             handler: () => {
+
               this.transactionApi.sendTransactions(this.transaction.infosUser.token, datasClient)
                 .then(retour => {
                   const DATAS = JSON.parse(retour.data)
+
+
 
                   if (DATAS.resultat == "true") { //Credit client suffisant
 

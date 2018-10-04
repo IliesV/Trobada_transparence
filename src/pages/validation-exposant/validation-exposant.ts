@@ -80,6 +80,15 @@ export class ValidationExposantPage {
     this.app.getRootNav().setRoot(TabsExposantPage)
   }
 
+
+  // doRefresh(refresher) {
+  //   this.startVerif()
+
+  //   setTimeout(() => {
+  //     refresher.complete();
+  //   }, 1000);
+  // }
+
   ionViewCanEnter(){
     //Recup Infos
     this.nativeStorage.getItem('infosUser')

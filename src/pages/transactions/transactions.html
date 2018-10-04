@@ -9,7 +9,16 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding *ngIf="connected == 'true'">
+
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+    <ion-refresher-content
+        pullingText="Tirer pour rafraîchir"
+        pullingIcon="arrow-dropdown"
+        refreshingSpinner="circles"
+        refreshingText="...mise à jour...">
+    </ion-refresher-content>
+  </ion-refresher>
 
   <ion-card *ngFor="let transaction of listeTransac">
     <ion-card-content>
@@ -54,4 +63,20 @@
       </ion-grid>
     </ion-card-content>
   </ion-card>
+</ion-content>
+
+  <ion-content padding *ngIf="connected == 'false'">
+      
+  <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+          pullingText="Tirer pour rafraîchir"
+          pullingIcon="arrow-dropdown"
+          refreshingSpinner="circles"
+          refreshingText="...mise à jour...">
+      </ion-refresher-content>
+    </ion-refresher>
+
+  <div class="errorConnexion">
+    Vous n'êtes pas conncté à internet, historique indisponible
+  </div>
 </ion-content>
