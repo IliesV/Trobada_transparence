@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, App } from 'ionic-angular';
+import { NavController, NavParams, App,LoadingController } from 'ionic-angular';
 import { UserGlobal } from '../../models/infosUser.model';
 import { NativeStorage } from '@ionic-native/native-storage';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
@@ -26,23 +26,32 @@ export class ValidationExposantPage {
     private app: App,
     public transactionsApiProvider: TransactionsApiProvider,
     private infosProvider: InfosProvider,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    public loadingCtrl: LoadingController
   ) {
     this.idTransac = navParams.get('idTransac');
   }
 
   public startVerif(){
     this.hideResultat = true;
+
     var i = 0;
+
+    let loading = this.loadingCtrl.create({
+      content: 'Vérification...'
+    });
+  
+    loading.present();
 
     this.timer = setInterval(() => {
       i++;
-      console.log("start verif")
+      this.hideVerif = true;
       this.validateTransacFromCom()
       .then(result => {
             
         if(result.data == "true"){
           clearInterval(this.timer);
+          loading.dismiss();
           this.hideVerif = true;
           //Update message écran et solde
           this.transactionsApiProvider.giveMySoldeOnline(this.infosUser.token)
@@ -53,19 +62,27 @@ export class ValidationExposantPage {
               this.resultat="Transaction validée";
                 this.hideResultat = false;
           })
-          .catch(() => console.log("erreur recup solde"))
+          .catch(() => {
+            console.log('erreur recup solde')
+            loading.dismiss();
+          })
         }else{
-          this.resultat="Transaction en attente, essai "+i+"/5";
-          this.hideResultat = false;
+          // this.resultat="Transaction en attente, essai "+i+"/5";
+          // this.hideResultat = false;
           if(i == 5){
             clearInterval(this.timer);
+            loading.dismiss();
+            this.hideResultat = false;
             this.resultat="Transaction non validée";
             this.hideVerif =false;
           }
         }
       })
-      .catch(()=>console.log("erreur check vendeur"))
-    }, 3000);
+      .catch(() => {
+        console.log('erreur check vendeur')
+        loading.dismiss();
+      })
+    }, 2000);
   }
 
   private validateTransacFromCom(){
@@ -81,13 +98,10 @@ export class ValidationExposantPage {
   }
 
 
-  // doRefresh(refresher) {
-  //   this.startVerif()
-
-  //   setTimeout(() => {
-  //     refresher.complete();
-  //   }, 1000);
-  // }
+  doRefresh(refresher) {
+    this.startVerif()
+    refresher.complete();
+  }
 
   ionViewCanEnter(){
     //Recup Infos
