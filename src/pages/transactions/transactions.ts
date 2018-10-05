@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { AlertController,LoadingController } from 'ionic-angular';
 import { App } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
@@ -21,6 +21,7 @@ export class TransactionsPage {
   listeTransac: TransactionGlobal[] = new Array<TransactionGlobal>();
   infosUser: UserGlobal = new UserGlobal();
   connected: string = "true";
+  firstCheck:boolean = true;
 
   constructor(
     public navCtrl: NavController,
@@ -28,7 +29,8 @@ export class TransactionsPage {
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
     private transactionsApiProvider: TransactionsApiProvider,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    public loadingCtrl: LoadingController
   ) { }
 
   public logout() {
@@ -56,17 +58,29 @@ export class TransactionsPage {
 
   doRefresh(refresher) {
     this.prepareThePage()
-
-    setTimeout(() => {
-      refresher.complete();
-    }, 2000);
+    refresher.complete();
   }
 
   ionViewCanEnter() {
     this.prepareThePage()
   }
 
+  ionViewDidEnter(){
+    if(!this.firstCheck){
+      this.prepareThePage();
+    }else{
+      this.firstCheck = false;
+    }
+  }
+
   prepareThePage(){
+
+    let loading = this.loadingCtrl.create({
+      content: 'Mise à jour...'
+    });
+  
+    loading.present();
+
     if (this.connexionApiProvider.checkOnline()) { //Client ONLINE
       this.connected = "true";
       //Recup Infos
@@ -77,13 +91,21 @@ export class TransactionsPage {
           this.transactionsApiProvider.giveMyTransactions(this.infosUser.token)
             .then(transac => {
               this.listeTransac = JSON.parse(transac.data)
+              loading.dismiss();
             })
-            .catch(() => console.log('erreur recup transactions'))
+            .catch(() => {
+              console.log('erreur recup transactions')
+              loading.dismiss();
+            })
         })
-        .catch(() => console.log('erreur recup infos'))
+        .catch(() => {
+          console.log('erreur recup infos')
+          loading.dismiss();
+        })
 
     } else {  //Client OFFLINE
       this.connected = "false";
+      loading.dismiss();
     }
   }
 }

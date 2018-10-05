@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AlertController } from 'ionic-angular';
+import { AlertController,LoadingController  } from 'ionic-angular';
 import { App } from 'ionic-angular';
 
 import { LoginPage } from '../login/login';
@@ -35,7 +35,8 @@ export class HomePage {
     private connexionApiProvider: ConnexionApiProvider,
     private transactionsApiProvider: TransactionsApiProvider,
     private nativeStorage: NativeStorage,
-    private sqlite: SQLite
+    private sqlite: SQLite,
+    public loadingCtrl: LoadingController
   ) { }
 
   public logout() {
@@ -80,47 +81,63 @@ export class HomePage {
         this.nativeStorage.getItem('infosUser')
           .then(infos => {
             this.infosUser = infos as UserGlobal
-
-            //Recup last transaction
-
-            if (this.connexionApiProvider.checkOnline()) { //Client ONLINE
-
-              this.transactionsApiProvider.lastClientTransaction(this.infosUser.token)
-                .then(transac => {
-                  this.lastTransac = JSON.parse(transac.data)
-                  this.showLast = false;
-                  this.connected = "true";
-                })
-                .catch(() => console.log('erreur recup transactions Online'))
-
-            } else {  //Client OFFLINE
-
-              //Ouverture DB => SQLiteObject
-              this.appBddProvider.openDB()
-                .then((db: SQLiteObject) => {
-                  this.appBddProvider.recupLastTransac(db)
-                    .then(transac => {
-
-                      //Si BD vide
-                      if (transac.rows.length == 0) {
-                        this.showLast = true;
-                      } else {
-                        this.lastTransac = transac.rows.item(0) as TransactionGlobal
-                        //Affichage modifié
-                        this.showLast = false;
-                        this.connected = "false";
-                      }
-                    })
-                    .catch(() => console.log('erreur recup transactions OFFLINE'))
-                })
-                .catch(e => console.log('erreur recup DB'));
-            }
+            this.searchLastTransacs();
           })
           .catch(() => console.log('erreur recup infos'))
       })
       .catch(() => console.log('erreur recup solde'))
   }
 
+  searchLastTransacs(){
+    //Recup transactions
+    let loading = this.loadingCtrl.create({
+      content: 'Mise à jour...'
+    });
+  
+    loading.present();
+  
+     //Recup last transaction
 
+     if (this.connexionApiProvider.checkOnline()) { //Client ONLINE
+
+      this.transactionsApiProvider.lastClientTransaction(this.infosUser.token)
+        .then(transac => {
+          this.lastTransac = JSON.parse(transac.data)
+          this.showLast = false;
+          this.connected = "true";
+          loading.dismiss();
+        })
+        .catch(() => {
+          console.log('erreur recup transactions ONLINE')
+          loading.dismiss();
+        })
+
+    } else {  //Client OFFLINE
+
+      //Ouverture DB => SQLiteObject
+      this.appBddProvider.openDB()
+        .then((db: SQLiteObject) => {
+          this.appBddProvider.recupLastTransac(db)
+            .then(transac => {
+
+              //Si BD vide
+              if (transac.rows.length == 0) {
+                this.showLast = true;
+              } else {
+                this.lastTransac = transac.rows.item(0) as TransactionGlobal
+                //Affichage modifié
+                this.showLast = false;
+                this.connected = "false";
+              }
+              loading.dismiss();
+            })
+            .catch(() => {
+              console.log('erreur recup transactions OFFLINE')
+              loading.dismiss();
+            })
+        })
+        .catch(e => console.log('erreur recup DB'));
+    }
+  }
 
 }
