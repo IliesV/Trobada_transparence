@@ -74,7 +74,7 @@ export class TransactionExposantPage {
       this.firstCheck = false;
     }
   }
-  
+
   searchLastTransacs(){
     //Recup transactions
     let loading = this.loadingCtrl.create({

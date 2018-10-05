@@ -26,6 +26,7 @@ export class HomePage {
   infosUser: UserGlobal = new UserGlobal();
   connected: string = "true";
   showLast: boolean = false;
+  needToCheck:boolean = true;
 
   constructor(
     public navCtrl: NavController,
@@ -88,6 +89,13 @@ export class HomePage {
       .catch(() => console.log('erreur recup solde'))
   }
 
+  ionViewDidEnter(){
+    if(this.needToCheck && this.connexionApiProvider.checkOnline()){
+      this.searchLastTransacs();
+      this.needToCheck = false;
+    }
+  }
+
   searchLastTransacs(){
     //Recup transactions
     let loading = this.loadingCtrl.create({
@@ -113,6 +121,8 @@ export class HomePage {
         })
 
     } else {  //Client OFFLINE
+
+      this.needToCheck = true;
 
       //Ouverture DB => SQLiteObject
       this.appBddProvider.openDB()
