@@ -36,6 +36,7 @@ export class DealExposantPage {
   nombre: number = 0;
   newIdTransac: number = 0;
   qrCode: string = "";
+  soloButton: boolean = true;
 
   constructor(
     public navCtrl: NavController,
@@ -70,6 +71,7 @@ export class DealExposantPage {
     this.prixArticles = [];
     this.quantity = [];
     this.pseudo = null;
+    this.soloButton = true;
   }
 
   private addQuantity(number) {
@@ -93,6 +95,9 @@ export class DealExposantPage {
       this.quantity.splice(index, 1);
     }
     this.transaction.sommeTot();
+    if(this.nomsArticles[0] == null){
+      this.soloButton = true;
+    }
   }
 
   private logout() {
@@ -191,6 +196,7 @@ export class DealExposantPage {
       alert.present();
     } else if (this.objet != null) {
       this.qrdata = this.objet.split("-", 6);
+      this.soloButton = false;
         this.transaction.quantity.push(1);
         this.transaction.sommeTot();
         let alert = this.alertCtrl.create({
