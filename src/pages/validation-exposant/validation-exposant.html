@@ -5,6 +5,15 @@
 </ion-header>
 
 <ion-content padding>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+          pullingText="Tirer pour rafraîchir"
+          pullingIcon="arrow-dropdown"
+          refreshingSpinner="none"
+          refreshingText="">
+      </ion-refresher-content>
+    </ion-refresher>
+
   <ion-grid>
     <ion-row text-right>
       <ion-col col-md-4 offset-md-8 col-12>
@@ -28,14 +37,14 @@
       </ion-col>
     </ion-row>
     <br>
-    <ion-row text-center>
+    <ion-row text-center [hidden]='(resultat != "Transaction validée")'>
         <ion-col>
-          <button [hidden]='(resultat != "Transaction validée")' ion-button color="trobada" (tap)="cancelVerif()">Retour</button>
+          <button ion-button color="trobada" (tap)="cancelVerif()">Retour</button>
         </ion-col>
       </ion-row>
-    <ion-row text-center>
+    <ion-row text-center [hidden]='(resultat == "Transaction validée" || hideVerif)'>
       <ion-col>
-        <button [hidden]='(resultat == "Transaction validée" || hideVerif)' ion-button color="trobada" (tap)="startVerif()">Vérifier</button>
+        <ion-icon name="arrow-dropdown-circle"></ion-icon> Tirer pour relancer la vérification <ion-icon name="arrow-dropdown-circle"></ion-icon>
       </ion-col>
     </ion-row>
   </ion-grid>
