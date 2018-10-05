@@ -6,6 +6,7 @@ import { NativeStorage } from '@ionic-native/native-storage';
 import {TransactionsApiProvider} from '../../providers/api/api.transactions';
 import { TabsPage } from '../tabs/tabs';
 import {InfosProvider} from '../../providers/infos/infosUser';
+import { AppBddProvider } from '../../providers/app-bdd/app-bdd';
 
 @Component({
   selector: 'page-validation-festivalier',
@@ -18,16 +19,14 @@ export class ValidationFestivalierPage {
   @ViewChild('key4') key4Input;
 
   infosUser:UserGlobal = new UserGlobal();
-  datasString:string = "";
   idCom: string = "0";
-  idTransac: string = "0";
+  idTransac: number;
   pseudoCom: string = "inconnu";
-  montant: string = "0";
+  montant: number;
   resultat: string = "";
   hideResultat:boolean = true;
-  showResultat:boolean = false;
   solde: string = "";
-  classVariable:string = "resultatRequeteWrong"
+  classVariable:string = "resultatRequeteWrong";
 
   constructor(
     public navCtrl: NavController,
@@ -35,15 +34,14 @@ export class ValidationFestivalierPage {
     public navParams: NavParams,
     private transactionsApiProvider: TransactionsApiProvider,
     private keyboard: Keyboard,
+    public appBddProvider: AppBddProvider,
     private infosProvider: InfosProvider,
     private nativeStorage: NativeStorage
     ){
-    this.datasString = navParams.get('objet');
-    const DATASARRAY = this.datasString.split("-");
-    this.idCom = DATASARRAY[0];
-    this.pseudoCom = DATASARRAY[1];
-    this.idTransac = DATASARRAY[2];
-    this.montant = DATASARRAY[3];
+    this.idCom = navParams.get('idCom');
+    this.pseudoCom = navParams.get('pseudoCom');
+    this.idTransac = navParams.get('idTransac');
+    this.montant = navParams.get('montant');
   }
 
     //Pattern qrCode: idVendeur-pseudoVendeur-idTransac-montant
@@ -53,8 +51,10 @@ export class ValidationFestivalierPage {
     const CODEPIN = this.key1Input.value+this.key2Input.value+this.key3Input.value+this.key4Input.value;
 
     if(CODEPIN != this.infosUser.pass){
-      this.resultat = "Erreur code pin, nouvel essai";
+      this.classVariable = "resultatRequeteWrong"
       this.hideResultat = false;
+      this.resultat = "Erreur code pin, nouvel essai";
+      this.keyboard.hide();
 
       //Reset inputs + focus
       this.key1Input.value = "";
@@ -63,11 +63,16 @@ export class ValidationFestivalierPage {
       this.key4Input.value = "";
 
       this.setInputFocus(1)
-
-    }else{
+      // setTimeout(() => {
+      // }, 1000);
       
 
-      //Validation code pin => CheckClient
+    }else{  //Validation code pin
+      
+      //Sauvegarde en bdd locale
+      this.appBddProvider.createTransac(this.idTransac,this.montant,this.pseudoCom);
+
+      // => CheckClient
 
       return this.transactionsApiProvider.checkClient(this.idCom,this.pseudoCom,this.idTransac,this.montant,this.infosUser.token)
       .then( result => {
@@ -81,7 +86,6 @@ export class ValidationFestivalierPage {
               this.classVariable = "resultatRequeteOk"
               this.hideResultat = false;
               this.resultat = result.data;
-              this.showResultat = true;
               this.keyboard.hide();
             })
             .catch(() => console.log("erreur save sold"))

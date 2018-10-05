@@ -59,7 +59,7 @@ export class TransactionsApiProvider {
     }
 
     //CheckTransac from client
-    public checkClient(idCom: string, pseudoCom: string, idTransac: string, montant: string, token:string): Promise<any> {
+    public checkClient(idCom: string, pseudoCom: string, idTransac: number, montant: number, token:string): Promise<any> {
         const URL = 'http://trobadapi.ddns.info/api/checkClient'
         this.http.setDataSerializer('JSON');
         return this.http.post(URL, {
