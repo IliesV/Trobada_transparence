@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,LoadingController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
@@ -19,7 +19,9 @@ import { TransactionGlobal } from '../../models/api.transaction.model'
 export class TransactionExposantPage {
 
   listeTransac:TransactionGlobal[] = new Array<TransactionGlobal>();
+  bufferListeTransac:TransactionGlobal[] = new Array<TransactionGlobal>();
   infosUser:UserGlobal = new UserGlobal();
+  firstCheck:boolean = true;
 
   constructor(
     public navCtrl: NavController,
@@ -27,7 +29,8 @@ export class TransactionExposantPage {
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
     private transactionsApiProvider: TransactionsApiProvider,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    public loadingCtrl: LoadingController
   ) {}
 
   public logout(){
@@ -54,17 +57,43 @@ export class TransactionExposantPage {
   }
 
   ionViewCanEnter(){
+
     //Recup Infos
     this.nativeStorage.getItem('infosUser')
     .then( infos => {
       this.infosUser = infos as UserGlobal
-      //Recup transaction
-      this.transactionsApiProvider.giveMyTransactions(this.infosUser.token)
-      .then( transac => {
-        this.listeTransac = JSON.parse(transac.data)
-      })
-      .catch(() => console.log('erreur recup transactions'))
+      this.searchLastTransacs();
     })
     .catch(() => console.log('erreur recup infos'))
   }
+
+  ionViewDidEnter(){
+    if(!this.firstCheck){
+      this.searchLastTransacs();
+    }else{
+      this.firstCheck = false;
+    }
+  }
+
+  searchLastTransacs(){
+    //Recup transactions
+    let loading = this.loadingCtrl.create({
+      content: 'Mise à jour...'
+    });
+  
+    loading.present();
+  
+    this.transactionsApiProvider.giveMyTransactions(this.infosUser.token)
+    .then( transac => {
+      this.listeTransac = JSON.parse(transac.data)
+      loading.dismiss();
+    })
+    .catch(() => {
+      console.log('erreur recup transactions')
+      loading.dismiss();
+    })
+  }
+
 }
+
+

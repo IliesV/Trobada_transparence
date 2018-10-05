@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController,LoadingController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 import {App} from 'ionic-angular';
 
@@ -28,7 +28,8 @@ export class HomeExposantPage {
     private app: App,
     private connexionApiProvider: ConnexionApiProvider,
     private transactionsApiProvider: TransactionsApiProvider,
-    private nativeStorage: NativeStorage
+    private nativeStorage: NativeStorage,
+    public loadingCtrl: LoadingController
   ) {}
 
   public logout(){
@@ -63,15 +64,30 @@ export class HomeExposantPage {
       this.nativeStorage.getItem('infosUser')
       .then( infos => {
         this.infosUser = infos as UserGlobal
-        //Recup transaction
-        this.transactionsApiProvider.lastVendeurTransaction(this.infosUser.token)
-        .then( transac => {
-          this.lastTransac = JSON.parse(transac.data)
-        })
-        .catch(() => console.log('erreur recup transactions'))
+        this.searchLastTransac();
       })
       .catch(() => console.log('erreur recup infos'))
     })
     .catch(() => console.log('erreur recup solde'))
    }
+
+
+  searchLastTransac(){
+    //Recup transaction
+    let loading = this.loadingCtrl.create({
+      content: 'Mise à jour...'
+    });
+  
+    loading.present();
+
+    this.transactionsApiProvider.lastVendeurTransaction(this.infosUser.token)
+    .then( transac => {
+      this.lastTransac = JSON.parse(transac.data)
+      loading.dismiss();
+    })
+    .catch(() => {
+      console.log('erreur recup transactions')
+      loading.dismiss();
+    })
+  }
 }

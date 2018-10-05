@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,LoadingController } from 'ionic-angular';
 import { AlertController } from 'ionic-angular';
 
 import {TabsPage} from '../tabs/tabs';
@@ -29,7 +29,8 @@ export class LoginPage {
     private alertCtrl: AlertController,
     private infosProvider: InfosProvider,
     public connexionApiProvider:ConnexionApiProvider,
-    private transactionsApiProvider:TransactionsApiProvider
+    private transactionsApiProvider:TransactionsApiProvider,
+    public loadingCtrl: LoadingController
   ) {
     //Creation BDD
     this.appBddProvider.createDatabaseFile();
@@ -38,6 +39,13 @@ export class LoginPage {
   public submitLogin(){
     this.attentionOnline();
     console.log('Check credentials')
+
+    let loading = this.loadingCtrl.create({
+      content: 'Connexion...'
+    });
+  
+    loading.present();
+
     this.connexionApiProvider.login(this.email,this.password)
     .then(response => {
       const TOKEN = JSON.parse(response.data).token;
@@ -53,6 +61,7 @@ export class LoginPage {
             //Recup Role
             this.infosProvider.giveInfosUser()
             .then(infosUser => {
+              loading.dismiss();
               //Redirection
               if(infosUser.role == 'vendeur'){
                 this.navCtrl.setRoot(TabsExposantPage)
@@ -60,13 +69,25 @@ export class LoginPage {
                 this.navCtrl.setRoot(TabsPage);
               }
             })
-            .catch(() => console.log("erreur recup role"))
+            .catch(() => {
+              console.log('erreur recup role')
+              loading.dismiss();
+            })
           })
-          .catch(() => console.log('erreur save solde'))
+          .catch(() => {
+            console.log('erreur save solde')
+            loading.dismiss();
+          })
         })
-        .catch(() => console.log('erreur recup solde'))
+        .catch(() => {
+          console.log('erreur recup solde')
+          loading.dismiss();
+        })
       })
-      .catch(() => console.log('erreur sauvegarde token'))
+      .catch(() => {
+        console.log('erreur sauvegarde token')
+        loading.dismiss();
+      })
     })
     .catch(() => {
       let alert = this.alertCtrl.create({
