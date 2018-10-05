@@ -1,0 +1,12 @@
+page-qrcode-exposant {
+    .qrCode{
+        margin: 30px auto;
+        display: table;
+    }
+
+    .qrCode span {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+    }
+}

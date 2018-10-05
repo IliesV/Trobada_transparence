@@ -1,0 +1,21 @@
+page-scan-qr {
+    .fixed-size-square {
+        position: absolute;
+        left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%);
+        display: table;
+        width: 230px;
+        height: 230px;
+        background: rgb(255, 255, 255);
+        opacity: 0.3;
+    }
+
+    .fixed-size-square span {
+        display: table-cell;
+        text-align: center;
+        vertical-align: middle;
+        color: white
+    }
+
+}

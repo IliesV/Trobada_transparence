@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>Finalisation</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+    <ion-refresher (ionRefresh)="doRefresh($event)">
+      <ion-refresher-content
+          pullingText="Tirer pour rafraîchir"
+          pullingIcon="arrow-dropdown"
+          refreshingSpinner="none"
+          refreshingText="">
+      </ion-refresher-content>
+    </ion-refresher>
+
+  <ion-grid>
+    <ion-row text-right>
+      <ion-col col-md-4 offset-md-8 col-12>
+        <button [hidden]='(resultat == "Transaction validée")' ion-button small color="danger" (tap)="cancelVerif()">Annuler</button>
+      </ion-col>
+    </ion-row>
+    <ion-row text-center>
+      <ion-col>
+        <ion-img width="20" height="20" src="../../assets/imgs/three.png"></ion-img>
+        Finalisation de la transaction par le client
+      </ion-col>
+    </ion-row>
+    <br>
+    <br>
+    <ion-row text-center>
+      <ion-col [hidden]=hideResultat [ngClass]='(resultat == "Transaction validée") ? "resultatRequeteOk" : "resultatRequeteWrong"'>
+        {{ resultat }}<br>
+        <div [hidden]='(resultat != "Transaction validée")'>
+          Votre nouveau solde: {{ solde }} €
+        </div>
+      </ion-col>
+    </ion-row>
+    <br>
+    <ion-row text-center [hidden]='(resultat != "Transaction validée")'>
+        <ion-col>
+          <button ion-button color="trobada" (tap)="cancelVerif()">Retour</button>
+        </ion-col>
+      </ion-row>
+    <ion-row text-center [hidden]='(resultat == "Transaction validée" || hideVerif)'>
+      <ion-col>
+        <ion-icon name="arrow-dropdown-circle"></ion-icon> Tirer pour relancer la vérification <ion-icon name="arrow-dropdown-circle"></ion-icon>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-content>
