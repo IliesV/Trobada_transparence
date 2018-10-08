@@ -20,8 +20,8 @@ import 'rxjs/add/operator/toPromise';
 })
 export class LoginPage {
 
-    email: string = 'Vendeur';
-    password: string = 'pass';
+    email: string = '';
+    password: string = '';
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
@@ -63,7 +63,7 @@ export class LoginPage {
             .then(infosUser => {
               loading.dismiss();
               //Redirection
-              if(infosUser.role == 'vendeur'){
+              if(infosUser.role == 'COM'){
                 this.navCtrl.setRoot(TabsExposantPage)
               }else{
                 this.navCtrl.setRoot(TabsPage);
@@ -95,6 +95,7 @@ export class LoginPage {
         subTitle: 'Vérifiez vos informations',
         buttons: ['Ok']
       });
+      loading.dismiss();
       alert.present();
     })
   }
