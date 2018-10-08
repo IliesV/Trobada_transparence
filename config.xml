@@ -3,7 +3,7 @@
     <name>TrobadaApp</name>
     <description>An awesome BeWeb app.</description>
     <author email="hi@ionicframework" href="http://ionicframework.com/">Ionic Framework Team</author>
-    <content original-src="index.html" src="http://192.168.1.59:8100" />
+    <content src="index.html" />
     <access origin="*" />
     <allow-intent href="http://*/*" />
     <allow-intent href="https://*/*" />
@@ -92,7 +92,6 @@
     <plugin name="cordova-plugin-ionic-keyboard" spec="^2.1.3" />
     <allow-navigation href="http://192.168.1.27:8100" sessionid="2a57cd3d" />
     <plugin name="cordova-plugin-qrscanner" spec="^2.6.0" />
-    <allow-navigation href="http://192.168.1.55:8100" sessionid="6c3fbe94" />
     <engine name="browser" spec="^5.0.4" />
     <engine name="ios" spec="^4.5.5" />
     <engine name="android" spec="^7.1.1" />

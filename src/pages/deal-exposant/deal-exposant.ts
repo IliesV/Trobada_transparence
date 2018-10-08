@@ -56,17 +56,20 @@ export class DealExposantPage {
 
   }
 
-
+  //Redirige sur la page du scanner en précisant que le code scanné sera celui d'un article.
   private goScan() {
     this.navCtrl.push(ScanQrPage, { source: "article" });
   }
 
+  //Redirige sur la page du scanner en précisant que le code scanné sera celui d'un client.
   private goScanClient() {
     this.navCtrl.push(ScanQrPage, { source: "client" });
   }
 
+  //Ré initialise toute la transaction.
   private reset() {
-    this.transaction.reset();
+    this.transaction.reset(); //Ré initialise la transaction au sein du provider.
+    //Ré initialise les valeurs de la transaction courante.
     this.nomsArticles = [];
     this.prixArticles = [];
     this.quantity = [];
@@ -74,11 +77,13 @@ export class DealExposantPage {
     this.soloButton = true;
   }
 
+  //Incrémente la quantité d'un article dans une transaction grâce à son ID dans le tableau quantité.
   private addQuantity(number) {
     this.quantity[number]++;
     this.transaction.sommeTot();
   }
 
+  //Décrémente la quantité d'un article dans une transaction grâce à son ID dans le tableau quantité.
   private removeQuantity(number) {
     if (this.quantity[number] > 1) {
       this.quantity[number]--;
@@ -86,14 +91,20 @@ export class DealExposantPage {
     }
   }
 
+  //Supprimer un article déja scanné de la liste depuis son nom.
   private remove(noms) {
+    //Si l'article n'existe pas dans la liste, indexOf retourne "-1"
     let index = this.nomsArticles.indexOf(noms);
 
+    //Si l'article est présent dans la liste, son index sera supérieur à -1.
+    //On supprime alors toutes les propriétés à l'index de ce produit.
     if (index > -1) {
       this.nomsArticles.splice(index, 1);
       this.prixArticles.splice(index, 1);
       this.quantity.splice(index, 1);
     }
+    //Si la suppression d'article s'effectue sur le dernier présent dans la liste
+    //on ré initialise l'afichage à son état par défaut.
     this.transaction.sommeTot();
     if(this.nomsArticles[0] == null){
       this.soloButton = true;
@@ -126,6 +137,8 @@ export class DealExposantPage {
   ionViewDidLoad() {
 
     console.log('ionViewDidLoad DealExposantPage');
+    //Initialisation d'un tableau dans le quel sera stockés les propriétés des articles qu'il est
+    //nécéssaire d'envoyer en BDD (l'id et la quantité).
     var articles = [];
     for (let i = 0; i < this.transaction.nomsArticles.length; i++) {
       var article = {
@@ -135,6 +148,8 @@ export class DealExposantPage {
       articles.push(article);
     }
 
+    //Chaine de caractère en JSON contenant toute les données liées à une transaction à envoyer en
+    //base de données. Inclut le tableau précédemment crée.
     var datasClient = {
       "amount": this.transaction.sommeTotale,
       "id_fest": this.transaction.idFestivalier,
@@ -144,12 +159,15 @@ export class DealExposantPage {
       "listeTransactions": articles
     }
 
+    //Au chargement de la page, si l'utilisateur à scanné un QR code client, apparition d'une alerte
+    //proposant de finaliser la transaction.
     if (this.pseudo != null) {
       let alert = this.alertCtrl.create({
         title: 'Confirmer la transaction',
         message: "Confirmez vous cette vente d'une valeur de " + this.sommeTotale + "€",
         buttons: [
           {
+            //Si "Annuler" est pressé, fermeture de l'alerte.
             text: 'Annuler',
             role: 'cancel',
             handler: () => {
@@ -157,6 +175,8 @@ export class DealExposantPage {
             }
           },
           {
+            //Si "Oui" est pressé, envoi de la requête sur l'API en fournissant les données récupérées
+            //précédemment.
             text: 'Oui',
             handler: () => {
 
@@ -194,11 +214,13 @@ export class DealExposantPage {
         ]
       });
       alert.present();
+      //Au chargement de la page, si l'utilisateur à scanné un qrcode d'article :
     } else if (this.objet != null) {
-      this.qrdata = this.objet.split("-", 6);
-      this.soloButton = false;
-        this.transaction.quantity.push(1);
-        this.transaction.sommeTot();
+      this.qrdata = this.objet.split("-", 6);//Récupération et découpage des données contenues dans le QrCode.
+      this.soloButton = false; //Changement de l'affichage.
+        this.transaction.quantity.push(1);// Quantité de l'article scanné initialisée à 1.
+        this.transaction.sommeTot();//Mise à jour de la somme totale de la transaction.
+        //Création d'une alerte à but purement informatif.
         let alert = this.alertCtrl.create({
           title: 'Article scanné',
           subTitle: "1 X " + this.qrdata[2] + " coute " + this.qrdata[3] + " €",
