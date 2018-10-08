@@ -137,8 +137,12 @@ export class DealExposantPage {
   ionViewDidLoad() {
 
     console.log('ionViewDidLoad DealExposantPage');
+    if(this.nomsArticles[0] !== undefined){
+      this.soloButton = false;
+    }
     //Initialisation d'un tableau dans le quel sera stockés les propriétés des articles qu'il est
     //nécéssaire d'envoyer en BDD (l'id et la quantité).
+
     var articles = [];
     for (let i = 0; i < this.transaction.nomsArticles.length; i++) {
       var article = {
