@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 import { DealExposantPage } from '../deal-exposant/deal-exposant';
 import { TransactionProvider } from '../../providers/transaction/transaction';
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the ScanQrPage page.
@@ -25,6 +26,7 @@ export class ScanQrPage {
 
   constructor(public navCtrl: NavController, 
     public navParams: NavParams,
+    private alertCtrl: AlertController,
     private qrScanner: QRScanner,
     private transaction: TransactionProvider) {
       this.source = this.navParams.get('source')
@@ -60,11 +62,33 @@ export class ScanQrPage {
   
            console.log('Scanned something', text);
            this.objet = text;
-           this.qrScanner.hide();//Fermeture du scanner de QRCode
-           scanSub.unsubscribe();
-          console.log('tout marche' + this.objet);
-          this.transaction.addInfos(text);//Envoi des données du code dans le provider.
-          this.navCtrl.push(DealExposantPage, { objet: this.objet})//Redirection vers la page de transaction tout en envoyant les informations du code dedans.
+           let verif = this.objet.split("-",6)
+           if(verif[3] !== null){
+             if(verif[3] !== "true" || verif[3] !== "false"){
+              this.qrScanner.hide();//Fermeture du scanner de QRCode
+              scanSub.unsubscribe();
+             console.log('tout marche' + this.objet);
+             this.transaction.addInfos(text);//Envoi des données du code dans le provider.
+             this.navCtrl.push(DealExposantPage, { objet: this.objet})//Redirection vers la page de transaction tout en envoyant les informations du code dedans.
+             }else{
+              let alert = this.alertCtrl.create({
+                title: 'Erreur',
+                subTitle: "Veuillez scanner un article et non un code festivalier.",
+                buttons: ['OK']
+              });
+              alert.present();
+              this.navCtrl.push(DealExposantPage);
+            }
+           }else{
+            let alert = this.alertCtrl.create({
+              title: 'Erreur',
+              subTitle: "Mauvais QR Code scanné.",
+              buttons: ['OK']
+            });
+            alert.present();
+            this.navCtrl.push(DealExposantPage);
+           }
+
           });
         
   
@@ -91,11 +115,32 @@ export class ScanQrPage {
   
            console.log('Scanned something', text);
            this.festivalier = text;
+           let verif = this.festivalier.split("-", 6);
+           if(verif[3] !== null){
+            if(verif[3] == "true" || verif[3]== "false" ){
            this.qrScanner.hide();
            scanSub.unsubscribe(); 
           console.log('tout marche' + this.objet);
           this.transaction.addInfosFestivalier(text);
           this.navCtrl.push(DealExposantPage)
+        }else{
+          let alert = this.alertCtrl.create({
+            title: 'Erreur',
+            subTitle: "Veuillez scanner un article et non un code festivalier.",
+            buttons: ['OK']
+          });
+          alert.present();
+          this.navCtrl.push(DealExposantPage);
+        }
+       }else{
+        let alert = this.alertCtrl.create({
+          title: 'Erreur',
+          subTitle: "Mauvais QR Code scanné.",
+          buttons: ['OK']
+        });
+        alert.present();
+        this.navCtrl.push(DealExposantPage);
+       }
           });
         } else if (status.denied) {
           console.log('Camera permission denied');
