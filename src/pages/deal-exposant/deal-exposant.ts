@@ -136,7 +136,6 @@ export class DealExposantPage {
 
   ionViewDidLoad() {
 
-    console.log('ionViewDidLoad DealExposantPage');
     if(this.nomsArticles[0] !== undefined){
       this.soloButton = false;
     }
@@ -183,12 +182,10 @@ export class DealExposantPage {
             //précédemment.
             text: 'Oui',
             handler: () => {
-
+              console.log(JSON.stringify(datasClient))
               this.transactionApi.sendTransactions(this.transaction.infosUser.token, datasClient)
                 .then(retour => {
                   const DATAS = JSON.parse(retour.data)
-
-
 
                   if (DATAS.resultat == "true") { //Credit client suffisant
 
