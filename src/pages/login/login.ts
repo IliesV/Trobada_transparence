@@ -49,6 +49,7 @@ export class LoginPage {
     this.connexionApiProvider.login(this.email,this.password)
     .then(response => {
       const TOKEN = JSON.parse(response.data).token;
+      console.log(TOKEN)
       //Sauvegarde du token
       this.infosProvider.saveTokenInfos(TOKEN)
       .then(()=> {
@@ -56,12 +57,14 @@ export class LoginPage {
         this.transactionsApiProvider.giveMySoldeOnline(TOKEN)
         .then(data=> {
           //sauvegarde solde
+          console.log("solde: "+data.data)
           this.infosProvider.saveSolde(data.data)
           .then(()=> {
             //Recup Role
             this.infosProvider.giveInfosUser()
             .then(infosUser => {
               loading.dismiss();
+              console.log(JSON.stringify(infosUser))
               //Redirection
               if(infosUser.role == 'COM'){
                 this.navCtrl.setRoot(TabsExposantPage)
