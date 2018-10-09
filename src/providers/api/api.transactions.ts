@@ -45,7 +45,7 @@ export class TransactionsApiProvider {
 
     //Recup last transaction Client
     public lastClientTransaction(token):Promise<HTTPResponse> {
-        console.log("Token: "+token)
+        
         const URL = this.baseUrl+'/lastTransacClient'
         this.http.setDataSerializer('JSON');
         return this.http.get(URL, {}, {"Content-Type": "application/json","Authorization":"Bearer " + token})
