@@ -26,7 +26,7 @@ export class HomePage {
   infosUser: UserGlobal = new UserGlobal();
   connected: string = "true";
   showLast: boolean = false;
-  needToCheck:boolean = true;
+  needToCheck:boolean = false;
 
   constructor(
     public navCtrl: NavController,

@@ -67,8 +67,6 @@ export class ValidationExposantPage {
             loading.dismiss();
           })
         }else{
-          // this.resultat="Transaction en attente, essai "+i+"/5";
-          // this.hideResultat = false;
           if(i == 5){
             clearInterval(this.timer);
             loading.dismiss();

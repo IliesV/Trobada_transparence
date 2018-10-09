@@ -44,7 +44,7 @@ export class MyApp {
                 this.rootPage = LoginPage;
             }else{
 
-              if(datas.role == 'vendeur'){
+              if(datas.role == 'COM'){
                 this.rootPage = TabsExposantPage;
               }else{
                 this.rootPage = TabsPage;

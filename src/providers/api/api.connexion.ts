@@ -1,9 +1,3 @@
-/*
-* Connexion: requete API et check credentials ou token
-*https://forum.ionicframework.com/t/adding-authorization-header-in-get-request/91222/8
-*https://raw.githubusercontent.com/RedFroggy/ionic2-nfc-app/master/app/pages/login/login.service.ts
-*/
-
 //Native Storage
 import { NativeStorage } from '@ionic-native/native-storage';
 
@@ -21,7 +15,7 @@ import { Network } from '@ionic-native/network';
 @Injectable()
 export class ConnexionApiProvider {
 
-    private baseUrl: string = 'http://trobadapi.ddns.info/login_check';
+    private baseUrl: string = 'http://trobada-api.fabrique-beweb.com';
     token;
 
     constructor(
@@ -44,7 +38,7 @@ export class ConnexionApiProvider {
     //CheckLogin
     public login(username: string, password: string): Promise<any> {
         this.http.setDataSerializer('JSON');
-        return this.http.post(this.baseUrl, { "username": username, "password": password }, { "Content-Type": "application/json" });
+        return this.http.post(this.baseUrl+"/login_check", { "username": username, "password": password }, { "Content-Type": "application/json" });
     }
 
     //Verification validité token
@@ -60,16 +54,4 @@ export class ConnexionApiProvider {
                 error => console.error('Error delete infosUser', error)
             );
     }
-
-    //Refresh token
-    public refreshToken(token): Promise<any> {
-        return this.http.post(this.baseUrl, { "refresh_token": token }, { "Content-Type": "application/x-www-form-urlencoded" });
-    }
 }
-
-//ngOnInit() {
-//     this.moviePromiseService
-//     .getService('api/Movie/TestGetNo')
-//     .then(result => console.log(result))
-//     .catch(error => console.log(error));
-// }
