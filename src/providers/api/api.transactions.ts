@@ -1,6 +1,5 @@
 import { Injectable }   from '@angular/core';
 import { HTTP, HTTPResponse } from '@ionic-native/http';
-import {TransactionProvider} from '../../providers/transaction/transaction';
 // RxJS
 import 'rxjs/add/operator/toPromise';
 
@@ -12,8 +11,7 @@ export class TransactionsApiProvider {
     private baseUrl: string = 'http://trobada-api.fabrique-beweb.com/api';
 
     constructor(
-        private http: HTTP,
-        private transaction: TransactionProvider
+        private http: HTTP
         ) {}
 
     //Recup solde API
@@ -88,7 +86,7 @@ export class TransactionsApiProvider {
     }
 
     //validate transaction from vendeur
-    public validateTransac(idTransac:string, token:string): Promise<any> {
+    public validateTransac(idTransac, token:string): Promise<any> {
         const URL = this.baseUrl+'/validation'
         this.http.setDataSerializer('JSON');
         return this.http.post(URL, {"idTransac": idTransac},

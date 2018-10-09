@@ -43,7 +43,7 @@ export class QrcodeExposantPage {
         this.app.getRootNav().setRoot(ValidationExposantPage,{ idTransac: this.idTransac});
 
       }else{  //User deconnecté donc vendeur valide transaction
-
+        console.log("idTransac: "+this.idTransac+" toekn: "+this.infosUser.token)
         this.transactionApi.validateTransac(this.idTransac, this.infosUser.token)
         .then(()=> this.app.getRootNav().setRoot(ValidationExposantPage,{ idTransac: this.idTransac}))
         .catch(()=> console.log("erreur validation"))
