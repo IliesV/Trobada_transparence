@@ -53,7 +53,7 @@ export class TransactionProvider {
           this.infosUser = infos as UserGlobal
           this.idVendeur = this.infosUser.id;
           this.pseudoVendeur = this.infosUser.pseudo;
-          console.log("isCom= " + this.infosUser.id);
+          console.log("idCom= " + this.infosUser.id);
         })
         .catch(() => console.log('erreur recup infos'))
       //Si l'article existe déjà, alors on incrémente sa quantité.
@@ -72,6 +72,7 @@ export class TransactionProvider {
 
   //Ré initialise les infos concernant la transaction courante.
   public reset() {
+    this.idArticles = [];
     this.nomsArticles = [];
     this.prixArticles = [];
     this.quantity = [];
